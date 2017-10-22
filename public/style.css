@@ -1,0 +1,32 @@
+.header{
+	background: #eee;
+	height:50px;	
+}
+
+.selected:hover{
+	cursor:pointer;
+}
+
+.breadcrumb{
+	background: #fff;
+	font-size:20px;
+}
+
+.btn{
+	margin-right:10px;
+}
+
+.modalBody{
+	padding:40px;
+}
+.sort:hover{
+	cursor:pointer;
+}
+
+.not_found{
+	text-align:center;
+	padding:40px;
+	font-decoration: italic;
+	font-size:1em;
+	color: #bbb;
+}
