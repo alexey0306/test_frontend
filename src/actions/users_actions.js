@@ -1,15 +1,23 @@
 // Import section
 import axios from 'axios';
-import {FETCH_USERS,FETCH_USER,ROOT_URL,REQUEST_TIMEOUT,CREATE_USER,DELETE_USERS, SORT_USERS, TYPE_DANGER,TYPE_SUCCESS} from './index';
+import {FETCH_USERS,FETCH_USER,ROOT_URL,REQUEST_TIMEOUT,CREATE_USER,DELETE_USERS, SORT_USERS, TYPE_DANGER,TYPE_SUCCESS,success} from './index';
 import {showAlert} from './alerts_actions';
 
+// Variables section
 axios.defaults.timeout = REQUEST_TIMEOUT;
+var message = "";
+// ---------------------------------------------------
+// 		Listing users
+// ---------------------------------------------------
+
 export function fetchUsers(term = "",sort = "asc"){
 	const URL = `${ROOT_URL}users/list?term=${term}&asc=${sort}`;
 	var message = "";
 	return function(dispatch){
 		axios.get(URL)
-		.then((response) => {dispatch(fetchUsersSuccess(response))})
+		.then((response) => {
+			dispatch(success(response,FETCH_USERS));			
+		})
 		.catch((err) => {
 			if (err.response){message = err.response.data.message;}
 			else{message = err.toString();}
@@ -18,20 +26,22 @@ export function fetchUsers(term = "",sort = "asc"){
 	}
 }
 
-function fetchUsersSuccess(response){
-	return {
-		type: FETCH_USERS,
-		payload: response
-	}
-
-}
+// ---------------------------------------------------
+// 		Getting user
+// ---------------------------------------------------
 
 export function fetchUser(id){
 	const URL = `${ROOT_URL}users/get/${id}`;
-	const request = axios.get(URL);
-	return {
-		type: FETCH_USER,
-		payload: request
+	return function(dispatch){
+		axios.get(URL)
+		.then((response) => {
+			dispatch(success(response,FETCH_USER));			
+		})
+		.catch((err) => {
+			if (err.response){message = err.response.data.message;}
+			else{message = err.toString();}
+			dispatch(showAlert(TYPE_DANGER,message));
+		});
 	}
 }
 

@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   users:UsersReducer,
   form: formReducer,
   groups: GroupsReducer,
-  alerts: AlertsReducer
+  alerts: AlertsReducer  
 });
 
 export default rootReducer;

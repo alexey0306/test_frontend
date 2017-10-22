@@ -24,6 +24,8 @@ export const TYPE_DANGER = "danger";
 export const TYPE_SUCCESS = "success";
 export const TYPE_WARN = "warning";
 
+// Breadcrumb actions
+export const SHOW_BREAD = "SHOW_BREAD";
 
 // FUnctions
 export function success(response,type){

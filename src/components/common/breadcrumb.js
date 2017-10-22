@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router';
+import {connect} from 'react-redux';
 
 class Breadcrumb extends Component{
 
@@ -23,7 +24,12 @@ class Breadcrumb extends Component{
 	render(){
 		return (
 			<div>
-				<ol className="breadcrumb">{this.props.items.map(this.renderItem)}</ol>
+				<ol className="breadcrumb">{this.props.items.map(this.renderItem)}
+					{this.props.lastItem ? (
+					<li className="breadcrumb-item">{this.props.lastItem.name}</li>
+					) : (<span></span>)}
+				</ol>
+				
 			</div>
 		);
 	}

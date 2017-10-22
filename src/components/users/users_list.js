@@ -82,16 +82,16 @@ class UsersList extends Component{
 	}
 
 	render(){
-		const items = [{name:"Users",link:"/users",isLink:false}];
+		const items = [{id:1, name: "Users","link":"/users",isLink: false}]
 		return (
 				<div>
-				<Breadcrumb items={items} />
+				<Breadcrumb items={items}/>
 				<UsersPanel selected={this.state.selected} />
 				<table className="table table-hover table-striped">
 					<thead>
 						<tr>
 							<th><input onChange={this.onAllChange} type="checkbox" id='selectAll'/></th>
-							<th>Name <i class="fa fa-fw fa-sort sort" id={this.state.sort} onClick={this.sortUsers}></i></th>
+							<th>Name <i className="fa fa-fw fa-sort sort" id={this.state.sort} onClick={this.sortUsers}></i></th>
 							<th>Email</th>
 							<th>Subject</th>
 						</tr>

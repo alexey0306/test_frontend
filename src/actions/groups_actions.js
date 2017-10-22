@@ -4,6 +4,7 @@ import {FETCH_GROUPS,ROOT_URL,REQUEST_TIMEOUT,CREATE_GROUP,success,TYPE_DANGER,T
 import {showAlert} from './alerts_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
 var message = "";
+
 // ---------------------------------------------------
 // 		Listing groups
 // ---------------------------------------------------

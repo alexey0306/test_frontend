@@ -41,7 +41,7 @@ class UsersPanel extends Component{
 		this.props.fetchUsers(this.state.term);
 	}
 
-	onChange(event){
+	onChange(event){		
 		this.setState({term:event.target.value});
 	}
 	
@@ -68,7 +68,7 @@ class UsersPanel extends Component{
 						<div className="input-group">
 						<input type="text" onChange={this.onChange} className="form-control searchBar" placeholder="Type the user name to search"/>
 							<span className="input-group-btn">					
-							<button  type="submit" className="btn btn-default" title="Search">
+							<button type="submit" className="btn btn-default" title="Search">
 								<i className="fa fa-search" aria-hidden="true"></i>
 							</button>
 							</span>
