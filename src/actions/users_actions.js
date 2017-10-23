@@ -10,8 +10,8 @@ var message = "";
 // 		Listing users
 // ---------------------------------------------------
 
-export function fetchUsers(term = "",sort = "asc"){
-	const URL = `${ROOT_URL}users/list?term=${term}&asc=${sort}`;
+export function fetchUsers(term = "",sort = "asc",group = ""){
+	const URL = `${ROOT_URL}users/list?term=${term}&asc=${sort}&group=${group}`;
 	var message = "";
 	return function(dispatch){
 		axios.get(URL)

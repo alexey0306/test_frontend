@@ -61,7 +61,7 @@ class UsersPanel extends Component{
 								<i className="fa fa-trash" aria-hidden="true"></i> Delete
 							</button>
 						</span>
-						<GroupsDropdown selected={this.state.selected} />						
+						<GroupsDropdown selected={this.props.selected} term={this.state.term} />						
 					</div>
 					<div className="col-md-6">
 						<form onSubmit={this.onSearchClick}>

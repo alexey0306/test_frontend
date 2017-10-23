@@ -8,8 +8,7 @@ import {Link} from 'react-router';
 import Breadcrumb from '../common/breadcrumb';
 import CreateGroupModal from '../modals/create_group';
 import GroupsPanel from './groups_panel';
-
-const no_groups_found = <tr><td colspan="10" className="not_found"> [ No groups found ] </td></tr>;
+import {no_groups_found} from '../../globals/globals';
 
 class GroupsList extends Component{
 
@@ -34,7 +33,7 @@ class GroupsList extends Component{
 		this.selectGroup(event.target.id,event.target.checked);
 	}
 
-	selectGroup(id,checked){
+ 	selectGroup(id,checked){
 		var arrayVar = this.state.selected;
 		if (checked){
 			arrayVar.push(parseInt(id));

@@ -30,3 +30,46 @@
 	font-size:1em;
 	color: #bbb;
 }
+.inline{
+	display: inline;
+}
+
+.accounts-list{
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.card{
+	width: 30%;
+	min-width: 200px;
+	border:1px solid #ddd;
+	margin-bottom:20px;
+}
+.card:hover{
+	cursor: pointer;
+}
+.card-block{
+	padding:20px;
+}
+.card-block-new{
+	padding:30px;
+	text-align:center;
+}
+.card-text-new{
+	color:#ddd;font-size:2em;
+}
+.card-text{
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.cardHeader{
+	height:100px;
+}
+.card-footer{
+	padding:10px;
+	border-top:1px solid #ddd;
+	color: #aaa;
+	font-style: italic;
+}
+.fa-big{font-size: 200px !important;color: #ddd;}

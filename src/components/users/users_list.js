@@ -6,8 +6,7 @@ import {Link} from 'react-router';
 import Breadcrumb from '../common/breadcrumb'
 import UsersPanel from './users_panel';
 import _ from 'lodash';
-
-const no_users_found = <tr><td colspan="10" className="not_found"> [ No users found ] </td></tr>;
+import {no_users_found} from '../../globals/globals';
 
 class UsersList extends Component{
 
