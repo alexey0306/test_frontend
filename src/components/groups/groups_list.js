@@ -81,7 +81,7 @@ class GroupsList extends Component{
 					<thead>
 						<tr>
 							<th><input onChange={this.onAllChange} type="checkbox" id='selectAll'/></th>
-							<th>Name <i class="fa fa-fw fa-sort sort" id={this.state.sort} onClick={this.sortUsers}></i></th>
+							<th>Name <i className="fa fa-fw fa-sort sort" id={this.state.sort} onClick={this.sortUsers}></i></th>
 							<th>Description</th>							
 						</tr>
 					</thead>

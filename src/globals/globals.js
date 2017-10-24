@@ -2,7 +2,7 @@ import React from 'react';
 
 // HTML outputs
 export const no_users_found = <tr><td colSpan="10" className="not_found"> [ No users found ] </td></tr>;
-export const no_groups_found = <tr><td colspan="10" className="not_found"> [ No groups found ] </td></tr>;
+export const no_groups_found = <tr><td colSpan="10" className="not_found"> [ No groups found ] </td></tr>;
 
 // Service IDs
 const SERVICE_EVERNOTE = 0;

@@ -5,35 +5,7 @@ import {reduxForm, Field} from 'redux-form';
 import { createGroup } from '../../actions/groups_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-
-
-// Creating the Render component
-const renderField = ({input,label,placeholder,type,meta: {touched, error, warning}}) => (
-	<div className={`form-group ${ touched && error ? 'has-error' : '' }`}>
-		<label>{label}</label>
-		<div>
-			<input 
-				className="form-control" {...input} 
-				placeholder={placeholder} 
-				type={type}
-			/>
-			{touched && ((error && <div className="help-block">{error}</div>)) }
-		</div>
-	</div>
-);
-const textAreaField = ({input,label,placeholder,type,meta: {touched, error, warning}}) => (
-	<div className={`form-group ${ touched && error ? 'has-error' : '' }`}>
-		<label>{label}</label>
-		<div>
-			<textarea 
-				className="form-control" {...input} 
-				placeholder={placeholder} 
-				type={type}
-			></textarea>
-			{touched && ((error && <div className="help-block">{error}</div>)) }
-		</div>
-	</div>
-);
+import {renderField,textAreaField} from '../../globals/render_fields';
 
 
 class CreateGroupModal extends Component{

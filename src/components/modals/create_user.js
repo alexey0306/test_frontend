@@ -5,29 +5,7 @@ import {reduxForm, Field} from 'redux-form';
 import { createUser } from '../../actions/users_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-
-
-// Creating the Render component
-const renderField = ({
-	input,
-	label,
-	placeholder,
-	type,
-	meta: {touched, error, warning}
-}) => (
-	<div className={`form-group ${ touched && error ? 'has-error' : '' }`}>
-		<label>{label}</label>
-		<div>
-			<input 
-				className="form-control" {...input} 
-				placeholder={placeholder} 
-				type={type}
-			/>
-			{touched && ((error && <div className="help-block">{error}</div>)) }
-		</div>
-	</div>
-);
-
+import {renderField} from '../../globals/render_fields';
 
 class CreateUserModal extends Component{
 

@@ -8,7 +8,7 @@
 // Import section
 import React, {Component} from 'react';
 import CreateGroupModal from '../modals/create_group';
-import {fetchGroups} from '../../actions/groups_actions';
+import {fetchGroups,deleteGroups} from '../../actions/groups_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -31,13 +31,14 @@ class GroupsPanel extends Component{
 		}
 
 		if (window.confirm("Are you sure that you want to delete selected groups?")){
-			//this.props.deleteUsers(this.props.selected);
+			console.log(this.props.selected);
+			this.props.deleteGroups(this.props.selected);
 		}
 	}
 
 	onSearchClick(event){
 		event.preventDefault();
-		//this.props.fetchGroups(this.state.term);
+		this.props.fetchGroups(this.state.term);
 	}
 
 	onChange(event){
@@ -84,7 +85,7 @@ class GroupsPanel extends Component{
 
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchGroups},dispatch);
+	return bindActionCreators({fetchGroups,deleteGroups},dispatch);
 }
 
 export default connect(null,mapDispatchToProps)(GroupsPanel);

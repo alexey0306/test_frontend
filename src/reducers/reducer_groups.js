@@ -1,4 +1,4 @@
-import {FETCH_GROUPS,CREATE_GROUP,FETCH_GROUP, DELETE_USERS_GROUP, UPDATE_GROUP, GROUP_USERS} from '../actions/index';
+import {FETCH_GROUPS,CREATE_GROUP,FETCH_GROUP, DELETE_USERS_GROUP, UPDATE_GROUP, GROUP_USERS, DELETE_GROUPS} from '../actions/index';
 import _ from 'lodash';
 const INITIAL_STATE = { all:[],group:{name:"",dscr:"",users:[],id:0} };
 
@@ -20,6 +20,11 @@ export default function(state = INITIAL_STATE,action){
 			return {...state, group: action.payload.data}
 		case GROUP_USERS:
 			return state;
+		case DELETE_GROUPS:
+			var array = state.all.filter(function(item){
+				return !_.includes(action.payload.data,item.id);
+			});
+			return {...state, all: array};
 		default:
 			return state;
 	}

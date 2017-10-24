@@ -1,5 +1,5 @@
 // Export section
-export const ROOT_URL = "http://10.10.10.130:5000/";
+export const ROOT_URL = "https://www.saferoomapp.com:5000/";
 export const FETCH_MENU = "FETCH_MENU";
 
 // Users actions
@@ -16,6 +16,7 @@ export const FETCH_GROUP = "FETCH_GROUP";
 export const DELETE_USERS_GROUP = "DELETE_USERS_GROUP";
 export const UPDATE_GROUP = "UPDATE_GROUP";
 export const GROUP_USERS = "GROUP_USERS";
+export const DELETE_GROUPS = "DELETE_GROUPS";
 
 // Alert actions
 export const SHOW_ALERT = "SHOW_ALERT";
@@ -24,6 +25,7 @@ export const REQUEST_TIMEOUT = 3000;
 
 // Account actions
 export const FETCH_ACCOUNTS = "FETCH_ACCOUNTS";
+export const FETCH_ACCOUNT = "FETCH_ACCOUNT";
 
 // Alert types
 export const TYPE_DANGER = "danger";

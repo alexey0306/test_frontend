@@ -1,6 +1,6 @@
 // Import section
 import axios from 'axios';
-import {FETCH_GROUPS,ROOT_URL,REQUEST_TIMEOUT,CREATE_GROUP,success,TYPE_DANGER,TYPE_SUCCESS,FETCH_GROUP, DELETE_USERS_GROUP, UPDATE_GROUP, GROUP_USERS} from './index';
+import {FETCH_GROUPS,ROOT_URL,REQUEST_TIMEOUT,CREATE_GROUP,success,TYPE_DANGER,TYPE_SUCCESS,FETCH_GROUP, DELETE_USERS_GROUP, UPDATE_GROUP, GROUP_USERS, DELETE_GROUPS} from './index';
 import {showAlert} from './alerts_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
 var message = "";
@@ -126,4 +126,27 @@ export function groupUsers(group, uids){
 				dispatch(showAlert(TYPE_DANGER,message));
 		});
 	}
+}
+
+// ---------------------------------------------------
+// 		Deleting groups
+// ---------------------------------------------------
+
+export function deleteGroups(groups){
+	const URL = `${ROOT_URL}groups/delete`;
+	return function(dispatch){
+
+		// Sending request
+		axios.delete(URL,{data: groups})
+		.then((response) => {
+			dispatch(success(response,DELETE_GROUPS));
+			dispatch(showAlert(TYPE_SUCCESS,"Groups have been successfully deleted"));
+		})
+		.catch((err) => {
+				if (err.response){message = err.response.data.message;}
+				else{message = err.toString();}
+				dispatch(showAlert(TYPE_DANGER,message));
+		});
+	}
+
 }

@@ -57,7 +57,7 @@
 	text-align:center;
 }
 .card-text-new{
-	color:#ddd;font-size:2em;
+	color:#ddd;font-size:1.5em;
 }
 .card-text{
 	padding-top:10px;
@@ -72,4 +72,4 @@
 	color: #aaa;
 	font-style: italic;
 }
-.fa-big{font-size: 200px !important;color: #ddd;}
+.fa-big{font-size: 100px !important;color: #ddd;}
