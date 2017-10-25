@@ -49,11 +49,11 @@ class CreateUserModal extends Component{
 function validate(values){
 	const errors = {};
 
-	if (!values.username){
-		errors.username = "Required";
+	if (!values.name){
+		errors.name = "Required";
 	}
-	else if (values.username.length > 64) {
-    	errors.username = 'Must be 64 characters or less'
+	else if (values.name.length > 64) {
+    	errors.name = 'Must be 64 characters or less'
   	}
 	if (!values.email) {
 		errors.email = 'Required'

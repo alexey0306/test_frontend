@@ -10,9 +10,20 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchMenu} from '../../actions/menu_actions';
+import {fetchAccounts} from '../../actions/accounts_actions';
 import {Link} from 'react-router';
+import {no_accounts_found} from '../../globals/globals';
 
 class Navigation extends Component{
+
+	renderAccount(account){
+		return (
+		<Link key={account.id} to={`/notebooks/list/${account.id}`}>
+			<li className="list-group-item">{account.name}</li>
+		</Link>
+		);
+	}
+
 
 	renderItem(item){
 		if (item.header){
@@ -29,7 +40,7 @@ class Navigation extends Component{
 		}
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		this.props.fetchMenu();		
 	}
 
@@ -38,6 +49,10 @@ class Navigation extends Component{
 			<div>
 				<ul className="list-group">
 					{this.props.items.map(this.renderItem)}
+					<h4 key="Accounts">Accounts</h4>
+					{ this.props.accounts.length == 0 ? 
+						no_accounts_found : this.props.accounts.map(this.renderAccount)
+					}
 				</ul>
 				
 			</div>
@@ -47,11 +62,14 @@ class Navigation extends Component{
 }
 
 function mapStateToProps(state){
-	return {items: state.navigation.items};
+	return {
+		items: state.navigation.items,
+		accounts: state.accounts.all
+	};
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchMenu},dispatch);
+	return bindActionCreators({fetchMenu,fetchAccounts},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Navigation);

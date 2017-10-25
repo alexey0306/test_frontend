@@ -59,7 +59,6 @@ class GroupsDropdown extends Component{
 }
 
 function mapStateToProps(state,ownProps){
-	console.log(ownProps)
 	return {
 		groups: state.groups.all,
 		selected: ownProps.selected

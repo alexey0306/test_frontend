@@ -12,7 +12,7 @@ const menu = [
 	{name:"Tasks",header: false,link:"tasks","icon":"tasks"},
 	{name:"Notes",header: true,link:"",icon:""},
 	{name:"Create note",header: false,link:"notes/create",icon:""},
-	{name:"Favourites",header: false,link:"notes/favourites",icon:""}
+	{name:"Favourites",header: false,link:"notes/favourites",icon:""}	
 ];
 
 export function fetchMenu(){

@@ -26,6 +26,7 @@ export const REQUEST_TIMEOUT = 3000;
 // Account actions
 export const FETCH_ACCOUNTS = "FETCH_ACCOUNTS";
 export const FETCH_ACCOUNT = "FETCH_ACCOUNT";
+export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 
 // Alert types
 export const TYPE_DANGER = "danger";

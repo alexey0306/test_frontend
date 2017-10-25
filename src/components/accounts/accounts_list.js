@@ -1,26 +1,34 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchAccounts} from '../../actions/accounts_actions';
+import {fetchAccounts,fetchAccount} from '../../actions/accounts_actions';
 import {no_accounts_found, get_account} from '../../globals/globals';
 import Breadcrumb from '../common/breadcrumb';
 import {ROOT_URL} from '../../actions/index';
 import AccountInfoModal from '../modals/account_info';
+import CreateAccountModal from '../modals/create_account';
 
 
 class AccountsList extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {lgShow: false}
+		this.state = {modalInfo: false, modalCreate: false,service: 0}
 		this.onLogin = this.onLogin.bind(this);
 		this.renderAccount = this.renderAccount.bind(this);
 		this.onLogout = this.onLogout.bind(this);
 		this.onInfoClick = this.onInfoClick.bind(this);
+		this.onNewClick = this.onNewClick.bind(this);
 	}
 
 	onInfoClick(event){
-		this.setState({lgShow:true});
+		this.props.fetchAccount(event.target.id,event.target.name);
+		this.setState({modalInfo:true});
+		this.setState({service: event.target.name});
+	}
+
+	onNewClick(event){
+		this.setState({modalCreate:true});
 	}
 
 	onLogout(event){
@@ -39,14 +47,15 @@ class AccountsList extends Component{
 			<Breadcrumb items={items} />
 			<div className="accounts-list">
 				{this.props.accounts.map(this.renderAccount)}
-				<div className="card">
+				<div onClick={this.onNewClick} className="card">
 					<div className="card-block-new">
 						<i className="fa fa-plus fa-big" aria-hidden="true"></i>
 						<div className="card-text-new">Add new account</div>
 					</div>
 				</div>
 			</div>
-			<AccountInfoModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>
+			<AccountInfoModal show={this.state.modalInfo} service={this.state.service} onHide={()=> this.setState({modalInfo:false})}/>
+			<CreateAccountModal show={this.state.modalCreate} onHide={()=> this.setState({modalCreate:false})}/>
 			</div>
 		);
 	}
@@ -88,7 +97,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchAccounts},dispatch);
+	return bindActionCreators({fetchAccounts,fetchAccount},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(AccountsList);

@@ -73,3 +73,15 @@
 	font-style: italic;
 }
 .fa-big{font-size: 100px !important;color: #ddd;}
+
+.service_1{
+	background: #80397B;
+	color: #fff;	
+}
+.service_0{
+	background: #2dbe60;
+	color: #fff;	
+}
+.label-status{
+	font-size: 0.9em;
+}

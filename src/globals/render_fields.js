@@ -36,3 +36,15 @@ export const textAreaField = ({input,label,placeholder,type,meta: {touched, erro
 		</div>
 	</div>
 );
+
+export const renderSelectField = ({ input, label, type, meta: { touched, error }, children }) => (
+  <div className={`form-group ${ touched && error ? 'has-error' : '' }`}>
+    <label>{label}</label>
+    <div>
+      <select className="form-control" {...input}>
+        {children}
+      </select>
+      {touched && ((error && <div className="help-block">{error}</div>)) }
+    </div>
+  </div>
+)
