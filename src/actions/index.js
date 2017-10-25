@@ -1,3 +1,5 @@
+import {showAlert,isLoading} from './alerts_actions';
+
 // Export section
 export const ROOT_URL = "http://www.saferoomapp.com:5000/";
 export const FETCH_MENU = "FETCH_MENU";
@@ -22,6 +24,7 @@ export const DELETE_GROUPS = "DELETE_GROUPS";
 export const SHOW_ALERT = "SHOW_ALERT";
 export const CLEAR_ALERTS = "CLEAR_ALERTS";
 export const REQUEST_TIMEOUT = 10000;
+export const HANDLE_LOADER = "HANDLE_LOADER";
 
 // Account actions
 export const FETCH_ACCOUNTS = "FETCH_ACCOUNTS";
@@ -46,4 +49,12 @@ export function success(response,type){
 		type: type,
 		payload: response
 	}
+}
+
+export function handleError(dispatch,err){
+	var message = "";
+	if (err.response){message = err.response.data.message;}
+	else{message = err.toString();}
+	dispatch(showAlert(TYPE_DANGER,message));
+	dispatch(isLoading(false));
 }

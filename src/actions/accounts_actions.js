@@ -1,7 +1,7 @@
 // Import section
 import axios from 'axios';
-import {FETCH_ACCOUNTS,FETCH_ACCOUNT,ROOT_URL,REQUEST_TIMEOUT,success,TYPE_DANGER,TYPE_SUCCESS,CREATE_ACCOUNT} from './index';
-import {showAlert} from './alerts_actions';
+import {FETCH_ACCOUNTS,FETCH_ACCOUNT,ROOT_URL,REQUEST_TIMEOUT,success,handleError,TYPE_DANGER,TYPE_SUCCESS,CREATE_ACCOUNT} from './index';
+import {showAlert,isLoading} from './alerts_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
 var message = "";
 
@@ -12,14 +12,14 @@ var message = "";
 export function fetchAccounts(){
 	const URL = `${ROOT_URL}accounts/list`;
 	return function(dispatch){
+		dispatch(isLoading(true));
 		axios.get(URL)
 		.then((response) => {
+			dispatch(isLoading(false));
 			dispatch(success(response,FETCH_ACCOUNTS));
 		})
 		.catch((err) => {
-			if (err.response){message = err.response.data.message;}
-			else{message = err.toString();}
-			dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	}
 }
@@ -36,9 +36,7 @@ export function fetchAccount(account_id,service_id){
 			dispatch(success(response,FETCH_ACCOUNT));
 		})
 		.catch((err) => {
-			if (err.response){message = err.response.data.message;}
-			else{message = err.toString();}
-			dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	};
 }
@@ -56,9 +54,7 @@ const URL = `${ROOT_URL}accounts/create`;
 			dispatch(showAlert(TYPE_SUCCESS,"Account has been successfully created"));
 		})
 		.catch((err) => {
-			if (err.response){message = err.response.data.message;}
-			else{message = err.toString();}
-			dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	};
 }

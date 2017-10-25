@@ -1,9 +1,10 @@
 // Import section
 import axios from 'axios';
-import {FETCH_GROUPS,ROOT_URL,REQUEST_TIMEOUT,CREATE_GROUP,success,TYPE_DANGER,TYPE_SUCCESS,FETCH_GROUP, DELETE_USERS_GROUP, UPDATE_GROUP, GROUP_USERS, DELETE_GROUPS} from './index';
-import {showAlert} from './alerts_actions';
+import {FETCH_GROUPS,ROOT_URL,REQUEST_TIMEOUT,CREATE_GROUP,success,handleError,TYPE_DANGER,TYPE_SUCCESS,FETCH_GROUP, DELETE_USERS_GROUP, UPDATE_GROUP, GROUP_USERS, DELETE_GROUPS} from './index';
+import {showAlert,isLoading} from './alerts_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
 var message = "";
+
 
 // ---------------------------------------------------
 // 		Listing groups
@@ -13,12 +14,14 @@ export function fetchGroups(){
 	const URL = `${ROOT_URL}groups/list`;
 	var message = "";
 	return function(dispatch){
+		dispatch(isLoading(true));
 		axios.get(URL)
-		.then((response) => {dispatch(success(response,FETCH_GROUPS));})
+		.then((response) => {
+			dispatch(isLoading(false));
+			dispatch(success(response,FETCH_GROUPS));
+		})
 		.catch((err) => {
-			if (err.response){message = err.response.data.message;}
-			else{message = err.toString();}
-			dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	}
 }
@@ -36,9 +39,7 @@ export function createGroup(props){
 			dispatch(showAlert(TYPE_SUCCESS,"Group has been successfully created"));
 		})
 		.catch((err) => {
-			if (err.response){message = err.response.data.message;}
-			else{message = err.toString();}
-			dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	};
 }
@@ -53,9 +54,7 @@ export function fetchGroup(id){
 		axios.get(URL)
 		.then((response) => {dispatch(success(response,FETCH_GROUP));})
 		.catch((err) => {
-			if (err.response){message = err.response.data.message;}
-			else{message = err.toString();}
-			dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	}
 }
@@ -77,11 +76,7 @@ export function deleteUsers(group_id,uids){
 			dispatch(success(response,DELETE_USERS_GROUP));
 			dispatch(showAlert(TYPE_SUCCESS,"Users have been successfully deleted from the group"));
 		})
-		.catch((err) => {
-			if (err.response){message = err.response.data.message;}
-			else{message = err.toString();}
-			dispatch(showAlert(TYPE_DANGER,message));
-		});
+		.catch((err) => {handleError(dispatch,err);});
 
 	}
 }
@@ -99,9 +94,7 @@ export function updateGroup(values){
 			dispatch(showAlert(TYPE_SUCCESS,"Group has been successfully updated"));
 		})
 		.catch((err) => {
-				if (err.response){message = err.response.data.message;}
-				else{message = err.toString();}
-				dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	}
 }
@@ -121,9 +114,7 @@ export function groupUsers(group, uids){
 			dispatch(showAlert(TYPE_SUCCESS,"Users have been successfully added to the group"));
 		})
 		.catch((err) => {
-				if (err.response){message = err.response.data.message;}
-				else{message = err.toString();}
-				dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	}
 }
@@ -143,9 +134,7 @@ export function deleteGroups(groups){
 			dispatch(showAlert(TYPE_SUCCESS,"Groups have been successfully deleted"));
 		})
 		.catch((err) => {
-				if (err.response){message = err.response.data.message;}
-				else{message = err.toString();}
-				dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	}
 

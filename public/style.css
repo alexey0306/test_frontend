@@ -85,3 +85,9 @@
 .label-status{
 	font-size: 0.9em;
 }
+.loader{
+	margin-right:30px;
+}
+.loaderModal {
+    width: 25vw    /* Occupy the 90% of the screen width */
+} 
