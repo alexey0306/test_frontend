@@ -87,7 +87,6 @@ class GroupsList extends Component{
 					</thead>
 					<tbody>
 						{this.props.groups.length == 0 ? no_groups_found : this.props.groups.map(this.renderGroup)}
-						
 					</tbody>
 				</table>			
 			</div>

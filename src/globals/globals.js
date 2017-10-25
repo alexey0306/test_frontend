@@ -3,11 +3,12 @@ import React from 'react';
 // HTML outputs
 export const no_users_found = <tr><td colSpan="10" className="not_found"> [ No users found ] </td></tr>;
 export const no_groups_found = <tr><td colSpan="10" className="not_found"> [ No groups found ] </td></tr>;
+export const no_notebooks_found = <tr><td colSpan="10" className="not_found"> [ No notebooks found ] </td></tr>;
 export const no_accounts_found = <li  className='list-group-item'> No accounts found </li>;
 
 // Service IDs
-const SERVICE_EVERNOTE = 0;
-const SERVICE_ONENOTE = 1;
+export const SERVICE_EVERNOTE = 0;
+export const SERVICE_ONENOTE = 1;
 const EVERNOTE_COLOR = "#2dbe60";
 const ONENOTE_COLOR = "#80397B";
 const DEFAULT_COLOR = "#dddddd"

@@ -24,7 +24,6 @@ class Navigation extends Component{
 		);
 	}
 
-
 	renderItem(item){
 		if (item.header){
 			return (
@@ -41,7 +40,8 @@ class Navigation extends Component{
 	}
 
 	componentDidMount(){
-		this.props.fetchMenu();		
+		this.props.fetchMenu();
+		this.props.fetchAccounts();	
 	}
 
 	render(){
