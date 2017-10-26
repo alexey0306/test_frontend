@@ -1,24 +1,27 @@
-import {FETCH_NOTEBOOKS, SORT_NOTEBOOKS, SET_NOTEBOOK, REQUEST_TIMEOUT, ROOT_URL, success, TYPE_DANGER, handleError} from './index';
+import {
+		FETCH_NOTES, SORT_NOTES, REQUEST_TIMEOUT, 
+		FETCH_NOTES_START,ROOT_URL, 
+		success, handleError,TYPE_DANGER} from './index';
 import axios from 'axios';
 import {showAlert,isLoading} from './alerts_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
-var message = "";
 
 // ---------------------------------------------------
-// 		Fetching notebooks
+// 		Fetching notes
 // ---------------------------------------------------
 
-export function fetchNotebooks(id, refresh = false, term = ""){
+export function fetchNotes(id, guid, refresh = false, term = ""){
 
-	var URL = `${ROOT_URL}notebooks/list/${id}?term=${term}`;
+	var URL = `${ROOT_URL}notes/${id}/list/${guid}?term=${term}`;
 	if (refresh){URL = URL+"&refresh";}
 
 	return function(dispatch){
+		dispatch(success(null,FETCH_NOTES_START));
 		dispatch(isLoading(true));
 		axios.get(URL)
 		.then((response) => {
 			dispatch(isLoading(false));
-			dispatch(success(response,FETCH_NOTEBOOKS));
+			dispatch(success(response,FETCH_NOTES));
 		})
 		.catch((err) => {
 			handleError(dispatch,err);
@@ -31,20 +34,9 @@ export function fetchNotebooks(id, refresh = false, term = ""){
 // 		Sorting notebooks
 // ---------------------------------------------------
 
-export function sortNotebooks(sort,field){
+export function sortNotes(sort,field){
 	return {
-		type: SORT_NOTEBOOKS,
+		type: SORT_NOTES,
 		payload: {sort: sort, field: field}
-	}
-}
-
-// ---------------------------------------------------
-// 		Setting Active notebook/section
-// ---------------------------------------------------
-
-export function setActive(notebook){
-	return {
-		type: SET_NOTEBOOK,
-		payload: notebook
 	}
 }

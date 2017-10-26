@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchNotebooks,sortNotebooks} from '../../actions/notebooks_actions';
+import {fetchNotebooks,sortNotebooks,setActive} from '../../actions/notebooks_actions';
 import {no_notebooks_found, SERVICE_ONENOTE,SERVICE_EVERNOTE} from '../../globals/globals';
 import {Link} from 'react-router';
 import _ from 'lodash';
 import NotebooksPanel from './notebooks_panel';
 import Breadcrumb from '../common/breadcrumb';
+
+const items = [{id:1, name: "Notebooks" , link: "", isLink: false}];
+var link = "";
 
 class NotebooksList extends Component {
 
@@ -18,6 +21,14 @@ class NotebooksList extends Component {
 		this.onRowClick = this.onRowClick.bind(this);
 		this.onSortClick = this.onSortClick.bind(this);
 		this.state = {selected: [], sort: 'asc', sortField: ''};
+		this.onLinkClick = this.onLinkClick.bind(this);
+	}
+
+	onLinkClick(event){
+		event.preventDefault();		
+		// Setting the active notebook
+		this.props.setActive({name: event.target.id});
+		this.props.router.push(event.currentTarget.name);
 	}
 
 	onNotebookClick(event){
@@ -73,7 +84,7 @@ class NotebooksList extends Component {
 					onClick={this.onNotebookClick}
 					checked={_.includes(this.state.selected,notebook.guid)} />
 				</td>
-				<td><Link to={link}>{notebook.name}</Link></td>
+				<td><a onClick={this.onLinkClick} name={link} id={notebook.name}>{notebook.name}</a></td>
 				<td>{notebook.guid}</td>
 				<td>{notebook.created}</td>
 				<td>{notebook.shared}</td>
@@ -87,7 +98,6 @@ class NotebooksList extends Component {
 	}
 
 	render(){
-		const items = [{id:1, name: "Notebooks" , link: "", isLink: false}]
 		return (
 			<div>
 			<Breadcrumb items={items} />
@@ -117,7 +127,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotebooks,sortNotebooks},dispatch);
+	return bindActionCreators({fetchNotebooks,sortNotebooks,setActive},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotebooksList);

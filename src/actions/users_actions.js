@@ -1,7 +1,7 @@
 // Import section
 import axios from 'axios';
-import {FETCH_USERS,FETCH_USER,ROOT_URL,REQUEST_TIMEOUT,CREATE_USER,DELETE_USERS, SORT_USERS, TYPE_DANGER,TYPE_SUCCESS,success} from './index';
-import {showAlert} from './alerts_actions';
+import {FETCH_USERS,FETCH_USER,ROOT_URL,REQUEST_TIMEOUT,CREATE_USER,DELETE_USERS, SORT_USERS, TYPE_DANGER,TYPE_SUCCESS,success,handleError} from './index';
+import {showAlert,isLoading} from './alerts_actions';
 
 // Variables section
 axios.defaults.timeout = REQUEST_TIMEOUT;
@@ -14,14 +14,14 @@ export function fetchUsers(term = "",sort = "asc",group = ""){
 	const URL = `${ROOT_URL}users/list?term=${term}&asc=${sort}&group=${group}`;
 	var message = "";
 	return function(dispatch){
+		dispatch(isLoading(true));
 		axios.get(URL)
 		.then((response) => {
+			dispatch(isLoading(false));
 			dispatch(success(response,FETCH_USERS));			
 		})
 		.catch((err) => {
-			if (err.response){message = err.response.data.message;}
-			else{message = err.toString();}
-			dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	}
 }
@@ -38,9 +38,7 @@ export function fetchUser(id){
 			dispatch(success(response,FETCH_USER));			
 		})
 		.catch((err) => {
-			if (err.response){message = err.response.data.message;}
-			else{message = err.toString();}
-			dispatch(showAlert(TYPE_DANGER,message));
+			handleError(dispatch,err);
 		});
 	}
 }
@@ -51,22 +49,33 @@ export function createUser(props){
 	delete props['passwordCnf'];
 	const URL = `${ROOT_URL}users/create`;
 	props.subject = `CN=${props.name},E=${props.email}`;
-	
-	// Sending request
-	const request = axios.post(URL,props);
 
-	return {
-		type: CREATE_USER,
-		payload:request
+	// Sending request and handling the response
+	return function(dispatch){
+		axios.post(URL,props)
+		.then((response) => {
+			dispatch(showAlert(TYPE_SUCCESS,"User has been successfully created"));
+			dispatch(success(response,CREATE_USER));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
 	}
 }
 
 export function deleteUsers(ids){
 	const URL = `${ROOT_URL}users/delete`;
-	const request = axios.delete(URL,{data: ids});
-	return {
-		type: DELETE_USERS,
-		payload:request
+	return function(dispatch){
+		dispatch(isLoading(true));
+		axios.delete(URL,{data: ids})
+		.then((response) => {
+			dispatch(isLoading(false));
+			dispatch(showAlert(TYPE_SUCCESS,"Users have been successfully deleted"));
+			dispatch(success(response,DELETE_USERS));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
 	}
 }
 

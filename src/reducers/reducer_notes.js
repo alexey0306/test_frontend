@@ -1,11 +1,13 @@
-import {FETCH_NOTEBOOKS, SORT_NOTEBOOKS, SET_NOTEBOOK} from '../actions/index';
-const INITIAL_STATE = { all: [], active: {} };
+import {FETCH_NOTES, SORT_NOTES, FETCH_NOTES_START} from '../actions/index';
+const INITIAL_STATE = {all: [], note: {} };
 
 export default function (state = INITIAL_STATE, action) {
 	switch (action.type){
-		case FETCH_NOTEBOOKS:
+		case FETCH_NOTES_START:
+			return {...state, all: []}
+		case FETCH_NOTES:
 			return {...state, all: action.payload.data };
-		case SORT_NOTEBOOKS:
+		case SORT_NOTES:
 
 			// Creating a new array
 			var newArray = state.all;
@@ -21,9 +23,6 @@ export default function (state = INITIAL_STATE, action) {
 				});
 			}
 			return { ...state, all: newArray }
-
-		case SET_NOTEBOOK:
-			return { ...state, active:action.payload }
 
 		default:
 			return state;

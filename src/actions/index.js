@@ -34,6 +34,12 @@ export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 // Notebook actions
 export const FETCH_NOTEBOOKS = "FETCH_NOTEBOOKS";
 export const SORT_NOTEBOOKS = "SORT_NOTEBOOKS";
+export const SET_NOTEBOOK = "SET_NOTEBOOK";
+
+// Notes actions
+export const FETCH_NOTES = "FETCH_NOTES";
+export const SORT_NOTES = "SORT_NOTES";
+export const FETCH_NOTES_START = "FETCH_NOTES_START";
 
 // Alert types
 export const TYPE_DANGER = "danger";

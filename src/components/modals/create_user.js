@@ -11,14 +11,9 @@ class CreateUserModal extends Component{
 
 
 	onSubmit(props){
-		console.log(props)
-		this.props.createUser(props)
-		.then(() => {
-			this.props.onHide();
-		});
+		this.props.createUser(props);
+		this.props.onHide();
 	}
-
-
 
 	render(){
 
