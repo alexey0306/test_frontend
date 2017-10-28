@@ -3,8 +3,10 @@ const INITIAL_STATE = { all: [], active: {} };
 
 export default function (state = INITIAL_STATE, action) {
 	switch (action.type){
+		
 		case FETCH_NOTEBOOKS:
 			return {...state, all: action.payload.data };
+		
 		case SORT_NOTEBOOKS:
 
 			// Creating a new array

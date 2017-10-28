@@ -25,13 +25,13 @@ class NotesPanel extends Component{
 	}
 
 	onRefresh(){
-		this.props.fetchNotes(this.props.notebook_id,true,this.state.term);
+		this.props.fetchNotes(this.props.id,this.props.guid,true,this.state.term);
 	}
 
 	
 	onSearchClick(event){
 		event.preventDefault();
-		this.props.fetchNotebooks(this.props.id, this.props.guid, false,this.state.term);
+		this.props.fetchNotes(this.props.id, this.props.guid, false,this.state.term);
 	}
 
 	onChange(event){		
@@ -64,7 +64,7 @@ class NotesPanel extends Component{
 								<i className="fa fa-lock" aria-hidden="true"></i> Reencrypt
 							</button>
 						</span>
-						<NotesFilter />
+						<NotesFilter search={this.state.term} id={this.props.id} guid={this.props.guid} />
 					</div>
 					<div className="col-md-6">
 						<form onSubmit={this.onSearchClick}>

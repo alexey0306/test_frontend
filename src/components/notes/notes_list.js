@@ -55,6 +55,7 @@ class NotesList extends Component {
 
 
 	renderNote(note){
+		const link = `/notes/${this.props.params.id}/${note.guid}`
 		return (
 			<tr key={note.guid} onClick={this.onRowClick} id={note.guid} className="selected">
 				<td><input
@@ -63,7 +64,7 @@ class NotesList extends Component {
 					onClick={this.onNotebookClick}
 					checked={_.includes(this.state.selected,note.guid)} />
 				</td>
-				<td><Link to="/">{note.title}</Link></td>
+				<td><Link to={link}>{note.title}</Link></td>
 				<td>{note.guid}</td>
 				<td>{note.created}</td>
 				<td>{note.updated}</td>

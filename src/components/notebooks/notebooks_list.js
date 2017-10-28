@@ -27,8 +27,8 @@ class NotebooksList extends Component {
 	onLinkClick(event){
 		event.preventDefault();		
 		// Setting the active notebook
-		this.props.setActive({name: event.target.id});
-		this.props.router.push(event.currentTarget.name);
+		this.props.setActive({name: event.target.id, guid: event.target.name});
+		this.props.router.push(event.currentTarget.href);
 	}
 
 	onNotebookClick(event){
@@ -84,7 +84,7 @@ class NotebooksList extends Component {
 					onClick={this.onNotebookClick}
 					checked={_.includes(this.state.selected,notebook.guid)} />
 				</td>
-				<td><a onClick={this.onLinkClick} name={link} id={notebook.name}>{notebook.name}</a></td>
+				<td><a onClick={this.onLinkClick} name={notebook.guid} href={link} id={notebook.name}>{notebook.name}</a></td>
 				<td>{notebook.guid}</td>
 				<td>{notebook.created}</td>
 				<td>{notebook.shared}</td>

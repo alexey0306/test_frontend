@@ -18,19 +18,30 @@ class NotesFilter extends Component{
 	constructor(props){
 		super(props);
 		this.onNotesFilter = this.onNotesFilter.bind(this);
+		this.state = {display: 0};
 	}
 
-	onNotesFilter(group_id){
-		//this.props.fetchUsers(this.props.term,"asc",group_id);
+	onNotesFilter(display){
+		this.setState({display: display});
+		this.props.fetchNotes(
+			this.props.id, 
+			this.props.guid, 
+			true,this.props.search,"notebooks",display);
 	}
 
 	render(){
 		return (
 			<div className="inline">
       		<DropdownButton onSelect={this.onNotesFilter} title="Filter by" id="dropdown-size-medium">
-      			<MenuItem key="" eventKey=""> -- All -- </MenuItem>
-      			<MenuItem key="" eventKey=""> Only encrypted </MenuItem>
-      			<MenuItem key="" eventKey=""> Only plain </MenuItem>
+      			<MenuItem key="0" eventKey="0"> 
+      			{this.state.display == 0 ? (<i className="fa fa-check iconMargin" aria-hidden="true"></i>) : ''}
+      			 -- All -- </MenuItem>
+      			<MenuItem key="1" eventKey="1">
+      			{this.state.display == 1 ? (<i className="fa fa-check iconMargin" aria-hidden="true"></i>) : ''} 
+      			 Only encrypted </MenuItem>
+      			<MenuItem key="2" eventKey="2"> 
+      			{this.state.display == 2 ? (<i className="fa fa-check iconMargin" aria-hidden="true"></i>) : ''}
+      			 Only plain </MenuItem>
       		</DropdownButton>
       		</div>   		
 		);

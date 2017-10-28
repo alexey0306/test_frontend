@@ -90,4 +90,15 @@
 }
 .loaderModal {
     width: 25vw    /* Occupy the 90% of the screen width */
-} 
+}
+.iconMargin{
+	margin-right:10px;
+}
+
+.attachment{
+	width:90%;
+	padding:10px 10px 10px 10px;
+	margin-bottom:10px;border:1px solid #dddddd;
+	border-radius: 10px 10px 10px 10px;
+
+}

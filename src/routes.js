@@ -9,6 +9,7 @@ import GroupInfo from './components/groups/group_info';
 import AccountsList from './components/accounts/accounts_list';
 import NotebooksList from './components/notebooks/notebooks_list';
 import NotesList from './components/notes/notes_list';
+import NotesInfo from './components/notes/notes_info';
 
 export default (
 	<Route path="/" component={App}>
@@ -20,5 +21,6 @@ export default (
 		<Route path="accounts" component={AccountsList}></Route>
 		<Route path="notebooks/list/:id" component={NotebooksList}></Route>
 		<Route path="/notes/:id/list/:guid" component={NotesList}></Route>
+		<Route path="/notes/:id/:guid" component={NotesInfo} />
 	</Route>
 );

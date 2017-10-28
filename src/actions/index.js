@@ -40,6 +40,8 @@ export const SET_NOTEBOOK = "SET_NOTEBOOK";
 export const FETCH_NOTES = "FETCH_NOTES";
 export const SORT_NOTES = "SORT_NOTES";
 export const FETCH_NOTES_START = "FETCH_NOTES_START";
+export const FETCH_NOTE_START = "FETCH_NOTE_START";
+export const FETCH_NOTE = "FETCH_NOTE";
 
 // Alert types
 export const TYPE_DANGER = "danger";
