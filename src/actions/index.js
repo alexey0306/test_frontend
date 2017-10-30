@@ -32,9 +32,11 @@ export const FETCH_ACCOUNT = "FETCH_ACCOUNT";
 export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 
 // Notebook actions
+export const FETCH_NOTEBOOKS_START = "FETCH_NOTEBOOKS_START";
 export const FETCH_NOTEBOOKS = "FETCH_NOTEBOOKS";
 export const SORT_NOTEBOOKS = "SORT_NOTEBOOKS";
 export const SET_NOTEBOOK = "SET_NOTEBOOK";
+export const LIST_NOTEBOOKS = "LIST_NOTEBOOKS";
 
 // Notes actions
 export const FETCH_NOTES = "FETCH_NOTES";
@@ -49,6 +51,11 @@ export const FETCH_POLICY = "FETCH_POLICY";
 export const FETCH_POLICIES_START = "FETCH_POLICIES_START";
 export const FETCH_POLICY_START = "FETCH_POLICY_START";
 export const CREATE_POLICY = "CREATE_POLICY";
+
+// Tasks actions
+export const FETCH_TASKS_START = "LIST_TASKS_START";
+export const FETCH_TASKS = "LIST_TASKS";
+export const DELETE_TASKS = "DELETE_TASKS";
 
 // Alert types
 export const TYPE_DANGER = "danger";

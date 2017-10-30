@@ -24,6 +24,12 @@ class NotebooksList extends Component {
 		this.onLinkClick = this.onLinkClick.bind(this);
 	}
 
+	componentWillReceiveProps(newProps){
+		if (this.props.params.id != newProps.params.id){
+			this.props.fetchNotebooks(newProps.params.id);
+		}
+	}
+
 	onLinkClick(event){
 		event.preventDefault();		
 		// Setting the active notebook

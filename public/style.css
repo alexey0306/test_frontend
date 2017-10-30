@@ -107,5 +107,23 @@
 }
 .group-hover:hover{
 	cursor:pointer;
-	background: #eee;
+	background: #00cc66;
+	color: #fff;
+}
+
+.hidden{
+	display:none;
+}
+
+.selected{
+	background: #00b359;
+	color: #fff;
+}
+
+.demo-editor{
+	border:1px solid #ddd;
+	border-radius: 5px;
+	padding:10px;
+	font-family: Arial;
+	font-size: 20px;
 }

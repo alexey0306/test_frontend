@@ -12,6 +12,8 @@ import NotesList from './components/notes/notes_list';
 import NotesInfo from './components/notes/notes_info';
 import PoliciesList from './components/policies/policies_list';
 import PolicyInfo from './components/policies/policy_info';
+import TasksList from './components/tasks/tasks_list.js';
+import CreateNote from './components/notes/create_note';
 
 export default (
 	<Route path="/" component={App}>
@@ -26,5 +28,7 @@ export default (
 		<Route path="notes/:id/:guid" component={NotesInfo} />
 		<Route path="policies" component={PoliciesList}></Route>
 		<Route path="policies/:id" component={PolicyInfo}></Route>
+		<Route path="tasks" component={TasksList}></Route>
+		<Route path="create" component={CreateNote}></Route>
 	</Route>
 );

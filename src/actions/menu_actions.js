@@ -11,8 +11,8 @@ const menu = [
 	{name:"Policies",header: false,link:"policies","icon":"policies"},
 	{name:"Tasks",header: false,link:"tasks","icon":"tasks"},
 	{name:"Notes",header: true,link:"",icon:""},
-	{name:"Create note",header: false,link:"notes/create",icon:""},
-	{name:"Favourites",header: false,link:"notes/favourites",icon:""}	
+	{name:"Create note",header: false,link:"create",icon:""},
+	{name:"Favourites",header: false,link:"favourites",icon:""}	
 ];
 
 export function fetchMenu(){
