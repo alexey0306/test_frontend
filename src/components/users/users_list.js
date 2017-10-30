@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchUsers,sortUsers} from '../../actions/users_actions';
 import {Link} from 'react-router';
-import Breadcrumb from '../common/breadcrumb'
+import Breadcrumb from '../common/breadcrumb';
 import UsersPanel from './users_panel';
 import _ from 'lodash';
 import {no_users_found} from '../../globals/globals';
@@ -12,7 +12,7 @@ class UsersList extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {loading: false,selected:[],sort:"dsc"};
+		this.state = {selected:[],sort:"dsc"};
 		this.renderUser = this.renderUser.bind(this);
 		this.onUserSelect = this.onUserSelect.bind(this);
 		this.onRowClick = this.onRowClick.bind(this);
@@ -96,8 +96,7 @@ class UsersList extends Component{
 						</tr>
 					</thead>
 					<tbody>
-						{this.props.users.length == 0 ? no_users_found : this.props.users.map(this.renderUser)}
-						
+						{this.props.users.length == 0 ? no_users_found : this.props.users.map(this.renderUser)}						
 					</tbody>
 				</table>
 				</div>

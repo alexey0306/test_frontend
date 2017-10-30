@@ -7,6 +7,7 @@ import AccountsReducer from './reducer_accounts';
 import { reducer as formReducer } from 'redux-form';
 import NotebooksReducer from './reducer_notebooks';
 import NotesReducer from './reducer_notes.js';
+import PoliciesReducer from './reducer_policies';
 
 const rootReducer = combineReducers({
   navigation: MenuReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   alerts: AlertsReducer,
   accounts: AccountsReducer,
   notebooks: NotebooksReducer,
-  notes: NotesReducer
+  notes: NotesReducer,
+  policies: PoliciesReducer
 });
 
 export default rootReducer;

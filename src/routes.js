@@ -10,6 +10,8 @@ import AccountsList from './components/accounts/accounts_list';
 import NotebooksList from './components/notebooks/notebooks_list';
 import NotesList from './components/notes/notes_list';
 import NotesInfo from './components/notes/notes_info';
+import PoliciesList from './components/policies/policies_list';
+import PolicyInfo from './components/policies/policy_info';
 
 export default (
 	<Route path="/" component={App}>
@@ -20,7 +22,9 @@ export default (
 		<Route path="groups/:id" component={GroupInfo}></Route>
 		<Route path="accounts" component={AccountsList}></Route>
 		<Route path="notebooks/list/:id" component={NotebooksList}></Route>
-		<Route path="/notes/:id/list/:guid" component={NotesList}></Route>
-		<Route path="/notes/:id/:guid" component={NotesInfo} />
+		<Route path="notes/:id/list/:guid" component={NotesList}></Route>
+		<Route path="notes/:id/:guid" component={NotesInfo} />
+		<Route path="policies" component={PoliciesList}></Route>
+		<Route path="policies/:id" component={PolicyInfo}></Route>
 	</Route>
 );

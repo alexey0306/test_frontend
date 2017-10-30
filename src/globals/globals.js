@@ -6,6 +6,8 @@ export const no_groups_found = <tr><td colSpan="10" className="not_found"> [ No 
 export const no_notebooks_found = <tr><td colSpan="10" className="not_found"> [ No notebooks found ] </td></tr>;
 export const no_accounts_found = <li  className='list-group-item'> No accounts found </li>;
 export const no_notes_found = <tr><td colSpan="10" className="not_found"> [ No notes found ] </td></tr>;
+export const no_policies_found = <tr><td colSpan="10" className="not_found"> [ No policies found ] </td></tr>;
+
 
 // Service IDs
 export const SERVICE_EVERNOTE = 0;

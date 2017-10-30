@@ -102,3 +102,10 @@
 	border-radius: 10px 10px 10px 10px;
 
 }
+.policies{
+	margin-top:20px;
+}
+.group-hover:hover{
+	cursor:pointer;
+	background: #eee;
+}

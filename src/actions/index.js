@@ -43,6 +43,13 @@ export const FETCH_NOTES_START = "FETCH_NOTES_START";
 export const FETCH_NOTE_START = "FETCH_NOTE_START";
 export const FETCH_NOTE = "FETCH_NOTE";
 
+// Policies actions
+export const FETCH_POLICIES = "FETCH_POLICIES";
+export const FETCH_POLICY = "FETCH_POLICY";
+export const FETCH_POLICIES_START = "FETCH_POLICIES_START";
+export const FETCH_POLICY_START = "FETCH_POLICY_START";
+export const CREATE_POLICY = "CREATE_POLICY";
+
 // Alert types
 export const TYPE_DANGER = "danger";
 export const TYPE_SUCCESS = "success";
