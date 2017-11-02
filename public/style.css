@@ -115,15 +115,19 @@
 	display:none;
 }
 
-.selected{
+.selected-action{
 	background: #00b359;
 	color: #fff;
 }
 
-.demo-editor{
+.class-editor{
 	border:1px solid #ddd;
 	border-radius: 5px;
 	padding:10px;
 	font-family: Arial;
 	font-size: 20px;
+}
+
+.class-toolbar{
+	padding:20px;
 }
