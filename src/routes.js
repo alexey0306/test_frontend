@@ -16,7 +16,6 @@ import TasksList from './components/tasks/tasks_list.js';
 import CreateNote from './components/notes/create_note';
 import CertificatesIndex from './components/certificates/certificates_index';
 import ThumbnailContainer from './components/common/thumbnail';
-
 export default (
 	<Route path="/" component={App}>
 		<IndexRoute component={Welcome}/>
@@ -26,8 +25,8 @@ export default (
 		<Route path="groups/:id" component={GroupInfo}></Route>
 		<Route path="accounts" component={AccountsList}></Route>
 		<Route path="notebooks/list/:id" component={NotebooksList}></Route>
-		<Route path="notes/:id/list/:guid" component={NotesList}></Route>
-		<Route path="notes/:id/:guid" component={NotesInfo} />
+		<Route path="notes/:id/list/:guid/:name" component={NotesList}></Route>
+		<Route path="notes/:id/:notebook/:name/:guid" component={NotesInfo} />
 		<Route path="policies" component={PoliciesList}></Route>
 		<Route path="policies/:id" component={PolicyInfo}></Route>
 		<Route path="tasks" component={TasksList}></Route>

@@ -40,18 +40,6 @@ export function sortNotebooks(sort,field){
 }
 
 // ---------------------------------------------------
-// 		Setting Active notebook/section
-// ---------------------------------------------------
-
-export function setActive(notebook){
-	return {
-		type: SET_NOTEBOOK,
-		payload: notebook
-	}
-}
-
-
-// ---------------------------------------------------
 // 		Listing notebooks for Policies
 // ---------------------------------------------------
 

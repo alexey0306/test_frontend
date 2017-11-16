@@ -39,7 +39,7 @@ class DecryptPanel extends Component{
 
 	renderRecipient(recip){
 		return (
-			<ListGroupItem id={recip.id} href="" onClick={this.selectRecipient}>
+			<ListGroupItem key={recip.id} id={recip.id} href="" onClick={this.selectRecipient}>
 				<div className="row">
 					<div className="col-md-6" style={{paddingTop:'5px'}}>
 						<strong>{recip.name}</strong>

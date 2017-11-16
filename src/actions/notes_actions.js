@@ -1,11 +1,13 @@
 import {
 		FETCH_NOTES, SORT_NOTES, REQUEST_TIMEOUT, 
-		FETCH_NOTES_START, FETCH_NOTE, FETCH_NOTE_START,CREATE_NOTE,
+		FETCH_NOTES_START, FETCH_NOTE, FETCH_NOTE_START,CREATE_NOTE, SET_LAST_ITEM,
 		DECRYPT_NOTE,CLEAR_DECRYPTED,ROOT_URL, 
 		success, handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
 import axios from 'axios';
 import {showAlert,isLoading} from './alerts_actions';
 import {showNotification} from '../globals/helpers';
+import {setLastItem} from './navigation_actions';
+
 axios.defaults.timeout = REQUEST_TIMEOUT;
 
 // ---------------------------------------------------
@@ -53,12 +55,12 @@ export function fetchNote(id,guid){
 		
 		// Managing the progress
 		dispatch(success(null,FETCH_NOTE_START));
-		dispatch(isLoading(true));
+		dispatch(setLastItem(null,SET_LAST_ITEM))
 
 		// Sending request
 		axios.get(URL)
 		.then((response) => {
-			dispatch(isLoading(false));
+			dispatch(setLastItem(response,SET_LAST_ITEM))
 			dispatch(success(response,FETCH_NOTE));
 		})
 		.catch((err) => {

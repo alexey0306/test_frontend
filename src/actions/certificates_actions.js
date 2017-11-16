@@ -2,6 +2,7 @@
 import axios from 'axios';
 import {FETCH_CERTIFICATES_START,FETCH_CERTIFICATES,REQUEST_CERTIFICATES,DELETE_CERTIFICATES,ROOT_URL,REQUEST_TIMEOUT,success,handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
 import {showAlert,isLoading} from './alerts_actions';
+import {setLastItem} from './navigation_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
 
 
@@ -16,6 +17,7 @@ export function fetchCertificates(term = ""){
 		// Displaying the progress
 		dispatch(isLoading(true));
 		dispatch(success(null,FETCH_CERTIFICATES_START));
+		dispatch(setLastItem(null));
 
 		// Sending request
 		axios.get(URL)

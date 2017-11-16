@@ -8,6 +8,8 @@ import NotesInfoPanel from './notes_info_panel';
 import {Panel,ListGroup,ListGroupItem} from 'react-bootstrap';
 import DecryptPanel from '../common/panel_decrypt';
 import DecryptNoteModal from '../modals/decrypt_note';
+import {displayBread} from '../../actions/navigation_actions';
+import Spinner from '../common/spinner';
 
 
 class NotesInfo extends Component{
@@ -24,7 +26,25 @@ class NotesInfo extends Component{
 
 	componentDidMount(){
 		this.props.fetchNote(this.props.params.id, this.props.params.guid);
-		this.props.clearNote();		
+		this.props.clearNote();
+
+		// Creating navigation
+		const items = [
+			{
+				id:1, 
+				name: "Notebooks", 
+				link:`/notebooks/list/${this.props.params.id}`,
+				isLink: true
+			},
+			{
+				id:2, 
+				name: this.props.params.name, 
+				link:`/notes/${this.props.params.id}/list/${this.props.params.notebook}/${this.props.params.name}`,
+				isLink:true
+			}
+		]
+
+		this.props.displayBread(items);
 	}
 
 	onDecrypt(mode, password=null, recipient=null){
@@ -41,31 +61,19 @@ class NotesInfo extends Component{
 	}
 
 	render(){
-		const items = [
-			{
-				id:1, 
-				name: "Notebooks" ,
-				link: `/notebooks/list/${this.props.params.id}`, 
-				isLink: true
-			},
-			{
-				id:2, 
-				name: this.props.active.name ,
-				link: `/notes/${this.props.params.id}/list/${this.props.active.guid}`, 
-				isLink: true
-			}
-			];
-		return (
-			<div>
-				<Breadcrumb items={items} lastItem={this.props.note} />
-				<NotesInfoPanel guid={this.props.params.id} recipients={this.props.note.recipients} />
-				<div 
-					dangerouslySetInnerHTML={{__html: this.props.note.content}}>
+
+		if (this.props.note.content){
+			return (
+				<div>
+					<div dangerouslySetInnerHTML={{__html: this.props.note.content}}></div>
+					{this.props.note.encrypted ? <DecryptPanel onDecrypt={this.onDecrypt} recipients={this.props.note.recipients} /> : '' }
+					<DecryptNoteModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>			
 				</div>
-				{this.props.note.encrypted ? <DecryptPanel onDecrypt={this.onDecrypt} recipients={this.props.note.recipients} /> : '' }
-				<DecryptNoteModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>			
-			</div>
-		);
+			);
+		}
+		else{
+			return (<Spinner />);
+		}
 	}
 }
 
@@ -78,7 +86,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNote,decryptNote,clearNote},dispatch);
+	return bindActionCreators({fetchNote,decryptNote,clearNote,displayBread},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesInfo);

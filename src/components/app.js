@@ -6,6 +6,9 @@ import Loader from './common/loader';
 import SocketListener from './common/socket_listener';
 import {Thumbnail,Panel} from 'react-bootstrap';
 import BreadcrumbNew from './common/breadcrumb_new';
+import { browserHistory } from 'react-router';
+import {setLastItem} from '../actions/navigation_actions';
+
 
 export default class App extends Component {
   render() {
@@ -21,7 +24,7 @@ export default class App extends Component {
             <Navigation/>
           </div>
           <div className="col-md-9" style={{padding:'20px'}}>
-            <div class="saferoomContainer">
+            <div className="saferoomContainer">
                <div className="saferoomHeader">{header}</div>
                <div className="saferoomContent">{this.props.children}</div>
             </div>
@@ -33,3 +36,7 @@ export default class App extends Component {
     );
   }
 }
+
+browserHistory.listen( location =>  {
+  setLastItem(null);
+});

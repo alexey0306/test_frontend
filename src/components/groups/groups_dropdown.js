@@ -1,60 +1,70 @@
-/*
-	Name: GroupsDropdown
-	Purpose: This component is used to display a list of groups in the form of a dropdown
-	Created: 17.10.2017
-	Author: Alexey Zelenkin
-*/
-
 // Import section
 import React, {Component} from 'react';
-import {DropdownButton, MenuItem} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchGroups,groupUsers} from '../../actions/groups_actions';
-import {fetchUsers} from '../../actions/users_actions';
+import {DropdownButton, MenuItem} from 'react-bootstrap';
+import {fetchGroups} from '../../actions/groups_actions';
 
-// Class definition
+// Initializing variables
+const DISPLAY_MODES = {groupadd: "groupadd", request: "request", sort: "sort"}
+
+// Class declaration
 class GroupsDropdown extends Component{
-
 	constructor(props){
 		super(props);
-		this.renderGroup = this.renderGroup.bind(this);
-		this.onGroupSort = this.onGroupSort.bind(this);
-		this.onGroupSelect = this.onGroupSelect.bind(this);
-
-	}
-
-	componentDidMount(){
-		this.props.fetchGroups();
-	}
-
-	onGroupSort(group_id){
-		this.props.fetchUsers(this.props.term,"asc",group_id);
-	}
-
-	onGroupSelect(group_id){
-		if (window.confirm("Are you sure that you want to add users to this group?")){
-			this.props.groupUsers(group_id,this.props.selected);
-		}
-
 	}
 
 	renderGroup(group){
 		return (<MenuItem key={group.id} eventKey={group.id}>{group.name}</MenuItem>); 
 	}
 
+	componentDidMount(){
+		this.props.fetchGroups();
+	}
+
+	onGroupAdd(group_id){
+		if (window.confirm("Are you sure that you want to add users to this group?")){
+			this.props.onGroupAdd(group_id)
+		}
+	}
+
+	onGroupSort(group_id){
+		this.props.onGroupSort(group_id);
+	}
+
+	onGroupRequest(group_id){
+		this.props.onGroupRequest(group_id);
+	}
+
 	render(){
-		return (
-			<div className="inline">
-			<DropdownButton onSelect={this.onGroupSelect} title="Add to group" id="dropdown-size-medium">
-        		{this.props.groups.map(this.renderGroup)}
-      		</DropdownButton>
-      		<DropdownButton onSelect={this.onGroupSort} title="Filter by" id="dropdown-size-medium">
-      			<MenuItem key="" eventKey=""> -- No groups -- </MenuItem>
-        		{this.props.groups.map(this.renderGroup)}
-      		</DropdownButton>
-      		</div>   		
-		);
+
+		switch (this.props.mode){
+			case DISPLAY_MODES.groupadd:
+				return (
+					<DropdownButton onSelect={this.onGroupAdd.bind(this)} 
+					title={<span><i className="fa fa-users" aria-hidden="true"></i> Add to group</span>} id="dropdown-size-medium">
+						{this.props.groups.map(this.renderGroup)}
+					</DropdownButton>
+				);
+			case DISPLAY_MODES.sort:
+				return (
+					<DropdownButton onSelect={this.onGroupSort.bind(this)} title={<span><i class="fa fa-filter" aria-hidden="true"></i> Filter by</span>} id="dropdown-size-medium">
+						<MenuItem key="" eventKey=""> -- No groups -- </MenuItem>
+						{this.props.groups.map(this.renderGroup)}
+					</DropdownButton>
+				);
+
+			case DISPLAY_MODES.request:
+				return (
+					<DropdownButton onSelect={this.onGroupRequest.bind(this)} 
+					title={<span><i className="fa fa-users" aria-hidden="true"></i> Request for group</span>} id="dropdown-size-medium">
+						{this.props.groups.map(this.renderGroup)}
+					</DropdownButton>
+				);
+
+		}
+
+		
 	}
 }
 
@@ -66,7 +76,7 @@ function mapStateToProps(state,ownProps){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchGroups,fetchUsers,groupUsers},dispatch);
+	return bindActionCreators({fetchGroups},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(GroupsDropdown);

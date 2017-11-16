@@ -20,10 +20,10 @@ class BreadcrumbNew extends Component{
 		const key = this.props.items.length + 1;
 		return (
 			<div>
-				<ul class="breadcrumb">
+				<ul className="breadcrumb">
 					{this.props.items.map(this.renderItem)}
 					{this.props.lastItem ? (
-					<li>{this.props.lastItem.name}</li>
+					<li key={key}>{this.props.lastItem.name}</li>
 					) : (<span></span>)}
 				</ul>	
 			</div>
@@ -34,7 +34,8 @@ class BreadcrumbNew extends Component{
 function mapStateToProps(state){
 	return {
 		items: state.breadcrumbs.items,
-		lastItem: state.breadcrumbs.lastItem
+		lastItem: state.breadcrumbs.lastItem,
+		active: state.notebooks.active
 	};
 }
 

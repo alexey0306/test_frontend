@@ -7,6 +7,7 @@ import {Link} from 'react-router';
 import _ from 'lodash';
 import NotesPanel from './notes_panel';
 import Breadcrumb from '../common/breadcrumb';
+import {displayBread,setLastItem} from '../../actions/navigation_actions';
 
 class NotesList extends Component {
 
@@ -55,7 +56,7 @@ class NotesList extends Component {
 
 
 	renderNote(note){
-		const link = `/notes/${this.props.params.id}/${note.guid}`
+		const link = `/notes/${this.props.params.id}/${this.props.params.guid}/${this.props.params.name}/${note.guid}`
 		return (
 			<tr key={note.guid} onClick={this.onRowClick} id={note.guid} className="selected">
 				<td><input
@@ -75,13 +76,15 @@ class NotesList extends Component {
 
 	componentDidMount(){
 		this.props.fetchNotes(this.props.params.id,this.props.params.guid);
+		const items = [{id:1, name: "Notebooks" , link: `/notebooks/list/${this.props.params.id}`, isLink: true}]
+		this.props.displayBread(items);
+		this.props.setLastItem({data: {name:this.props.params.name,guid:this.props.params.guid}});
 	}
 
 	render(){
-		const items = [{id:1, name: "Notebooks" , link: `/notebooks/list/${this.props.params.id}`, isLink: true}]
+
 		return (
 			<div>
-			<Breadcrumb items={items} lastItem={this.props.active} />
 			<NotesPanel id={this.props.params.id} guid={this.props.params.guid} />
 			<table className="table table-hover table-striped">
 				<thead>
@@ -111,7 +114,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotes,sortNotes},dispatch);
+	return bindActionCreators({fetchNotes,sortNotes,displayBread,setLastItem},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesList);

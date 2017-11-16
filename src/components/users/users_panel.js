@@ -8,7 +8,8 @@
 // Import section
 import React, {Component} from 'react';
 import CreateUserModal from '../modals/create_user';
-import {deleteUsers,fetchUsers} from '../../actions/users_actions';
+import {deleteUsers,fetchUsers,sortUsers} from '../../actions/users_actions';
+import {groupUsers} from '../../actions/groups_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import GroupsDropdown from '../groups/groups_dropdown';
@@ -44,6 +45,14 @@ class UsersPanel extends Component{
 	onChange(event){		
 		this.setState({term:event.target.value});
 	}
+
+	onGroupAdd(group_id){
+		this.props.groupUsers(group_id,this.props.selected);
+	}
+
+	onGroupSort(group_id){
+		this.props.fetchUsers(this.props.term,"asc",group_id);
+	}
 	
 	render(){
 		return (
@@ -61,7 +70,11 @@ class UsersPanel extends Component{
 								<i className="fa fa-trash" aria-hidden="true"></i> Delete
 							</button>
 						</span>
-						<GroupsDropdown selected={this.props.selected} term={this.state.term} />						
+						<div className="inline">
+							<GroupsDropdown onGroupAdd={this.onGroupAdd.bind(this)} mode="groupadd" />
+							<GroupsDropdown onGroupSort={this.onGroupSort.bind(this)} mode="sort" />
+						</div>
+
 					</div>
 					<div className="col-md-6">
 						<form onSubmit={this.onSearchClick}>
@@ -86,7 +99,7 @@ class UsersPanel extends Component{
 
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({deleteUsers,fetchUsers},dispatch);
+	return bindActionCreators({deleteUsers,fetchUsers,groupUsers, sortUsers},dispatch);
 }
 
 export default connect(null,mapDispatchToProps)(UsersPanel);

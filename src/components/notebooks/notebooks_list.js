@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchNotebooks,sortNotebooks,setActive} from '../../actions/notebooks_actions';
+import {fetchNotebooks,sortNotebooks} from '../../actions/notebooks_actions';
 import {no_notebooks_found, SERVICE_ONENOTE,SERVICE_EVERNOTE} from '../../globals/globals';
 import {Link} from 'react-router';
 import _ from 'lodash';
 import NotebooksPanel from './notebooks_panel';
 import Breadcrumb from '../common/breadcrumb';
+import {displayBread} from '../../actions/navigation_actions';
 
+
+// Initializing variables
 const items = [{id:1, name: "Notebooks" , link: "", isLink: false}];
 var link = "";
 
@@ -33,7 +36,6 @@ class NotebooksList extends Component {
 	onLinkClick(event){
 		event.preventDefault();		
 		// Setting the active notebook
-		this.props.setActive({name: event.target.id, guid: event.target.name});
 		this.props.router.push(event.currentTarget.href);
 	}
 
@@ -75,10 +77,10 @@ class NotebooksList extends Component {
 		var link = "";
 		switch (parseInt(notebook.service)){
 			case SERVICE_EVERNOTE:
-				link = `/notes/${this.props.params.id}/list/${notebook.guid}`;
+				link = `/notes/${this.props.params.id}/list/${notebook.guid}/${notebook.name}`;
 				break;
 			case SERVICE_ONENOTE:
-				link = `/sections/${this.props.params.id}/list/${notebook.guid}`;
+				link = `/sections/${this.props.params.id}/list/${notebook.guid}/${notebook.name}`;
 				break;
 		}
 
@@ -101,12 +103,12 @@ class NotebooksList extends Component {
 
 	componentDidMount(){
 		this.props.fetchNotebooks(this.props.params.id);
+		this.props.displayBread(items);
 	}
 
 	render(){
 		return (
 			<div>
-			<Breadcrumb items={items} />
 			<NotebooksPanel notebook_id={this.props.params.id} />
 			<table className="table table-hover table-striped">
 				<thead>
@@ -133,7 +135,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotebooks,sortNotebooks,setActive},dispatch);
+	return bindActionCreators({fetchNotebooks,sortNotebooks,displayBread},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotebooksList);

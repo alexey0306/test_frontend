@@ -12,9 +12,10 @@ import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css'; // If using WebPack and style-loader
 import {SERVICE_ONENOTE} from '../../globals/globals';
 import EncryptModal from '../modals/encrypt_method';
+import {displayBread} from '../../actions/navigation_actions';
 
-
-const items = [];
+// Initializing variables
+const items = [{id:1, name: "Create new note", link: "", isLink: false}];
 
 // Class declaration
 class CreateNote extends Component{
@@ -42,6 +43,10 @@ class CreateNote extends Component{
 		this.handleChange = this.handleChange.bind(this);
 		this.onContentChanged = this.onContentChanged.bind(this);
 
+	}
+
+	componentDidMount(){
+		this.props.displayBread(items);
 	}
 
 	handleChange(tags) {
@@ -125,11 +130,8 @@ class CreateNote extends Component{
 	}
 
 	render(){
-		const items = [{id:1, name: "Create new note", link: "", isLink: false}];
 		return (
-			<div>
-				<Breadcrumb items={items} />
-				
+			<div>				
 				<div className={`form-group ${ !this.state.isTitle ? 'has-error' : '' }`}>
 					<label>Title</label>
 					<input ref={(input) => { this.titleInput = input; }}
@@ -189,7 +191,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotebooks,clearNotebooks},dispatch);
+	return bindActionCreators({fetchNotebooks,clearNotebooks,displayBread},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(CreateNote);
