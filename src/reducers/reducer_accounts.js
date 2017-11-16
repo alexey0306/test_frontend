@@ -8,7 +8,7 @@ export default function (state = INITIAL_STATE, action){
 		case FETCH_ACCOUNT:
 			return { ...state, account: action.payload.data};
 		case CREATE_ACCOUNT:
-			return {...state,all: [...state.all, action.payload.data] }
+			return {...state,all: [...state.all, action.payload.data ] }
 		default:
 			return state;
 	}

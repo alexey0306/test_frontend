@@ -1,3 +1,4 @@
+// Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -7,7 +8,12 @@ import Breadcrumb from '../common/breadcrumb';
 import {Link} from 'react-router';
 import PoliciesPanel from './policies_panel';
 import _ from 'lodash';
+import {displayBread} from '../../actions/navigation_actions';
 
+// Initializing variables
+const items = [{id:1, name: "Policies","link":"/users",isLink: false}]
+
+// Declaring class
 class PoliciesList extends Component{
 
 	constructor(props){
@@ -20,7 +26,8 @@ class PoliciesList extends Component{
 	}
 
 	componentDidMount(){
-		this.props.fetchPolicies();		
+		this.props.fetchPolicies();
+		this.props.displayBread(items);		
 	}
 
 	onRowClick(event){
@@ -69,13 +76,9 @@ class PoliciesList extends Component{
 		);
 	}
 
-
-
 	render(){
-		const items = [{id:1, name: "Policies","link":"/users",isLink: false}]
 		return (
 			<div>
-			<Breadcrumb items={items} />
 			<PoliciesPanel />
 			<table className="table table-hover table-striped">
 				<thead>
@@ -99,7 +102,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchPolicies},dispatch);
+	return bindActionCreators({fetchPolicies,displayBread},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(PoliciesList);

@@ -1,9 +1,11 @@
 import {
 		FETCH_NOTES, SORT_NOTES, REQUEST_TIMEOUT, 
-		FETCH_NOTES_START, FETCH_NOTE, FETCH_NOTE_START,ROOT_URL, 
-		success, handleError,TYPE_DANGER} from './index';
+		FETCH_NOTES_START, FETCH_NOTE, FETCH_NOTE_START,CREATE_NOTE,
+		DECRYPT_NOTE,CLEAR_DECRYPTED,ROOT_URL, 
+		success, handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
 import axios from 'axios';
 import {showAlert,isLoading} from './alerts_actions';
+import {showNotification} from '../globals/helpers';
 axios.defaults.timeout = REQUEST_TIMEOUT;
 
 // ---------------------------------------------------
@@ -66,4 +68,61 @@ export function fetchNote(id,guid){
 
 
 	};	
+}
+
+// ---------------------------------------------------
+// 		Create note
+// ---------------------------------------------------
+
+export function createNote(data){
+	const URL = `${ROOT_URL}notes/create`;
+	return function(dispatch){
+		
+		// Sending the request
+		console.log(data);
+		axios.post(URL,data)
+		.then((response) => {
+
+			// Displaying the result of operation
+			showNotification("Creating note",response.data.message,TYPE_SUCCESS);
+
+			// Sending message to reducer
+			dispatch(success(response, CREATE_NOTE));
+
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
+	}
+}
+
+// ---------------------------------------------------
+// 		Decrypting note
+// ---------------------------------------------------
+
+export function decryptNote(data){
+
+	const URL = `${ROOT_URL}notes/decrypt`;
+	return function(dispatch){
+
+		// Sending the decrypt request
+		axios.post(URL,data)
+		.then((response) => {
+			dispatch(success(response,DECRYPT_NOTE));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
+
+	}
+}
+
+// ---------------------------------------------------
+// 		Clearing the decrypted note
+// ---------------------------------------------------
+
+export function clearNote(){
+	return function(dispatch){
+		dispatch(success(null,CLEAR_DECRYPTED));
+	}
 }

@@ -9,6 +9,7 @@ const menu = [
 	{name:"Groups",header: false,link:"groups","icon":"users"},
 	{name:"Accounts",header: false,link:"accounts","icon":"accounts"},
 	{name:"Policies",header: false,link:"policies","icon":"policies"},
+	{name:"Certificates",header: false,link:"certificates","icon":"certificates"},
 	{name:"Tasks",header: false,link:"tasks","icon":"tasks"},
 	{name:"Notes",header: true,link:"",icon:""},
 	{name:"Create note",header: false,link:"create",icon:""},

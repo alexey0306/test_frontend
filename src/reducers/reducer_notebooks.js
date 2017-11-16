@@ -1,5 +1,5 @@
 // Import section
-import {FETCH_NOTEBOOKS,FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS, SET_NOTEBOOK, LIST_NOTEBOOKS} from '../actions/index';
+import {FETCH_NOTEBOOKS,FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS,CLEAR_NOTEBOOKS,SET_NOTEBOOK, LIST_NOTEBOOKS} from '../actions/index';
 import _ from 'lodash';
 
 // Initializing variables
@@ -8,6 +8,10 @@ const INITIAL_STATE = { all: [], active: {}, notebook_list:[]};
 // Functions
 export default function (state = INITIAL_STATE, action) {
 	switch (action.type){
+
+		// Clearing the list of notebooks
+		case CLEAR_NOTEBOOKS:
+			return {...state, all:[]};
 
 		// Starting to fetch the list of notebooks
 		case FETCH_NOTEBOOKS_START:

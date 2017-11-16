@@ -2,6 +2,7 @@
 import axios from 'axios';
 import {FETCH_GROUPS,ROOT_URL,REQUEST_TIMEOUT,CREATE_GROUP,success,handleError,TYPE_DANGER,TYPE_SUCCESS,FETCH_GROUP, DELETE_USERS_GROUP, UPDATE_GROUP, GROUP_USERS, DELETE_GROUPS} from './index';
 import {showAlert,isLoading} from './alerts_actions';
+import {setLastItem} from './navigation_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
 var message = "";
 
@@ -52,7 +53,10 @@ export function fetchGroup(id){
 	const URL = `${ROOT_URL}groups/get/${id}`;
 	return function(dispatch){
 		axios.get(URL)
-		.then((response) => {dispatch(success(response,FETCH_GROUP));})
+		.then((response) => {
+			dispatch(success(response,FETCH_GROUP));
+			dispatch(setLastItem(response));
+		})
 		.catch((err) => {
 			handleError(dispatch,err);
 		});

@@ -31,7 +31,6 @@ class GroupsPanel extends Component{
 		}
 
 		if (window.confirm("Are you sure that you want to delete selected groups?")){
-			console.log(this.props.selected);
 			this.props.deleteGroups(this.props.selected);
 		}
 	}

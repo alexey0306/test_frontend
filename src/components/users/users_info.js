@@ -3,12 +3,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Breadcrumb from '../common/breadcrumb';
 import {fetchUser} from '../../actions/users_actions';
+import {displayBread} from '../../actions/navigation_actions';
 import {Link} from 'react-router';
 
 // Declaring the Input element IDs
 const TXT_NAME_ID = "txtName";
 const TXT_EMAIL_ID = "txtEmail";
 var arrayVar = [];
+const items = [{id:1, name: "Users","link":"/users",isLink: true}]
 
 
 class UsersInfo extends Component{
@@ -20,7 +22,8 @@ class UsersInfo extends Component{
 		this.generateDN = this.generateDN.bind(this);
 	}
 
-	componentWillMount(){
+	componentDidMount(){
+		this.props.displayBread(items);
 		this.props.fetchUser(this.props.params.id);		
 	}
 	
@@ -59,10 +62,10 @@ class UsersInfo extends Component{
 	}
 
 	render(){
-		const items = [{id:1, name: "Users","link":"/users",isLink: true}]
+		
 		return (
 			<div>
-				<Breadcrumb items={items} lastItem={this.props.user}/>
+				
 			</div>
 		);
 	}
@@ -74,7 +77,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchUser},dispatch);
+	return bindActionCreators({fetchUser,displayBread},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(UsersInfo);

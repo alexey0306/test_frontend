@@ -1,5 +1,11 @@
 import React from 'react';
 
+// HTML templates
+export const TMPL_ATTACH = "<div className=''>File name: %s, Type: %s, Size: %s</div>";
+//export const TMPL_FILE_ATTACH = "<div class=\"attachment\"><div class=\"row\"><div class=\"col-md-10\" style=\"display:inline-block\"><span style=\"margin-left:10px\"><img src=\"/images/%s\"/></span><span style=\"margin-left:10px\"><a href=\"%sstatic/%s\">%s (Size: %s)</a></span><span id='enml'><en-media data-type=\"%s\" data-hash=\"%s\" data-filename=\"%s\"/></span></div><div class=\"col-md-2\"><span id='txtFilename' style='display:none'>%s</span><span class=\"pull-right\" style=\"margin-right:10px\"><span id='removeAttach' class=\"glyphicon glyphicon-remove link\" aria-hidden=\"true\"></span></span></div></div></div><br/>";
+export const TMPL_FILE_ATTACH = "<table class=\"table table-bordered\"><tbody><tr><td><span style='margin-left:10px'><img src='/images/%s'></span><span style='margin-left:10px'><a href='%sstatic/%s'>%s (Size: %s)</a></span><span id='enml'><en-media data-type='%s' data-hash='%s' data-filename='%s'/></span><span class='pull-right' style='margin-right:10px'></span></td></tr></tbody></table><p><br></p>";
+export const TMPL_IMG_ATTACH = "<img class='attach' style='max-width:%s;max-height=%s' data-type='%s' data-filename='%s' data-hash='%s' src='%sstatic/%s'/>";
+
 // HTML outputs
 export const no_users_found = <tr><td colSpan="10" className="not_found"> [ No users found ] </td></tr>;
 export const no_groups_found = <tr><td colSpan="10" className="not_found"> [ No groups found ] </td></tr>;
@@ -7,14 +13,15 @@ export const no_notebooks_found = <tr><td colSpan="10" className="not_found"> [ 
 export const no_accounts_found = <li  className='list-group-item'> No accounts found </li>;
 export const no_notes_found = <tr><td colSpan="10" className="not_found"> [ No notes found ] </td></tr>;
 export const no_policies_found = <tr><td colSpan="10" className="not_found"> [ No policies found ] </td></tr>;
+export const no_certificates_found = <tr><td colSpan="10" className="not_found"> [ No certificates found ] </td></tr>;
 
 
 // Service IDs
 export const SERVICE_EVERNOTE = 0;
 export const SERVICE_ONENOTE = 1;
-const EVERNOTE_COLOR = "#2dbe60";
-const ONENOTE_COLOR = "#80397B";
-const DEFAULT_COLOR = "#dddddd"
+export const EVERNOTE_COLOR = "#2dbe60";
+export const ONENOTE_COLOR = "#80397B";
+export const DEFAULT_COLOR = "#dddddd"
 
 // Supported services
 export const SUPPORTED_SERVICES = [
@@ -35,16 +42,21 @@ export const PREMIUM_STATUS = {
 export const PRIVILEGE_LEVEL = {"1":"Normal","3":"Premium"};
 
 
-
-
-// Functions
-export function get_account(service_id){
-	switch(service_id){
-		case SERVICE_ONENOTE:
-			return ONENOTE_COLOR;
-		case SERVICE_EVERNOTE:
-			return EVERNOTE_COLOR;
-		default:
-			return DEFAULT_COLOR;
-	}
+// MIME types
+export const MIME_TYPES = {
+	pdf: "application/pdf",
+	doc: "application/msword",
+	docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+	xls: "application/vnd.ms-excel",
+	xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+	ppt: "application/vnd.ms-powerpoint",
+	pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+	jpeg: "image/jpeg",
+	gif: "image/gif",
+	png: "image/png",
+	default: "text/*",
+	flac: "audio/flac",
+	mp3: "audio/mp3",
+	mp4: "video/mp4",
+	xml: "text/xml"
 }

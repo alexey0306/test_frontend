@@ -1,6 +1,7 @@
 // Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+// Import section
 import {bindActionCreators} from 'redux';
 import {fetchGroups} from '../../actions/groups_actions';
 import _ from 'lodash';
@@ -9,6 +10,10 @@ import Breadcrumb from '../common/breadcrumb';
 import CreateGroupModal from '../modals/create_group';
 import GroupsPanel from './groups_panel';
 import {no_groups_found} from '../../globals/globals';
+import {displayBread} from '../../actions/navigation_actions';
+
+// Initializing variables
+const items = [{name:"Groups",link:"/groups",isLink:false}];
 
 class GroupsList extends Component{
 
@@ -59,6 +64,7 @@ class GroupsList extends Component{
 
 	componentDidMount(){
 		this.props.fetchGroups();
+		this.props.displayBread(items);
 	}
 
 	renderGroup(group){
@@ -72,10 +78,9 @@ class GroupsList extends Component{
 	}
 
 	render(){
-		const items = [{name:"Groups",link:"/groups",isLink:false}];
+		
 		return (
 			<div>
-				<Breadcrumb items={items} />
 				<GroupsPanel selected={this.state.selected} />
 				<table className="table table-hover table-striped">
 					<thead>
@@ -99,7 +104,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchGroups},dispatch);
+	return bindActionCreators({fetchGroups,displayBread},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(GroupsList);

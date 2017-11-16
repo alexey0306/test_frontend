@@ -9,6 +9,8 @@ import NotebooksReducer from './reducer_notebooks';
 import NotesReducer from './reducer_notes.js';
 import PoliciesReducer from './reducer_policies';
 import TasksReducer from './reducer_tasks';
+import CertificatesReducer from './reducer_certificates';
+import NavigationReducer from './reducer_navigation';
 
 const rootReducer = combineReducers({
   navigation: MenuReducer,
@@ -20,7 +22,9 @@ const rootReducer = combineReducers({
   notebooks: NotebooksReducer,
   notes: NotesReducer,
   policies: PoliciesReducer,
-  tasks: TasksReducer
+  tasks: TasksReducer,
+  certificates: CertificatesReducer,
+  breadcrumbs: NavigationReducer
 });
 
 export default rootReducer;

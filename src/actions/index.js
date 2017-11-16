@@ -37,6 +37,7 @@ export const FETCH_NOTEBOOKS = "FETCH_NOTEBOOKS";
 export const SORT_NOTEBOOKS = "SORT_NOTEBOOKS";
 export const SET_NOTEBOOK = "SET_NOTEBOOK";
 export const LIST_NOTEBOOKS = "LIST_NOTEBOOKS";
+export const CLEAR_NOTEBOOKS = "CLEAR_NOTEBOOKS";
 
 // Notes actions
 export const FETCH_NOTES = "FETCH_NOTES";
@@ -44,6 +45,9 @@ export const SORT_NOTES = "SORT_NOTES";
 export const FETCH_NOTES_START = "FETCH_NOTES_START";
 export const FETCH_NOTE_START = "FETCH_NOTE_START";
 export const FETCH_NOTE = "FETCH_NOTE";
+export const CREATE_NOTE = "CREATE_NOTE";
+export const DECRYPT_NOTE = "DECRYPT_NOTE";
+export const CLEAR_DECRYPTED = "CLEAR_DECRYPTED";
 
 // Policies actions
 export const FETCH_POLICIES = "FETCH_POLICIES";
@@ -57,6 +61,12 @@ export const FETCH_TASKS_START = "LIST_TASKS_START";
 export const FETCH_TASKS = "LIST_TASKS";
 export const DELETE_TASKS = "DELETE_TASKS";
 
+// Certificates action
+export const FETCH_CERTIFICATES_START = "FETCH_CERTIFICATES_START";
+export const FETCH_CERTIFICATES = "FETCH_CERTIFICATES";
+export const REQUEST_CERTIFICATES = "REQUEST_CERTIFICATES";
+export const DELETE_CERTIFICATES = "DELETE_CERTIFICATES";
+
 // Alert types
 export const TYPE_DANGER = "danger";
 export const TYPE_SUCCESS = "success";
@@ -64,6 +74,8 @@ export const TYPE_WARN = "warning";
 
 // Breadcrumb actions
 export const SHOW_BREAD = "SHOW_BREAD";
+export const DISPLAY_BREAD = "DISPLAY_BREAD";
+export const SET_LAST_ITEM = "SET_LAST_ITEM";
 
 // FUnctions
 export function success(response,type){

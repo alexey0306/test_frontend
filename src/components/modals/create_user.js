@@ -12,8 +12,10 @@ class CreateUserModal extends Component{
 
 	onSubmit(props){
 		this.props.createUser(props);
+		this.props.reset();
 		this.props.onHide();
 	}
+
 
 	render(){
 

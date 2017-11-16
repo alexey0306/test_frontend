@@ -1,23 +1,28 @@
+// Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchUsers,sortUsers} from '../../actions/users_actions';
-import {Link} from 'react-router';
-import Breadcrumb from '../common/breadcrumb';
-import UsersPanel from './users_panel';
 import _ from 'lodash';
+import {Link} from 'react-router';
 import {no_users_found} from '../../globals/globals';
 
+
+// Declaring a class
 class UsersList extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {selected:[],sort:"dsc"};
+		this.state = {selected: [], sort:"dsc"};
 		this.renderUser = this.renderUser.bind(this);
 		this.onUserSelect = this.onUserSelect.bind(this);
 		this.onRowClick = this.onRowClick.bind(this);
 		this.onAllChange = this.onAllChange.bind(this);
 		this.sortUsers = this.sortUsers.bind(this);
+	}
+
+	componentDidMount(){
+		this.props.fetchUsers();
 	}
 
 	sortUsers(){
@@ -46,6 +51,7 @@ class UsersList extends Component{
 			})
 		}
 		this.setState({selected:arrayVar});
+		this.props.onChange(arrayVar);
 	}
 
 	selectUser(id,checked){
@@ -59,9 +65,8 @@ class UsersList extends Component{
 			});
 		}
 		this.setState({selected: arrayVar});
+		this.props.onChange(arrayVar);
 	}
-
-
 
 	renderUser(user){
 
@@ -75,35 +80,23 @@ class UsersList extends Component{
 		);
 	}
 
-	componentDidMount(){
-		var self = this;
-		this.props.fetchUsers();
-	}
-
 	render(){
-		const items = [{id:1, name: "Users","link":"/users",isLink: false}]
 		return (
-				<div>
-				<Breadcrumb items={items}/>
-				<UsersPanel selected={this.state.selected} />
-				<table className="table table-hover table-striped">
-					<thead>
-						<tr>
-							<th><input onChange={this.onAllChange} type="checkbox" id='selectAll'/></th>
-							<th>Name <i className="fa fa-fw fa-sort sort" id={this.state.sort} onClick={this.sortUsers}></i></th>
-							<th>Email</th>
-							<th>Subject</th>
-						</tr>
-					</thead>
-					<tbody>
-						{this.props.users.length == 0 ? no_users_found : this.props.users.map(this.renderUser)}						
-					</tbody>
-				</table>
-				</div>
-				
-			);		
+			<table className="table table-hover table-striped">
+				<thead>
+					<tr>
+						<th><input onChange={this.onAllChange} type="checkbox" id='selectAll'/></th>
+						<th>Name <i className="fa fa-fw fa-sort sort" id={this.state.sort} onClick={this.sortUsers}></i></th>
+						<th>Email</th>
+						<th>Subject</th>
+					</tr>
+				</thead>
+				<tbody>
+					{this.props.users.length == 0 ? no_users_found : this.props.users.map(this.renderUser)}						
+				</tbody>
+			</table>
+		);
 	}
-
 }
 
 function mapStateToProps(state){

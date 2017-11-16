@@ -1,5 +1,5 @@
-import {FETCH_NOTES, SORT_NOTES, FETCH_NOTES_START, FETCH_NOTE_START, FETCH_NOTE} from '../actions/index';
-const INITIAL_STATE = {all: [], note: {} };
+import {FETCH_NOTES, SORT_NOTES, CREATE_NOTE,FETCH_NOTES_START, FETCH_NOTE_START, FETCH_NOTE,DECRYPT_NOTE,CLEAR_DECRYPTED} from '../actions/index';
+const INITIAL_STATE = {all: [], note: {}, decrypted:{}};
 
 export default function (state = INITIAL_STATE, action) {
 	switch (action.type){
@@ -37,6 +37,18 @@ export default function (state = INITIAL_STATE, action) {
 				});
 			}
 			return { ...state, all: newArray }
+
+		// Creating the note
+		case CREATE_NOTE:
+			return state;
+
+		// Decrypting the note
+		case DECRYPT_NOTE:
+			return { ...state, decrypted:action.payload.data }
+
+		// CLearing the decrypted note object
+		case CLEAR_DECRYPTED:
+			return { ...state, decrypted: {} }
 
 		default:
 			return state;

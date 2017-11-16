@@ -2,6 +2,7 @@
 import axios from 'axios';
 import {FETCH_USERS,FETCH_USER,ROOT_URL,REQUEST_TIMEOUT,CREATE_USER,DELETE_USERS, SORT_USERS, TYPE_DANGER,TYPE_SUCCESS,success,handleError} from './index';
 import {showAlert,isLoading} from './alerts_actions';
+import {setLastItem} from './navigation_actions';
 
 // Variables section
 axios.defaults.timeout = REQUEST_TIMEOUT;
@@ -35,7 +36,8 @@ export function fetchUser(id){
 	return function(dispatch){
 		axios.get(URL)
 		.then((response) => {
-			dispatch(success(response,FETCH_USER));			
+			dispatch(success(response,FETCH_USER));
+			dispatch(setLastItem(response));		
 		})
 		.catch((err) => {
 			handleError(dispatch,err);

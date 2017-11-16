@@ -1,4 +1,4 @@
-import {FETCH_NOTEBOOKS, FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS, SET_NOTEBOOK, LIST_NOTEBOOKS,REQUEST_TIMEOUT, ROOT_URL, success, TYPE_DANGER, handleError} from './index';
+import {FETCH_NOTEBOOKS, FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS,SET_NOTEBOOK, LIST_NOTEBOOKS,CLEAR_NOTEBOOKS,REQUEST_TIMEOUT, ROOT_URL, success, TYPE_DANGER, handleError} from './index';
 import axios from 'axios';
 import {showAlert,isLoading} from './alerts_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
@@ -55,7 +55,7 @@ export function setActive(notebook){
 // 		Listing notebooks for Policies
 // ---------------------------------------------------
 
-export function listNotebooks(account_id,policy_id){
+export function listNotebooks(account_id,policy_id,clear){
 	var URL = `${ROOT_URL}notebooks/list/${account_id}?term=`;
 	
 	return function(dispatch){
@@ -69,4 +69,14 @@ export function listNotebooks(account_id,policy_id){
 			handleError(dispatch,err);
 		});
 	}	
+}
+
+// ---------------------------------------------------
+// 		Clearing the list of notebooks
+// ---------------------------------------------------
+
+export function clearNotebooks(){
+	return function(dispatch){
+		dispatch(success(null,CLEAR_NOTEBOOKS));
+	}
 }

@@ -1,12 +1,18 @@
+// Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchAccounts,fetchAccount} from '../../actions/accounts_actions';
-import {no_accounts_found, get_account} from '../../globals/globals';
+import {no_accounts_found} from '../../globals/globals';
+import {get_account} from '../../globals/helpers';
 import Breadcrumb from '../common/breadcrumb';
 import {ROOT_URL} from '../../actions/index';
 import AccountInfoModal from '../modals/account_info';
 import CreateAccountModal from '../modals/create_account';
+import {displayBread} from '../../actions/navigation_actions';
+
+// Initializing variables
+const items = [{id:1, name: "Accounts", link: "/accounts", isLink: false}];
 
 
 class AccountsList extends Component{
@@ -41,10 +47,8 @@ class AccountsList extends Component{
 	}
 
 	render(){
-		const items = [{id:1, name: "Accounts", link: "/accounts", isLink: false}];
 		return (
 			<div>
-			<Breadcrumb items={items} />
 			<div className="accounts-list">
 				{this.props.accounts.map(this.renderAccount)}
 				<div onClick={this.onNewClick} className="card">
@@ -89,6 +93,7 @@ class AccountsList extends Component{
 
 	componentDidMount(){
 		this.props.fetchAccounts();
+		this.props.displayBread(items);
 	}
 }
 
@@ -97,7 +102,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchAccounts,fetchAccount},dispatch);
+	return bindActionCreators({fetchAccounts,fetchAccount,displayBread},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(AccountsList);
