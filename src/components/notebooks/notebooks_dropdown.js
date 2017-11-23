@@ -8,7 +8,7 @@ class NotebooksDropdown extends Component {
 	}
 
 	onChange(event){
-		this.props.onChange(event.target.value);
+		this.props.onChange(event.target.value,event.target.options[event.target.selectedIndex].text);
 	}
 
 	renderNotebook(notebook){

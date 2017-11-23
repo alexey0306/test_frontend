@@ -1,7 +1,7 @@
 import {showAlert,isLoading} from './alerts_actions';
 
 // Export section
-export const ROOT_URL = "http://www.saferoomapp.com:5000/";
+export const ROOT_URL = "https://www.saferoomapp.com:5000/";
 export const FETCH_MENU = "FETCH_MENU";
 
 // Users actions
@@ -23,7 +23,7 @@ export const DELETE_GROUPS = "DELETE_GROUPS";
 // Alert actions
 export const SHOW_ALERT = "SHOW_ALERT";
 export const CLEAR_ALERTS = "CLEAR_ALERTS";
-export const REQUEST_TIMEOUT = 10000;
+export const REQUEST_TIMEOUT = 20000;
 export const HANDLE_LOADER = "HANDLE_LOADER";
 
 // Account actions
@@ -60,12 +60,18 @@ export const CREATE_POLICY = "CREATE_POLICY";
 export const FETCH_TASKS_START = "LIST_TASKS_START";
 export const FETCH_TASKS = "LIST_TASKS";
 export const DELETE_TASKS = "DELETE_TASKS";
+export const FETCH_TASK = "FETCH_TASK";
 
 // Certificates action
 export const FETCH_CERTIFICATES_START = "FETCH_CERTIFICATES_START";
 export const FETCH_CERTIFICATES = "FETCH_CERTIFICATES";
 export const REQUEST_CERTIFICATES = "REQUEST_CERTIFICATES";
 export const DELETE_CERTIFICATES = "DELETE_CERTIFICATES";
+
+// Sections actions
+export const FETCH_SECTIONS_START = "FETCH_SECTIONS_START";
+export const FETCH_SECTIONS = "FETCH_SECTIONS";
+export const LIST_SECTIONS = "LIST_SECTIONS";
 
 // Alert types
 export const TYPE_DANGER = "danger";
@@ -76,6 +82,9 @@ export const TYPE_WARN = "warning";
 export const SHOW_BREAD = "SHOW_BREAD";
 export const DISPLAY_BREAD = "DISPLAY_BREAD";
 export const SET_LAST_ITEM = "SET_LAST_ITEM";
+
+// Global actions
+export const SET_SERVICE = "SET_SERVICE";
 
 // FUnctions
 export function success(response,type){

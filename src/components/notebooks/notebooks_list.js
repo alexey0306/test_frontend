@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchNotebooks,sortNotebooks} from '../../actions/notebooks_actions';
-import {no_notebooks_found, SERVICE_ONENOTE,SERVICE_EVERNOTE} from '../../globals/globals';
+import {no_notebooks_found, SERVICE_ONENOTE,SERVICE_EVERNOTE,PATHS} from '../../globals/globals';
 import {Link} from 'react-router';
 import _ from 'lodash';
 import NotebooksPanel from './notebooks_panel';
 import Breadcrumb from '../common/breadcrumb';
 import {displayBread} from '../../actions/navigation_actions';
+import {vsprintf} from 'sprintf-js';
+import {setService} from '../../actions/globals_actions';
 
 
 // Initializing variables
@@ -77,33 +79,30 @@ class NotebooksList extends Component {
 		var link = "";
 		switch (parseInt(notebook.service)){
 			case SERVICE_EVERNOTE:
-				link = `/notes/${this.props.params.id}/list/${notebook.guid}/${notebook.name}`;
+				link = vsprintf(PATHS.notes, [this.props.params.id, [notebook.name,notebook.guid].join("/")])
 				break;
 			case SERVICE_ONENOTE:
-				link = `/sections/${this.props.params.id}/list/${notebook.guid}/${notebook.name}`;
+				link = vsprintf(PATHS.sections, [this.props.params.id,notebook.name,notebook.guid])
 				break;
 		}
 
-		return (
-			<tr key={notebook.guid} onClick={this.onRowClick} id={notebook.guid} className="selected">
+		return (<tr key={notebook.guid} onClick={this.onRowClick} id={notebook.guid} className="selected">
 				<td><input
 					id={notebook.guid} 
 					type="checkbox" 
 					onClick={this.onNotebookClick}
 					checked={_.includes(this.state.selected,notebook.guid)} />
 				</td>
-				<td><a onClick={this.onLinkClick} name={notebook.guid} href={link} id={notebook.name}>{notebook.name}</a></td>
+				<td><Link to={link}>{notebook.name}</Link></td>
 				<td>{notebook.guid}</td>
 				<td>{notebook.created}</td>
-				<td>{notebook.shared}</td>
 			</tr>
 		);
-
 	}
 
 	componentDidMount(){
 		this.props.fetchNotebooks(this.props.params.id);
-		this.props.displayBread(items);
+		this.props.displayBread(items);		
 	}
 
 	render(){
@@ -135,7 +134,10 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotebooks,sortNotebooks,displayBread},dispatch);
+	return bindActionCreators({
+		fetchNotebooks,sortNotebooks,
+		displayBread},
+	dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotebooksList);

@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchNotes,sortNotes} from '../../actions/notes_actions';
-import {no_notes_found} from '../../globals/globals';
+import {no_notes_found,PATHS} from '../../globals/globals';
 import {Link} from 'react-router';
 import _ from 'lodash';
 import NotesPanel from './notes_panel';
-import Breadcrumb from '../common/breadcrumb';
 import {displayBread,setLastItem} from '../../actions/navigation_actions';
+import {vsprintf} from 'sprintf-js';
 
 class NotesList extends Component {
 
@@ -19,6 +19,7 @@ class NotesList extends Component {
 		this.onRowClick = this.onRowClick.bind(this);
 		this.onSortClick = this.onSortClick.bind(this);
 		this.state = {selected: [], sort: 'asc', sortField: ''};
+		this.generateLink = this.generateLink.bind(this);
 	}
 
 	onNoteClick(event){
@@ -43,6 +44,10 @@ class NotesList extends Component {
 		this.setState({selected: arrayVar});
 	}
 
+	componentWillUnmount() {
+		this.props.setLastItem(null);
+  	}
+
 	onSortClick(event){
 
 		// Sorting the notebooks
@@ -53,10 +58,7 @@ class NotesList extends Component {
 		else{this.setState({sort: "dsc"});}
 	}
 
-
-
 	renderNote(note){
-		const link = `/notes/${this.props.params.id}/${this.props.params.guid}/${this.props.params.name}/${note.guid}`
 		return (
 			<tr key={note.guid} onClick={this.onRowClick} id={note.guid} className="selected">
 				<td><input
@@ -65,7 +67,7 @@ class NotesList extends Component {
 					onClick={this.onNotebookClick}
 					checked={_.includes(this.state.selected,note.guid)} />
 				</td>
-				<td><Link to={link}>{note.title}</Link></td>
+				<td><Link to={this.generateLink(note.guid)}>{note.title}</Link></td>
 				<td>{note.guid}</td>
 				<td>{note.created}</td>
 				<td>{note.updated}</td>
@@ -75,17 +77,38 @@ class NotesList extends Component {
 	}
 
 	componentDidMount(){
-		this.props.fetchNotes(this.props.params.id,this.props.params.guid);
-		const items = [{id:1, name: "Notebooks" , link: `/notebooks/list/${this.props.params.id}`, isLink: true}]
+
+		var params = this.props.params;
+		
+		// Defining the first item in the bread
+		var items = [{id:1, 
+			name: "Notebooks" , 
+			link: vsprintf(PATHS.notebooks,[params.id]),
+			isLink: true}]
+
+		// Adding other items
+		if ( this.props.params.section_name ){
+			items.push({id:2,name:params.notebook_name,
+				link: vsprintf(PATHS.sections, [params.id, params.notebook_name,params.notebook_guid]),
+				isLink: true});
+
+			// Setting the last item
+			this.props.setLastItem({data: {id: params.container_id, name: params.section_name}});
+		}
+		else{
+			// Setting the last item
+			this.props.setLastItem({data: {id: params.container_id, name:params.notebook_name}});
+		}
 		this.props.displayBread(items);
-		this.props.setLastItem({data: {name:this.props.params.name,guid:this.props.params.guid}});
+		this.props.fetchNotes(params.id,params.container_id);		
+		
 	}
 
 	render(){
 
 		return (
 			<div>
-			<NotesPanel id={this.props.params.id} guid={this.props.params.guid} />
+			<NotesPanel id={this.props.params.id} guid={this.props.params.container_id} />
 			<table className="table table-hover table-striped">
 				<thead>
 					<tr>
@@ -104,12 +127,28 @@ class NotesList extends Component {
 		);
 	}
 
+	generateLink(guid){
+
+		var params = this.props.params;
+		var array = []
+	
+		// If Section is not specified
+		if ( this.props.params.section_name && this.props.params.container_id ){
+			array = [params.id, [params.notebook_name, params.notebook_guid,params.section_name,params.container_id,guid].join("/")];
+		}
+		else{
+			array = [params.id,[params.notebook_name, params.container_id,guid].join("/")];
+		}
+		return vsprintf(PATHS.notes_info, array)
+	}
+
 }
 
 function mapStateToProps(state){
 	return { 
 			notes: state.notes.all, 
-			active: state.notebooks.active
+			active: state.notebooks.active,
+		 	lastItem: state.navigation.lastItem
 		 };
 }
 

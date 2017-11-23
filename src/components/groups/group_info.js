@@ -25,7 +25,7 @@ class GroupInfo extends Component {
 	}
 
 	componentDidMount(){
-		this.props.fetchGroup(this.props.params.id);
+		this.props.fetchGroup(this.props.params.gid);
 		this.props.displayBread(items);
 		//this.props.initialize({ name: this.props.group.name })
 	}

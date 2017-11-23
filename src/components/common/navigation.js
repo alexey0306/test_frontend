@@ -18,7 +18,7 @@ class Navigation extends Component{
 
 	renderAccount(account){
 		return (
-		<Link key={account.id} to={`/notebooks/list/${account.id}`}>
+		<Link key={account.id} to={`/notebooks/${account.id}/list`}>
 			<li className="list-group-item">{account.name}</li>
 		</Link>
 		);

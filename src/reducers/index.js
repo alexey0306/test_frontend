@@ -11,8 +11,14 @@ import PoliciesReducer from './reducer_policies';
 import TasksReducer from './reducer_tasks';
 import CertificatesReducer from './reducer_certificates';
 import NavigationReducer from './reducer_navigation';
+import SectionsReducer from './reducer_sections';
+import GlobalsReducer from './reducer_globals';
 
-const rootReducer = combineReducers({
+const rootReducer = (state, action) => {
+  return appReducer(state,action);
+}
+
+const appReducer = combineReducers({
   navigation: MenuReducer,
   users:UsersReducer,
   form: formReducer,
@@ -24,7 +30,9 @@ const rootReducer = combineReducers({
   policies: PoliciesReducer,
   tasks: TasksReducer,
   certificates: CertificatesReducer,
-  breadcrumbs: NavigationReducer
+  breadcrumbs: NavigationReducer,
+  sections: SectionsReducer,
+  globals: GlobalsReducer
 });
 
 export default rootReducer;

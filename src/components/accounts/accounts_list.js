@@ -1,6 +1,7 @@
 // Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import axios from 'axios';
 import {bindActionCreators} from 'redux';
 import {fetchAccounts,fetchAccount} from '../../actions/accounts_actions';
 import {no_accounts_found} from '../../globals/globals';
@@ -10,6 +11,7 @@ import {ROOT_URL} from '../../actions/index';
 import AccountInfoModal from '../modals/account_info';
 import CreateAccountModal from '../modals/create_account';
 import {displayBread} from '../../actions/navigation_actions';
+import {SERVICE_ONENOTE,SERVICE_EVERNOTE} from '../../globals/globals';
 
 // Initializing variables
 const items = [{id:1, name: "Accounts", link: "/accounts", isLink: false}];
@@ -43,7 +45,18 @@ class AccountsList extends Component{
 
 	onLogin(event){
 		const URL = `${ROOT_URL}accounts/login/${event.target.id}/${event.target.name}`;
-		window.open(URL,"_blank","width=600,height=600");
+
+		switch (parseInt(event.currentTarget.name)){
+			case SERVICE_ONENOTE:
+				axios.get(URL)
+					.then((response) => {
+						window.open(response.data,"_blank","width=600,height=400");
+					})
+				break;
+			default:
+				window.open(URL,"_blank","width=600,height=400");
+				break;
+		}	
 	}
 
 	render(){

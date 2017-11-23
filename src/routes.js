@@ -12,26 +12,36 @@ import NotesList from './components/notes/notes_list';
 import NotesInfo from './components/notes/notes_info';
 import PoliciesList from './components/policies/policies_list';
 import PolicyInfo from './components/policies/policy_info';
-import TasksList from './components/tasks/tasks_list.js';
+import TasksIndex from './components/tasks/tasks_index.js';
 import CreateNote from './components/notes/create_note';
 import CertificatesIndex from './components/certificates/certificates_index';
 import ThumbnailContainer from './components/common/thumbnail';
+import SectionsIndex from './components/sections/sections_index';
+import {browserHistory} from 'react-router';
+import {setLastItem} from './actions/navigation_actions';
+import {setService} from './actions/globals_actions';
+
+
 export default (
-	<Route path="/" component={App}>
+	<Route path="/" component={App} >
 		<IndexRoute component={Welcome}/>
-		<Route path="users" component={UsersIndex}></Route>
-		<Route path="users/:id" component={UsersInfo}></Route>
+		<Route path="users" component={UsersIndex} onEnter={()=>{setLastItem(null)}}></Route>
+		<Route path="users/:uid" component={UsersInfo}></Route>
 		<Route path="groups" component={GroupsList}></Route>
-		<Route path="groups/:id" component={GroupInfo}></Route>
+		<Route path="groups/:gid" component={GroupInfo}></Route>
 		<Route path="accounts" component={AccountsList}></Route>
-		<Route path="notebooks/list/:id" component={NotebooksList}></Route>
-		<Route path="notes/:id/list/:guid/:name" component={NotesList}></Route>
-		<Route path="notes/:id/:notebook/:name/:guid" component={NotesInfo} />
+		<Route path="notebooks/:id/list" component={NotebooksList}></Route>
+		<Route path="notes/:id/list/:notebook_name/:container_id" component={NotesList}></Route>
+		<Route path="notes/:id/list/:notebook_name/:notebook_guid/:section_name/:container_id" component={NotesList}></Route>
+		<Route path="notes/:id/:notebook_name/:notebook_guid/:guid" component={NotesInfo} />
+		<Route path="notes/:id/:notebook_name/:notebook_guid/:section_name/:section_guid/:guid" component={NotesInfo} />
 		<Route path="policies" component={PoliciesList}></Route>
-		<Route path="policies/:id" component={PolicyInfo}></Route>
-		<Route path="tasks" component={TasksList}></Route>
+		<Route path="policies/:pid" component={PolicyInfo}></Route>
+		<Route path="tasks" component={TasksIndex}></Route>
 		<Route path="create" component={CreateNote}></Route>
 		<Route path="certificates" component={CertificatesIndex}></Route>
+		<Route path="sections/:id/list/:notebook_name/:notebook_guid" component={SectionsIndex}></Route>
 		<Route path="thumb" component={ThumbnailContainer}></Route>
+
 	</Route>
 );

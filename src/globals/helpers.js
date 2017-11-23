@@ -120,3 +120,15 @@ export function showNotification(title,message,type){
 		var notification = new Notification(title, {icon: icon,body: message});
 	}
 }
+
+export function generate_items(params){
+	var items = []
+
+	// Pushing the first element
+	items.push({
+		id:1,
+		name:"Notebooks",
+		link:`/notebooks/${params.id}`,
+		isLink: (params.notebook != null)
+	});
+}

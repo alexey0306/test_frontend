@@ -8,7 +8,7 @@ class AccountsDropdown extends Component {
 	}
 
 	onChange(event){
-		this.props.onChange(event.target.value,event.target.options[event.target.selectedIndex].id);
+		this.props.onChange(event.target.value,event.target.options[event.target.selectedIndex].id,event.target.id);
 	}
 
 	renderAccount(account){
@@ -20,7 +20,7 @@ class AccountsDropdown extends Component {
 	render(){
 		return (
 			<select onChange={this.onChange} className="form-control">
-				<option value=""> -- Select account -- </option>
+				<option value="*"> -- Select account -- </option>
 				{this.props.accounts.length != 0 ? this.props.accounts.map(this.renderAccount) : ''}
 			</select>
 		);

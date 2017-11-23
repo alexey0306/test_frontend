@@ -4,7 +4,6 @@ import 'react-summernote/dist/react-summernote.css'; // import styles
 import axios from 'axios';
 import {insert_node} from '../../globals/helpers';
 import {ROOT_URL} from '../../actions/index';
-
  
 // Import bootstrap(v3 or v4) dependencies
 import 'bootstrap/js/modal';

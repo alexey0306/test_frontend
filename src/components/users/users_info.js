@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Breadcrumb from '../common/breadcrumb';
 import {fetchUser} from '../../actions/users_actions';
-import {displayBread} from '../../actions/navigation_actions';
+import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import {Link} from 'react-router';
 
 // Declaring the Input element IDs
@@ -24,7 +24,11 @@ class UsersInfo extends Component{
 
 	componentDidMount(){
 		this.props.displayBread(items);
-		this.props.fetchUser(this.props.params.id);		
+		this.props.fetchUser(this.props.params.uid);		
+	}
+
+	componentWillUnmount(){
+		this.props.setLastItem(null);
 	}
 	
 
@@ -77,7 +81,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchUser,displayBread},dispatch);
+	return bindActionCreators({fetchUser,displayBread,setLastItem},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(UsersInfo);

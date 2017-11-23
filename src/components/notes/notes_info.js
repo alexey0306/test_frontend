@@ -8,7 +8,7 @@ import NotesInfoPanel from './notes_info_panel';
 import {Panel,ListGroup,ListGroupItem} from 'react-bootstrap';
 import DecryptPanel from '../common/panel_decrypt';
 import DecryptNoteModal from '../modals/decrypt_note';
-import {displayBread} from '../../actions/navigation_actions';
+import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import Spinner from '../common/spinner';
 
 
@@ -18,6 +18,7 @@ class NotesInfo extends Component{
 		super(props);
 		this.state = {lgShow:false};
 		this.onDecrypt = this.onDecrypt.bind(this);
+		this.generateItems = this.generateItems.bind(this);
 	}
 
 	clear(){
@@ -27,24 +28,11 @@ class NotesInfo extends Component{
 	componentDidMount(){
 		this.props.fetchNote(this.props.params.id, this.props.params.guid);
 		this.props.clearNote();
+		this.props.displayBread(this.generateItems());
+	}
 
-		// Creating navigation
-		const items = [
-			{
-				id:1, 
-				name: "Notebooks", 
-				link:`/notebooks/list/${this.props.params.id}`,
-				isLink: true
-			},
-			{
-				id:2, 
-				name: this.props.params.name, 
-				link:`/notes/${this.props.params.id}/list/${this.props.params.notebook}/${this.props.params.name}`,
-				isLink:true
-			}
-		]
-
-		this.props.displayBread(items);
+	componentWillUnmount(){
+		this.props.setLastItem(null);
 	}
 
 	onDecrypt(mode, password=null, recipient=null){
@@ -75,6 +63,35 @@ class NotesInfo extends Component{
 			return (<Spinner />);
 		}
 	}
+
+
+	generateItems(){
+
+		var params = this.props.params;
+
+		// Creating the first element
+		var items = [{id:1, name: "Notebooks", link:`/notebooks/${params.id}/list`,isLink:true}];
+
+		// If section is specified
+		if (params.section_name && params.section_guid){
+			items.push({id:1, name:params.notebook_name,link:`/sections/${params.id}/list/${params.notebook_name}/${params.notebook_guid}`,isLink:true});
+		}
+		else{
+			items.push({id:1, name:params.notebook_name,link:`/notes/${params.id}/list/${params.notebook_name}/${params.notebook_guid}`,isLink:true});
+		}
+
+		// If section is specified
+		if (params.section_name && params.section_guid){
+			items.push({
+				id:4,
+				name: params.section_name,
+				link: `/notes/${params.id}/list/${params.notebook_name}/${params.notebook_guid}/${params.section_name}/${params.section_guid}`,
+				isLink: true
+			})
+		}
+
+		return items;
+	}
 }
 
 function mapStateToProps(state){
@@ -86,7 +103,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNote,decryptNote,clearNote,displayBread},dispatch);
+	return bindActionCreators({fetchNote,decryptNote,clearNote,displayBread,setLastItem},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesInfo);

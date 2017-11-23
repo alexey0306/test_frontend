@@ -43,7 +43,7 @@ export function sortNotebooks(sort,field){
 // 		Listing notebooks for Policies
 // ---------------------------------------------------
 
-export function listNotebooks(account_id,policy_id,clear){
+export function listNotebooks(account_id,policy_id){
 	var URL = `${ROOT_URL}notebooks/list/${account_id}?term=`;
 	
 	return function(dispatch){

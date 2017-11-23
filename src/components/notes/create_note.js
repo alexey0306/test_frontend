@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import NoteEditor from './notes_editor';
 import Breadcrumb from '../common/breadcrumb';
 import {fetchNotebooks,clearNotebooks} from '../../actions/notebooks_actions';
+import {fetchSections} from '../../actions/sections_actions';
 import AccountsDropdown from '../accounts/accounts_dropdown';
 import NotebooksDropdown from '../notebooks/notebooks_dropdown';
 import SectionsDropdown from '../sections/sections_dropdown';
@@ -26,6 +27,7 @@ class CreateNote extends Component{
 		this.createNote = this.createNote.bind(this);
 		this.validate = this.validate.bind(this);
 		this.loadSections = this.loadSections.bind(this);
+		this.sectionChanged = this.sectionChanged.bind(this);
 		this.state = {service: 0, 
 			tags: [], 
 			noteTitle: "", 
@@ -120,13 +122,20 @@ class CreateNote extends Component{
 		if (content == ""){this.setState({isContent: false});}
 	}
 
-	sectionChanged(section_id){
+	sectionChanged(section_id,name){
 		if (section_id != ""){this.setState({isSection: true});}
+		this.setState({section:section_id});
+
 	}
 
-	loadSections(notebook_guid){
+	loadSections(notebook_guid,name){
 		this.setState({notebook: notebook_guid});
-		if (notebook_guid != ""){this.setState({isNotebook: true});	}
+		if (notebook_guid != ""){
+			this.setState({isNotebook: true});
+			if (parseInt(this.state.service) == SERVICE_ONENOTE){
+				this.props.fetchSections(this.state.account,notebook_guid,true);
+			}
+		}
 	}
 
 	render(){
@@ -146,7 +155,7 @@ class CreateNote extends Component{
 
 				<div className={`form-group ${ !this.state.isAccount ? 'has-error' : '' }`} >
 					<label>Account</label>
-					<AccountsDropdown onChange={this.loadNotebooks} accounts={this.props.accounts} />
+					<AccountsDropdown id="" onChange={this.loadNotebooks} accounts={this.props.accounts} />
 					{ this.state.isAccount ? ('') : (<div className="help-block">Account is required</div>) }
 				</div>
 
@@ -158,7 +167,7 @@ class CreateNote extends Component{
 
 				<div className={`form-group ${ !this.state.isSection ? 'has-error' : '' }`}>
 					<label>Section</label>
-					<SectionsDropdown onChange={this.sectionChanged} sections={items} service={this.state.service} />
+					<SectionsDropdown onChange={this.sectionChanged} sections={this.props.sections} service={this.state.service} />
 					{ this.state.isSection ? ('') : (<div className="help-block">Section ID is required</div>) }
 				</div>
 
@@ -186,12 +195,13 @@ class CreateNote extends Component{
 function mapStateToProps(state){
 	return { 
 			accounts: state.accounts.all,
-			notebooks: state.notebooks.all 
+			notebooks: state.notebooks.all,
+			sections: state.sections.all 
 		 };
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotebooks,clearNotebooks,displayBread},dispatch);
+	return bindActionCreators({fetchNotebooks,clearNotebooks,displayBread,fetchSections},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(CreateNote);

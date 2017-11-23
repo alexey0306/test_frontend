@@ -14,9 +14,12 @@ export const no_accounts_found = <li  className='list-group-item'> No accounts f
 export const no_notes_found = <tr><td colSpan="10" className="not_found"> [ No notes found ] </td></tr>;
 export const no_policies_found = <tr><td colSpan="10" className="not_found"> [ No policies found ] </td></tr>;
 export const no_certificates_found = <tr><td colSpan="10" className="not_found"> [ No certificates found ] </td></tr>;
+export const no_sections_found = <tr><td colSpan="10" className="not_found"> [ No sections found ] </td></tr>;
+export const no_tasks_found = <tr><td colSpan="10" className="not_found"> [ No tasks found ] </td></tr>;
 
 
 // Service IDs
+export const DEFAULT_SERVICE = -1;
 export const SERVICE_EVERNOTE = 0;
 export const SERVICE_ONENOTE = 1;
 export const EVERNOTE_COLOR = "#2dbe60";
@@ -59,4 +62,12 @@ export const MIME_TYPES = {
 	mp3: "audio/mp3",
 	mp4: "video/mp4",
 	xml: "text/xml"
+}
+
+// PATHS
+export const PATHS = {
+	notebooks: "/notebooks/%s/list",
+	sections: "/sections/%s/list/%s/%s",
+	notes: "/notes/%s/list/%s",
+	notes_info: "/notes/%s/%s"
 }

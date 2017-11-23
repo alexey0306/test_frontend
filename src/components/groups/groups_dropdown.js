@@ -48,7 +48,7 @@ class GroupsDropdown extends Component{
 				);
 			case DISPLAY_MODES.sort:
 				return (
-					<DropdownButton onSelect={this.onGroupSort.bind(this)} title={<span><i class="fa fa-filter" aria-hidden="true"></i> Filter by</span>} id="dropdown-size-medium">
+					<DropdownButton onSelect={this.onGroupSort.bind(this)} title={<span><i className="fa fa-filter" aria-hidden="true"></i> Filter by</span>} id="dropdown-size-medium">
 						<MenuItem key="" eventKey=""> -- No groups -- </MenuItem>
 						{this.props.groups.map(this.renderGroup)}
 					</DropdownButton>

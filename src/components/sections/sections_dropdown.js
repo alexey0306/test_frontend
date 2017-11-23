@@ -9,7 +9,7 @@ class SectionsDropdown extends Component {
 	}
 
 	onChange(event){
-		this.props.onChange(event.target.value);
+		this.props.onChange(event.target.value,event.target.options[event.target.selectedIndex].text);
 	}
 
 	renderSection(section){
@@ -22,10 +22,10 @@ class SectionsDropdown extends Component {
 
 		if (this.props.service == SERVICE_ONENOTE ){
 			return (
-				<select onChange={this.onChange} className="form-control">
-					<option value=""> -- Select section -- </option>
-					{this.props.sections.length != 0 ? this.props.sections.map(this.renderSection) : ''}
-				</select>
+					<select onChange={this.onChange} className="form-control">
+						<option value=""> -- Select section -- </option>
+						{this.props.sections.length != 0 ? this.props.sections.map(this.renderSection) : ''}
+					</select>
 			);
 		}
 		else{

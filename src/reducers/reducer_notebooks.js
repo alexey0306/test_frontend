@@ -45,7 +45,13 @@ export default function (state = INITIAL_STATE, action) {
 
 		// Getting the list of notebooks for Dropdown list
 		case LIST_NOTEBOOKS:
-			return {...state,notebook_list: [...state.notebook_list, action.payload] }
+			
+			// Creating new array
+			var arrayVar = state.notebook_list.slice();
+			arrayVar[action.payload.id] = action.payload.data
+		
+			// Sending updated state
+			return { ...state, notebook_list: arrayVar }
 
 		default:
 			return state;

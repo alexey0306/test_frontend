@@ -6,17 +6,17 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {showNotification} from '../../globals/helpers';
 
-const socket = openSocket(ROOT_URL);
+//const socket = openSocket(ROOT_URL);
 class SocketListener extends Component{
 	constructor(props){
 		super(props);
 	}
 
 	componentDidMount(){
-		var self = this;
-		socket.on("task_finished",function(data){
-			showNotification("Message from server",data,TYPE_SUCCESS);
-		});
+		//var self = this;
+		//socket.on("task_finished",function(data){
+		//	showNotification("Message from server",data,TYPE_SUCCESS);
+		//});
 	}
 
 	render(){

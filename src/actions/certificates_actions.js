@@ -17,7 +17,6 @@ export function fetchCertificates(term = ""){
 		// Displaying the progress
 		dispatch(isLoading(true));
 		dispatch(success(null,FETCH_CERTIFICATES_START));
-		dispatch(setLastItem(null));
 
 		// Sending request
 		axios.get(URL)
