@@ -42,6 +42,5 @@ export default (
 		<Route path="certificates" component={CertificatesIndex}></Route>
 		<Route path="sections/:id/list/:notebook_name/:notebook_guid" component={SectionsIndex}></Route>
 		<Route path="thumb" component={ThumbnailContainer}></Route>
-
 	</Route>
 );

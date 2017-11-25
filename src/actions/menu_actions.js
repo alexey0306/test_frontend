@@ -4,16 +4,19 @@ import {FETCH_MENU} from '../actions/index';
 
 // Constants
 const menu = [
-	{name:"Administration",header: true,link:"",icon:""},
-	{name:"Users",header: false,link:"users","icon":"users"},
+	{name:"ADMINISTRATION",header: true,link:"",icon:""},
+	{name:"Users",header: false,link:"users","icon":"user"},
 	{name:"Groups",header: false,link:"groups","icon":"users"},
-	{name:"Accounts",header: false,link:"accounts","icon":"accounts"},
-	{name:"Policies",header: false,link:"policies","icon":"policies"},
-	{name:"Certificates",header: false,link:"certificates","icon":"certificates"},
+	{name:"Accounts",header: false,link:"accounts","icon":"object-group"},
+	{name:"Policies",header: false,link:"policies","icon":"list"},
+	{name:"Certificates",header: false,link:"certificates","icon":"id-card-o"},
 	{name:"Tasks",header: false,link:"tasks","icon":"tasks"},
-	{name:"Notes",header: true,link:"",icon:""},
-	{name:"Create note",header: false,link:"create",icon:""},
-	{name:"Favourites",header: false,link:"favourites",icon:""}	
+	{name:"",header: false,link:"tasks","icon":"tasks",separator:true},
+	{name:"NOTES",header: true,link:"",icon:""},
+	{name:"Create note",header: false,link:"create",icon:"sticky-note-o"},
+	{name:"Favourites",header: false,link:"favourites",icon:"star"},
+	{name:"Batch encryption",header: false,link:"batchencrypt",icon:"upload"},
+	{name:"",header: false,link:"tasks","icon":"tasks",separator:true},
 ];
 
 export function fetchMenu(){
