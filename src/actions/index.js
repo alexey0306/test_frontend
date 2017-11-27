@@ -82,6 +82,7 @@ export const TYPE_WARN = "warning";
 export const SHOW_BREAD = "SHOW_BREAD";
 export const DISPLAY_BREAD = "DISPLAY_BREAD";
 export const SET_LAST_ITEM = "SET_LAST_ITEM";
+export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
 
 // Global actions
 export const SET_SERVICE = "SET_SERVICE";

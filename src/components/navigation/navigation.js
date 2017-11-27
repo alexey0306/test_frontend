@@ -11,9 +11,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchMenu} from '../../actions/menu_actions';
 import {fetchAccounts} from '../../actions/accounts_actions';
+import {toggleSidebar} from '../../actions/navigation_actions';
 import {Link} from 'react-router';
 import {no_accounts_found,SERVICE_EVERNOTE,SERVICE_ONENOTE} from '../../globals/globals';
 import StatusBar from './status_bar';
+import {browserHistory} from 'react-router';
 
 // Init section
 const styles = {
@@ -36,7 +38,8 @@ const styles = {
   	padding:'10px 0px 10px 16px'
   },
   link:{
-  	color: "#000"
+  	color: "#000",
+  	textDecoration:"none",
   },
   icon:{
   	marginRight:'24px'
@@ -46,6 +49,18 @@ const styles = {
 };
 
 class Navigation extends Component{
+
+	constructor(props){
+		super(props);
+		this.linkClick = this.linkClick.bind(this);
+		this.renderItem = this.renderItem.bind(this);
+		this.renderAccount = this.renderAccount.bind(this);
+	}
+
+	linkClick(event){
+		this.props.toggleSidebar(false);
+		browserHistory.push("/"+event.currentTarget.id);		
+	}
 
 	renderAccount(account){
 
@@ -60,11 +75,10 @@ class Navigation extends Component{
 		}
 
 		return (
-		<div style={styles.drawerItem}>
-		<span style={styles.icon}>{icon}</span>
-		<Link style={styles.link} key={account.id} to={`/notebooks/${account.id}/list`}>{account.name}
+		<Link onClick={this.linkClick} style={styles.link} key={account.id} id={`notebooks/${account.id}/list`}>
+			<div key={account.id} className="drawerItem" style={styles.drawerItem}>
+			<span style={styles.icon}>{icon}</span>{account.name}</div>
 		</Link>
-		</div>
 		);
 	}
 
@@ -72,20 +86,22 @@ class Navigation extends Component{
 
 		// Drawing separator
 		if (item.separator){
-			return (<div className="separator"></div>);
+			return (<div key={item.id} className="separator"></div>);
 		}
 
 		if (item.header){
 			return (
-				<div style={styles.drawerSubheader} key={item.key}>{item.name}</div>
+				<div style={styles.drawerSubheader} key={item.id}>{item.name}</div>
 			);
 		}
 		else{
 			return (
-				<div style={styles.drawerItem}>
-				<span style={styles.icon}><i class={`fa fa-${item.icon}`} aria-hidden="true"></i></span>
-				<Link key={item.name} style={styles.link} to={`/${item.link}`}>{item.name}</Link>
+				<Link onClick={this.linkClick} key={item.name} id={item.link} style={styles.link}>
+				<div className="drawerItem" style={styles.drawerItem}>
+					<span style={styles.icon}><i className={`fa fa-${item.icon}`} aria-hidden="true"></i></span>
+					{item.name}
 				</div>
+				</Link>
 			);
 		}
 	}
@@ -96,6 +112,7 @@ class Navigation extends Component{
 	}
 
 	render(){
+		console.log(this.props);
 		return (
 			<div style={styles.content}>
 				<StatusBar />
@@ -121,7 +138,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchMenu,fetchAccounts},dispatch);
+	return bindActionCreators({fetchMenu,fetchAccounts,toggleSidebar},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Navigation);

@@ -4,19 +4,19 @@ import {FETCH_MENU} from '../actions/index';
 
 // Constants
 const menu = [
-	{name:"ADMINISTRATION",header: true,link:"",icon:""},
-	{name:"Users",header: false,link:"users","icon":"user"},
-	{name:"Groups",header: false,link:"groups","icon":"users"},
-	{name:"Accounts",header: false,link:"accounts","icon":"object-group"},
-	{name:"Policies",header: false,link:"policies","icon":"list"},
-	{name:"Certificates",header: false,link:"certificates","icon":"id-card-o"},
-	{name:"Tasks",header: false,link:"tasks","icon":"tasks"},
-	{name:"",header: false,link:"tasks","icon":"tasks",separator:true},
-	{name:"NOTES",header: true,link:"",icon:""},
-	{name:"Create note",header: false,link:"create",icon:"sticky-note-o"},
-	{name:"Favourites",header: false,link:"favourites",icon:"star"},
-	{name:"Batch encryption",header: false,link:"batchencrypt",icon:"upload"},
-	{name:"",header: false,link:"tasks","icon":"tasks",separator:true},
+	{id:1,name:"ADMINISTRATION",header: true,link:"",icon:""},
+	{id:2,name:"Users",header: false,link:"users","icon":"user"},
+	{id:3,name:"Groups",header: false,link:"groups","icon":"users"},
+	{id:4,name:"Accounts",header: false,link:"accounts","icon":"object-group"},
+	{id:5,name:"Policies",header: false,link:"policies","icon":"list"},
+	{id:6,name:"Certificates",header: false,link:"certificates","icon":"id-card-o"},
+	{id:7,name:"Tasks",header: false,link:"tasks","icon":"tasks"},
+	{id:8,name:"",header: false,link:"tasks","icon":"tasks",separator:true},
+	{id:9,name:"NOTES",header: true,link:"",icon:""},
+	{id:10,name:"Create note",header: false,link:"create",icon:"sticky-note-o"},
+	{id:11,name:"Favourites",header: false,link:"favourites",icon:"star"},
+	{id:12,name:"Batch encryption",header: false,link:"batchencrypt",icon:"upload"},
+	{id:13,name:"",header: false,link:"tasks","icon":"tasks",separator:true},
 ];
 
 export function fetchMenu(){

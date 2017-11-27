@@ -6,10 +6,9 @@ import Loader from './common/loader';
 //import SocketListener from './common/socket_listener';
 import {Thumbnail,Panel} from 'react-bootstrap';
 import BreadcrumbNew from './common/breadcrumb_new';
-import { browserHistory } from 'react-router';
-// Import section
-import {setLastItem} from '../actions/navigation_actions';
+import {setLastItem,toggleSidebar} from '../actions/navigation_actions';
 import {setService} from '../actions/globals_actions';
+
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Sidebar from 'react-sidebar';
@@ -24,20 +23,10 @@ class App extends Component {
 
   constructor(props){
     super(props);
-    this.state = {
-      docked: false,
-      open: false,
-      transitions: true,
-      touch: true,
-      shadow: true,
-      pullRight: false,
-      touchHandleWidth: 20,
-      dragToggleDistance: 30,
-    };
     this.onSetOpen = this.onSetOpen.bind(this);
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
-    this.onBarsClicked = this.onBarsClicked.bind(this);
-  }
+    this.onBarsClicked = this.onBarsClicked.bind(this);        
+  }  
 
   componentWillMount(){
     mql.addListener(this.mediaQueryChanged);
@@ -53,36 +42,23 @@ class App extends Component {
   }
 
   onSetOpen(open) {
-    this.setState({open: open});
+    this.props.toggleSidebar(open);
   }
 
   onBarsClicked(){
-    var opened = !this.state.open;
-    this.setState({open:opened});
+    this.props.toggleSidebar(true);
   }
 
   render() {
     this.props.setService(this.props.params.id);
-
-
-    const sidebarProps = {
-      sidebar: sidebarContent,
-      docked: this.state.docked,
-      open: this.state.open,
-      touch: this.state.touch,
-      shadow: this.state.shadow,
-      pullRight: this.state.pullRight,
-      touchHandleWidth: this.state.touchHandleWidth,
-      dragToggleDistance: this.state.dragToggleDistance,
-      transitions: this.state.transitions,
-      onSetOpen: this.onSetOpen,
-    };
-
     const header = <BreadcrumbNew service={this.props.service} style={{margin:'0px'}} />
-
     return (
       <div>
-        <Sidebar {...sidebarProps}>
+        <Sidebar 
+            open={this.props.sidebarOpened} 
+            docked={false} shadow={true} 
+            pullRight={false} sidebar={sidebarContent} touch={false} 
+            transitions={true} onSetOpen={this.onSetOpen} >
             <Header onBarsClicked={this.onBarsClicked} />
             <Notification />
             <div className="row">
@@ -101,10 +77,13 @@ class App extends Component {
 }
 
 function mapStateToProps(state){
-  return {service: state.accounts.service};
+  return {
+    service: state.accounts.service,
+    sidebarOpened: state.breadcrumbs.sidebarOpened
+  };
 }
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({setService},dispatch);
+  return bindActionCreators({setService,toggleSidebar},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);

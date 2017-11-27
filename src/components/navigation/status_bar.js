@@ -4,7 +4,7 @@ import React,{Component} from 'react';
 // Init section
 const styles = {
 	width:'100%',
-	height:'100px',
+	height:'150px',
 	backgroundColor: '#394165',
 	color: "#fff"
 }

@@ -1,5 +1,5 @@
 // Import section
-import {DISPLAY_BREAD,SET_LAST_ITEM,success} from './index';
+import {DISPLAY_BREAD,SET_LAST_ITEM,TOGGLE_SIDEBAR,success} from './index';
 
 // Function sections
 export function displayBread(items){
@@ -14,3 +14,9 @@ export function setLastItem(item){
 	}
 }
 
+// Closing the sidebar
+export function toggleSidebar(opened){
+	return function(dispatch){
+		dispatch(success(opened,TOGGLE_SIDEBAR));
+	}	
+}

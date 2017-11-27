@@ -343,3 +343,8 @@ li.borderless {
     margin: 1em 0;
     padding: 0;
 }
+
+.drawerItem:hover{
+	cursor:pointer;
+	background: #eee;
+}
