@@ -3,12 +3,11 @@ import Header from './common/header';
 import Navigation from './navigation/navigation';
 import Notification from './common/notification';
 import Loader from './common/loader';
-//import SocketListener from './common/socket_listener';
+import SocketListener from './common/socket_listener';
 import {Thumbnail,Panel} from 'react-bootstrap';
 import BreadcrumbNew from './common/breadcrumb_new';
 import {setLastItem,toggleSidebar} from '../actions/navigation_actions';
 import {setService} from '../actions/globals_actions';
-
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Sidebar from 'react-sidebar';
@@ -70,6 +69,7 @@ class App extends Component {
               </div>
             </div>
             <Loader show={initial_state} />
+            <SocketListener />
         </Sidebar>        
       </div>
     );

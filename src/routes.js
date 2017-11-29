@@ -17,15 +17,14 @@ import CreateNote from './components/notes/create_note';
 import CertificatesIndex from './components/certificates/certificates_index';
 import ThumbnailContainer from './components/common/thumbnail';
 import SectionsIndex from './components/sections/sections_index';
-import {browserHistory} from 'react-router';
-import {setLastItem} from './actions/navigation_actions';
-import {setService} from './actions/globals_actions';
+import FavouritesIndex from './components/favourites/favourites_index';
+import BatchCreateIndex from './components/batch/batch_create_index';
 
 
 export default (
 	<Route path="/" component={App} >
 		<IndexRoute component={Welcome}/>
-		<Route path="users" component={UsersIndex} onEnter={()=>{setLastItem(null)}}></Route>
+		<Route path="users" component={UsersIndex}></Route>
 		<Route path="users/:uid" component={UsersInfo}></Route>
 		<Route path="groups" component={GroupsList}></Route>
 		<Route path="groups/:gid" component={GroupInfo}></Route>
@@ -42,5 +41,7 @@ export default (
 		<Route path="certificates" component={CertificatesIndex}></Route>
 		<Route path="sections/:id/list/:notebook_name/:notebook_guid" component={SectionsIndex}></Route>
 		<Route path="thumb" component={ThumbnailContainer}></Route>
+		<Route path="favourites" component={FavouritesIndex}></Route>
+		<Route path="batch_create" component={BatchCreateIndex}></Route>
 	</Route>
 );

@@ -11,6 +11,7 @@ import CreatePolicyModal from '../modals/create_policy';
 import {fetchPolicies} from '../../actions/policies_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import SearchBar from '../common/search_bar';
 
 // Declaring class
 class PoliciesPanel extends Component{
@@ -35,9 +36,8 @@ class PoliciesPanel extends Component{
 		}
 	}
 
-	onSearchClick(event){
-		event.preventDefault();
-		this.props.fetchPolicies(this.state.term);
+	onSearchClick(term){
+		this.props.fetchPolicies(term);
 	}
 
 	onChange(event){		
@@ -62,16 +62,7 @@ class PoliciesPanel extends Component{
 						</span>						
 					</div>
 					<div className="col-md-6">
-						<form onSubmit={this.onSearchClick}>
-						<div className="input-group">
-						<input type="text" onChange={this.onChange} className="form-control searchBar" placeholder="Type the user name to search"/>
-							<span className="input-group-btn">					
-							<button type="submit" className="btn btn-default" title="Search">
-								<i className="fa fa-search" aria-hidden="true"></i>
-							</button>
-							</span>
-							</div>
-						</form>
+						<SearchBar onSearch={this.onSearchClick} />
 					</div>
 					
 				</div>

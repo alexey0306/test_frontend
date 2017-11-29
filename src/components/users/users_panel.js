@@ -13,6 +13,7 @@ import {groupUsers} from '../../actions/groups_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import GroupsDropdown from '../groups/groups_dropdown';
+import SearchBar from '../common/search_bar';
 
 // Declaring class
 class UsersPanel extends Component{
@@ -37,9 +38,8 @@ class UsersPanel extends Component{
 		}
 	}
 
-	onSearchClick(event){
-		event.preventDefault();
-		this.props.fetchUsers(this.state.term);
+	onSearchClick(term){
+		this.props.fetchUsers(term);
 	}
 
 	onChange(event){		
@@ -77,16 +77,7 @@ class UsersPanel extends Component{
 
 					</div>
 					<div className="col-md-6">
-						<form onSubmit={this.onSearchClick}>
-						<div className="input-group">
-						<input type="text" onChange={this.onChange} className="form-control searchBar" placeholder="Type the user name to search"/>
-							<span className="input-group-btn">					
-							<button type="submit" className="btn btn-default" title="Search">
-								<i className="fa fa-search" aria-hidden="true"></i>
-							</button>
-							</span>
-							</div>
-						</form>
+						<SearchBar onSearch={this.onSearchClick} />
 					</div>
 					
 				</div>

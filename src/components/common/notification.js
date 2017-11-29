@@ -13,7 +13,7 @@ const alerts = [{
 	type: "success",
 	message: "Oh, hai"
 }];
-const timeout = 5000;
+const timeout = 8000;
 const position = "top-right";
 
 

@@ -44,6 +44,7 @@ class EncryptModal extends Component{
 
 		// Sending request to create note
 		this.props.createNote(note);
+		this.props.onHide();
 		
 	}
 

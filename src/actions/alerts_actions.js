@@ -3,7 +3,7 @@ import {SHOW_ALERT,CLEAR_ALERTS, HANDLE_LOADER} from './index';
 export function showAlert(type,message){
 	return {
 		type: SHOW_ALERT,
-		payload: {id:1, type: type, message: message}
+		payload: {id: (new Date()).getTime(), type: type, message: message}
 	}
 }
 

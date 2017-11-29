@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchNotes,sortNotes} from '../../actions/notes_actions';
+import {fetchNotes,sortNotes,setFavourite,fetchFavourites} from '../../actions/notes_actions';
 import {no_notes_found,PATHS} from '../../globals/globals';
 import {Link} from 'react-router';
 import _ from 'lodash';
 import NotesPanel from './notes_panel';
 import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import {vsprintf} from 'sprintf-js';
+import md5 from 'md5';
 
 class NotesList extends Component {
 
@@ -20,6 +21,8 @@ class NotesList extends Component {
 		this.onSortClick = this.onSortClick.bind(this);
 		this.state = {selected: [], sort: 'asc', sortField: ''};
 		this.generateLink = this.generateLink.bind(this);
+		this.setFavourite = this.setFavourite.bind(this);
+		this.isFavourite = this.isFavourite.bind(this);
 	}
 
 	onNoteClick(event){
@@ -48,6 +51,20 @@ class NotesList extends Component {
 		this.props.setLastItem(null);
   	}
 
+  	setFavourite(event,guid,title){
+  		
+  		// Preparing data
+  		var data = this.props.params;
+  		data.note_guid = guid;
+  		data.note_name = title;
+
+  		// Sending request
+  		this.props.setFavourite(data);
+  		
+  		// Stopping the event propagation
+  		event.stopPropagation();
+  	}
+
 	onSortClick(event){
 
 		// Sorting the notebooks
@@ -58,16 +75,39 @@ class NotesList extends Component {
 		else{this.setState({sort: "dsc"});}
 	}
 
+	isFavourite(guid){
+
+		var isFavourite = false;
+		var current_link = md5(decodeURIComponent(document.location.pathname.substring(1).replace("list/","")+"/"+guid));
+		this.props.favourites.map(function(item){
+			if (current_link == item.hash){
+				isFavourite = true;return;
+			}
+		});
+		return isFavourite;
+	}
+
 	renderNote(note){
+		console.log(this.props.favourites);
 		return (
 			<tr key={note.guid} onClick={this.onRowClick} id={note.guid} className="selected">
 				<td><input
 					id={note.guid} 
 					type="checkbox" 
-					onClick={this.onNotebookClick}
+					onClick={this.onNoteClick}
 					checked={_.includes(this.state.selected,note.guid)} />
 				</td>
-				<td><Link to={this.generateLink(note.guid)}>{note.title}</Link></td>
+				<td>
+					<Link to={this.generateLink(note.guid)}>{note.title}</Link>
+					{ this.isFavourite(note.guid) ? 
+					(
+						<i style={{marginLeft:'10px'}} name={note.title} id={note.guid} onClick={(event) => this.setFavourite(event,note.guid,note.title) } class="fa fa-star" aria-hidden="true"></i>
+					):
+					(
+						<i style={{marginLeft:'10px'}} name={note.title} id={note.guid} onClick={(event) => this.setFavourite(event,note.guid,note.title) } class="fa fa-star-o" aria-hidden="true"></i>	
+					) }
+					
+				</td>
 				<td>{note.guid}</td>
 				<td>{note.created}</td>
 				<td>{note.updated}</td>
@@ -100,7 +140,8 @@ class NotesList extends Component {
 			this.props.setLastItem({data: {id: params.container_id, name:params.notebook_name}});
 		}
 		this.props.displayBread(items);
-		this.props.fetchNotes(params.id,params.container_id);		
+		this.props.fetchNotes(params.id,params.container_id);
+		this.props.fetchFavourites();	
 		
 	}
 
@@ -148,12 +189,15 @@ function mapStateToProps(state){
 	return { 
 			notes: state.notes.all, 
 			active: state.notebooks.active,
-		 	lastItem: state.navigation.lastItem
+		 	lastItem: state.navigation.lastItem,
+		 	favourites: state.notes.favourites
 		 };
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotes,sortNotes,displayBread,setLastItem},dispatch);
+	return bindActionCreators({
+		fetchNotes,sortNotes,displayBread,
+		setLastItem,setFavourite,fetchFavourites},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesList);

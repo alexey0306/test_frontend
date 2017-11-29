@@ -11,6 +11,7 @@ import CreateGroupModal from '../modals/create_group';
 import {fetchGroups,deleteGroups} from '../../actions/groups_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import SearchBar from '../common/search_bar';
 
 // Declaring class
 class GroupsPanel extends Component{
@@ -35,9 +36,8 @@ class GroupsPanel extends Component{
 		}
 	}
 
-	onSearchClick(event){
-		event.preventDefault();
-		this.props.fetchGroups(this.state.term);
+	onSearchClick(term){
+		this.props.fetchGroups(term);
 	}
 
 	onChange(event){
@@ -62,16 +62,7 @@ class GroupsPanel extends Component{
 						</span>						
 					</div>
 					<div className="col-md-9">
-						<form onSubmit={this.onSearchClick}>
-						<div className="input-group">
-						<input type="text" onChange={this.onChange} className="form-control searchBar" placeholder="Search the group by name"/>
-							<span className="input-group-btn">					
-							<button  type="submit" className="btn btn-default" title="Search">
-								<i className="fa fa-search" aria-hidden="true"></i>
-							</button>
-							</span>
-							</div>
-						</form>
+						<SearchBar onSearch={this.onSearchClick} />
 					</div>
 					
 				</div>

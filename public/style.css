@@ -1,10 +1,12 @@
 
 .header{
-	background: #eee;
-	height:50px;
+	background: #fff;
+	height:70px;
 	overflow:hidden;
 	display:table;
 	width:100%;
+	border:1px solid #ddd;
+	box-shadow: 0px 0px 4px 2px #eee;
 }
 
 .headerItem{
@@ -258,7 +260,7 @@ ul.breadcrumb li a:hover {
 	box-shadow: 3px 3px 3px #ccc;
 }
 .saferoomHeader{
-	background:#ddd;
+	background:#fff;
 	width:auto;
 	display:block;
 }
@@ -347,4 +349,33 @@ li.borderless {
 .drawerItem:hover{
 	cursor:pointer;
 	background: #eee;
+}
+
+i.profile {
+  display: inline-block;
+  border-radius: 30px;
+  box-shadow: 0px 0px 2px #fff;
+  padding: 0.5em 0.6em;
+  border: 4px;
+}
+i.custom-icon {
+	margin-left:20px;
+}
+i.custom-icon:hover{
+	cursor:pointer;
+}
+.btn-saferoom{
+	color:#fff !important;
+	background-color: #394165 !important;
+}
+.dropzone{
+	width:100%;
+	height:50px;
+	border: 1px dashed #999;
+	text-align:center;
+}
+.dropzone h4 {
+	padding-top:5px;
+	color: #999;
+
 }

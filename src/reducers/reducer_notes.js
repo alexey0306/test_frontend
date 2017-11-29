@@ -1,6 +1,12 @@
-import {FETCH_NOTES, SORT_NOTES, CREATE_NOTE,FETCH_NOTES_START, FETCH_NOTE_START, FETCH_NOTE,DECRYPT_NOTE,CLEAR_DECRYPTED} from '../actions/index';
-const INITIAL_STATE = {all: [], note: {}, decrypted:{}};
+// Import section
+import {FETCH_NOTES, SORT_NOTES, CREATE_NOTE,FETCH_NOTES_START, FETCH_NOTE_START, FETCH_NOTE,DECRYPT_NOTE,CLEAR_DECRYPTED, SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES} from '../actions/index';
+import _ from 'lodash';
+import md5 from 'md5';
 
+// Initi section 
+const INITIAL_STATE = {all: [], note: {}, decrypted:{}, favourites: []};
+
+// Functions section
 export default function (state = INITIAL_STATE, action) {
 	switch (action.type){
 		
@@ -49,6 +55,35 @@ export default function (state = INITIAL_STATE, action) {
 		// CLearing the decrypted note object
 		case CLEAR_DECRYPTED:
 			return { ...state, decrypted: {} }
+
+		// Listing the favourites
+		case FETCH_FAVOURITES:
+			return { ...state, favourites: action.payload.data }
+
+		// Adding or removing note to Favourites
+		case SET_FAVOURITE:
+			
+			var array = new Array();
+			var item = action.payload.data;
+			
+			// Removing the element from 
+			if (item.id == null){
+				array = state.favourites.filter(function(favourite){
+					return (item.hash != favourite.hash);
+				});
+			}
+			else{
+				array = state.favourites.slice();
+				array.push(item);
+			}
+			return {...state, favourites:array}
+
+		// Deleting favourites
+		case DELETE_FAVOURITES:
+			var array = state.favourites.filter(function(item){
+				return !_.includes(action.payload.data,item.id);
+			});
+			return {...state, favourites: array};
 
 		default:
 			return state;

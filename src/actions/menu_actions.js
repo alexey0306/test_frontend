@@ -5,6 +5,7 @@ import {FETCH_MENU} from '../actions/index';
 // Constants
 const menu = [
 	{id:1,name:"ADMINISTRATION",header: true,link:"",icon:""},
+	{id:0,name:"Home",header: false,link:"/","icon":"home"},
 	{id:2,name:"Users",header: false,link:"users","icon":"user"},
 	{id:3,name:"Groups",header: false,link:"groups","icon":"users"},
 	{id:4,name:"Accounts",header: false,link:"accounts","icon":"object-group"},
@@ -15,7 +16,7 @@ const menu = [
 	{id:9,name:"NOTES",header: true,link:"",icon:""},
 	{id:10,name:"Create note",header: false,link:"create",icon:"sticky-note-o"},
 	{id:11,name:"Favourites",header: false,link:"favourites",icon:"star"},
-	{id:12,name:"Batch encryption",header: false,link:"batchencrypt",icon:"upload"},
+	{id:12,name:"Batch encryption",header: false,link:"batch_create",icon:"upload"},
 	{id:13,name:"",header: false,link:"tasks","icon":"tasks",separator:true},
 ];
 

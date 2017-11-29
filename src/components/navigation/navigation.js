@@ -42,7 +42,8 @@ const styles = {
   	textDecoration:"none",
   },
   icon:{
-  	marginRight:'24px'
+  	marginRight:'24px',
+  	width:'30px'
   }
   
 
@@ -98,7 +99,7 @@ class Navigation extends Component{
 			return (
 				<Link onClick={this.linkClick} key={item.name} id={item.link} style={styles.link}>
 				<div className="drawerItem" style={styles.drawerItem}>
-					<span style={styles.icon}><i className={`fa fa-${item.icon}`} aria-hidden="true"></i></span>
+					<span style={styles.icon}><i style={{width:'20px'}} className={`fa fa-${item.icon}`} aria-hidden="true"></i></span>
 					{item.name}
 				</div>
 				</Link>
@@ -112,7 +113,6 @@ class Navigation extends Component{
 	}
 
 	render(){
-		console.log(this.props);
 		return (
 			<div style={styles.content}>
 				<StatusBar />

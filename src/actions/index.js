@@ -48,6 +48,9 @@ export const FETCH_NOTE = "FETCH_NOTE";
 export const CREATE_NOTE = "CREATE_NOTE";
 export const DECRYPT_NOTE = "DECRYPT_NOTE";
 export const CLEAR_DECRYPTED = "CLEAR_DECRYPTED";
+export const SET_FAVOURITE = "SET_FAVOURITE";
+export const FETCH_FAVOURITES = "FETCH_FAVOURITES";
+export const DELETE_FAVOURITES = "DELETE_FAVOURITES";
 
 // Policies actions
 export const FETCH_POLICIES = "FETCH_POLICIES";

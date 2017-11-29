@@ -10,6 +10,9 @@ import {Link} from 'react-router';
 import TaskInfoModal from '../modals/task_info';
 
 // Initializing variables
+const STATUS_ACTIVE = 1;
+const STATUS_FINISHED = 0;
+const STATUS_ERROR = 2;
 
 // Class declaration
 class TasksList extends Component{
@@ -73,6 +76,19 @@ class TasksList extends Component{
 	}
 
 	renderTask(task){
+		var status;
+		switch (task.status){
+			case STATUS_ACTIVE:
+				status = <Label bsStyle="warn">Active</Label>
+				break;
+			case STATUS_FINISHED:
+				status = <Label bsStyle="success">Finished</Label>
+				break;
+			case STATUS_ERROR:
+				status = <Label bsStyle="danger">Failed</Label>
+				break;
+		}
+		console.log(task.status);
 		return (
 			<tr key={task.id} onClick={this.onRowClick.bind(this)} id={task.id} className="selected">
 				<td><input
@@ -83,7 +99,7 @@ class TasksList extends Component{
 				</td>
 				<td><a href="" onClick={this.showTask.bind(this)} id={task.id}>{task.name}</a></td>
 				<td>{task.dscr}</td>
-				<td>{task.status == "0" ? (<Label bsStyle="warning">Stopped</Label>) : (<Label bsStyle="success">Revoked</Label>)}</td>
+				<td>{status}</td>
 			</tr>
 		);
 	}

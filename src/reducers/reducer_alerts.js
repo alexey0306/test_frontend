@@ -4,7 +4,10 @@ const INITIAL_STATE = { all:[], loading: false};
 export default function (state = INITIAL_STATE, action){
 	switch (action.type){
 		case SHOW_ALERT:
-			return {...state, all: [...state.all, action.payload] }
+			var alerts = state.all.slice();
+			alerts.push(action.payload);
+			console.log(alerts);
+			return {...state, all: alerts}
 		case CLEAR_ALERTS:
 			return {...state, all: [] }
 		case HANDLE_LOADER:

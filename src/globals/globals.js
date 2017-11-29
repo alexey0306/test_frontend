@@ -16,6 +16,7 @@ export const no_policies_found = <tr><td colSpan="10" className="not_found"> [ N
 export const no_certificates_found = <tr><td colSpan="10" className="not_found"> [ No certificates found ] </td></tr>;
 export const no_sections_found = <tr><td colSpan="10" className="not_found"> [ No sections found ] </td></tr>;
 export const no_tasks_found = <tr><td colSpan="10" className="not_found"> [ No tasks found ] </td></tr>;
+export const no_favourites_found = <tr><td colSpan="10" className="not_found"> [ No favourites found ] </td></tr>;
 
 
 // Service IDs

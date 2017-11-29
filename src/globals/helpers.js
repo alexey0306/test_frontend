@@ -9,7 +9,9 @@ import {vsprintf} from 'sprintf-js';
 
 
 // Function used to return the name of icon based on MIME type
-function get_icon(mime){
+export function get_icon(mime){
+
+	console.log(mime);
 
 	// Returning icon name based on MIME
 	if (mime == MIME_TYPES.pdf){
@@ -38,6 +40,16 @@ function get_icon(mime){
 	}
 	else{
 		return "icon_doc.png";
+	}
+}
+
+// Function used to return service icon
+export function get_service_icon(service){
+	switch (parseInt(service)){
+		case SERVICE_EVERNOTE:
+			return "evernote_icon_16.png";
+		case SERVICE_ONENOTE:
+			return "onenote_icon_16.png";
 	}
 }
 

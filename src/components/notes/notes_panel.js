@@ -12,6 +12,7 @@ import {fetchNotes} from '../../actions/notes_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import NotesFilter from './notes_filter';
+import NotesActions from './notes_actions';
 
 // Declaring class
 class NotesPanel extends Component{
@@ -28,6 +29,9 @@ class NotesPanel extends Component{
 		this.props.fetchNotes(this.props.id,this.props.guid,true,this.state.term);
 	}
 
+	onActionSelect(value){
+		console.log(value);
+	}
 	
 	onSearchClick(event){
 		event.preventDefault();
@@ -49,21 +53,7 @@ class NotesPanel extends Component{
 								<i className="fa fa-refresh" aria-hidden="true"></i> Refresh
 							</button>
 						</span>
-						<span>
-							<button type="button" onClick={this.onDelete} className="btn btn-default" title="Encrypt selected notebooks">
-								<i className="fa fa-lock" aria-hidden="true"></i> Encrypt
-							</button>
-						</span>
-						<span>
-							<button type="button" onClick={this.onDelete} className="btn btn-default" title="Restore selected notes">
-								<i className="fa fa-lock" aria-hidden="true"></i> Restore
-							</button>
-						</span>
-						<span>
-							<button type="button" onClick={this.onDelete} className="btn btn-default" title="Restore selected notes">
-								<i className="fa fa-lock" aria-hidden="true"></i> Reencrypt
-							</button>
-						</span>
+						<NotesActions onChange={this.onActionSelect.bind(this)} />
 						<NotesFilter search={this.state.term} id={this.props.id} guid={this.props.guid} />
 					</div>
 					<div className="col-md-6">

@@ -1,7 +1,7 @@
 import {
 		FETCH_NOTES, SORT_NOTES, REQUEST_TIMEOUT, 
 		FETCH_NOTES_START, FETCH_NOTE, FETCH_NOTE_START,CREATE_NOTE, SET_LAST_ITEM,
-		DECRYPT_NOTE,CLEAR_DECRYPTED,ROOT_URL, 
+		DECRYPT_NOTE,CLEAR_DECRYPTED,SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,ROOT_URL, 
 		success, handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
 import axios from 'axios';
 import {showAlert,isLoading} from './alerts_actions';
@@ -81,12 +81,11 @@ export function createNote(data){
 	return function(dispatch){
 		
 		// Sending the request
-		console.log(data);
 		axios.post(URL,data)
 		.then((response) => {
 
 			// Displaying the result of operation
-			showNotification("Creating note",response.data.message,TYPE_SUCCESS);
+			dispatch(showAlert(TYPE_SUCCESS,"Request has been successfully sent"));
 
 			// Sending message to reducer
 			dispatch(success(response, CREATE_NOTE));
@@ -126,5 +125,66 @@ export function decryptNote(data){
 export function clearNote(){
 	return function(dispatch){
 		dispatch(success(null,CLEAR_DECRYPTED));
+	}
+}
+
+// ---------------------------------------------------
+// 		Listing favourites
+// ---------------------------------------------------
+
+export function fetchFavourites(data){
+	const URL = `${ROOT_URL}notes/favourites/list`;
+	return function(dispatch){
+		axios.get(URL)
+		.then((response) => {
+
+			// Sending the message to reducer
+			dispatch(success(response,FETCH_FAVOURITES));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
+	}
+}
+
+// ---------------------------------------------------
+// 		Adding/Removing from favourites
+// ---------------------------------------------------
+
+export function setFavourite(data){
+	const URL = `${ROOT_URL}notes/favourites/set`;
+	return function(dispatch){
+		axios.post(URL,data)
+		.then((response) => {
+
+			// Displaying the notifications
+			dispatch(showAlert(TYPE_SUCCESS,"Note status updated"));
+
+			// Sending the message to reducer
+			dispatch(success(response,SET_FAVOURITE));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
+	}
+}
+
+// ---------------------------------------------------
+// 		Deleting favourites
+// ---------------------------------------------------
+
+export function deleteFavourites(ids){
+	const URL = `${ROOT_URL}notes/favourites/delete`;
+	return function(dispatch){
+		dispatch(isLoading(true));
+		axios.delete(URL,{data: ids})
+		.then((response) => {
+			dispatch(isLoading(false));
+			dispatch(showAlert(TYPE_SUCCESS,"Items have been successfully removed from favourites"));
+			dispatch(success(response,DELETE_FAVOURITES));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
 	}
 }

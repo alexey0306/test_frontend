@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import GroupsDropdown from '../groups/groups_dropdown';
 import {PFX_DSCR} from '../../globals/messages';
+import SearchBar from '../common/search_bar';
 
 // Declaring class
 class CertificatesPanel extends Component{
@@ -39,9 +40,8 @@ class CertificatesPanel extends Component{
 		}
 	}
 
-	onSearchClick(event){
-		event.preventDefault();
-		this.props.fetchCertificates(this.state.term);
+	onSearchClick(term){
+		this.props.fetchCertificates(term);
 	}
 
 	onChange(event){
@@ -81,16 +81,7 @@ class CertificatesPanel extends Component{
 						</div>					
 					</div>
 					<div className="col-md-6">
-						<form onSubmit={this.onSearchClick}>
-						<div className="input-group">
-						<input type="text" onChange={this.onChange} className="form-control searchBar" placeholder="Search the certificate by name or serial"/>
-							<span className="input-group-btn">					
-							<button  type="submit" className="btn btn-default" title="Search">
-								<i className="fa fa-search" aria-hidden="true"></i>
-							</button>
-							</span>
-							</div>
-						</form>
+						<SearchBar onSearch={this.onSearchClick} />
 					</div>
 					
 				</div>

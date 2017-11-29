@@ -32,7 +32,7 @@ class NotesFilter extends Component{
 	render(){
 		return (
 			<div className="inline">
-      		<DropdownButton onSelect={this.onNotesFilter} title="Filter by" id="dropdown-size-medium">
+      		<DropdownButton onSelect={this.onNotesFilter} title={<span><i className="fa fa-filter" aria-hidden="true"></i> Filter by</span>} id="dropdown-size-medium">
       			<MenuItem key="0" eventKey="0"> 
       			{this.state.display == 0 ? (<i className="fa fa-check iconMargin" aria-hidden="true"></i>) : ''}
       			 -- All -- </MenuItem>
