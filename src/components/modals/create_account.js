@@ -29,6 +29,7 @@ class CreateAccountModal extends Component{
 					</Modal.Header>
 					<Modal.Body className="modalBody">
 						<Field placeholder="Account's name" name="name" type="text" component={renderField} label="Name"></Field>
+						<Field placeholder="Account's email" name="email" type="text" component={renderField} label="Email"></Field>
 						<Field placeholder="Account's description" name="dscr" type="text" component={textAreaField} label="Description"></Field>
 						<DropdownServices />						
 					</Modal.Body>
@@ -51,6 +52,11 @@ function validate(values){
 	}
 	else if (values.name.length > 64) {
     	errors.username = 'Must be 64 characters or less'
+  	}
+  	if (!values.email) {
+		errors.email = 'Required'
+	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    	errors.email = 'Invalid email address'
   	}
   	if (!values.dscr){
 		errors.dscr = "Required";

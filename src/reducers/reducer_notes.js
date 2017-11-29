@@ -1,5 +1,5 @@
 // Import section
-import {FETCH_NOTES, SORT_NOTES, CREATE_NOTE,FETCH_NOTES_START, FETCH_NOTE_START, FETCH_NOTE,DECRYPT_NOTE,CLEAR_DECRYPTED, SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES} from '../actions/index';
+import {FETCH_NOTES, SORT_NOTES, CREATE_NOTE,FETCH_NOTES_START, FETCH_NOTE_START, FETCH_NOTE,DECRYPT_NOTE,CLEAR_DECRYPTED, SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,BATCH_CREATE_NOTES} from '../actions/index';
 import _ from 'lodash';
 import md5 from 'md5';
 
@@ -46,6 +46,10 @@ export default function (state = INITIAL_STATE, action) {
 
 		// Creating the note
 		case CREATE_NOTE:
+			return state;
+
+		// Batch encryption
+		case BATCH_CREATE_NOTES:
 			return state;
 
 		// Decrypting the note

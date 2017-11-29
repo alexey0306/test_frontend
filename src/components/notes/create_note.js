@@ -14,6 +14,7 @@ import 'react-tagsinput/react-tagsinput.css'; // If using WebPack and style-load
 import {SERVICE_ONENOTE} from '../../globals/globals';
 import EncryptModal from '../modals/encrypt_method';
 import {displayBread} from '../../actions/navigation_actions';
+import {createNote} from '../../actions/notes_actions';
 
 // Initializing variables
 const items = [{id:1, name: "Create new note", link: "", isLink: false}];
@@ -24,7 +25,7 @@ class CreateNote extends Component{
 	constructor(props){
 		super(props);
 		this.loadNotebooks = this.loadNotebooks.bind(this);
-		this.createNote = this.createNote.bind(this);
+		this.selectMethod = this.selectMethod.bind(this);
 		this.validate = this.validate.bind(this);
 		this.loadSections = this.loadSections.bind(this);
 		this.sectionChanged = this.sectionChanged.bind(this);
@@ -90,17 +91,17 @@ class CreateNote extends Component{
   		return (errors.length === 0);
   	}
 
-  	createNote(){
-  		//if (!this.validate()){
-  		//	return;
-  		//}
+  	selectMethod(){
+  		if (!this.validate()){
+  			return;
+  		}
 
   		// Checking if the note content is empty
-  		//if (this.state.content == ""){
-  		//	if (!window.confirm("Do you really want to create the empty note?")){
-  		//		return;
-  		//	}
-  		//}
+  		if (this.state.content == ""){
+  			if (!window.confirm("Do you really want to create the empty note?")){
+  				return;
+  			}
+  		}
 
   		// Opening the modal window with encryption method selection
   		this.setState({lgShow:true});
@@ -136,6 +137,25 @@ class CreateNote extends Component{
 				this.props.fetchSections(this.state.account,notebook_guid,true);
 			}
 		}
+	}
+
+	createNote(method,password,keys){
+
+		// Preparing data for note creation
+		var note = {
+			account_id: this.state.account,
+			guid: (this.state.section != "" ? this.state.section : this.state.notebook),
+			title: this.state.noteTitle,
+			tags: this.state.tags,
+			content: this.state.content,
+			method: method,
+			password: password,
+			keys: keys
+		}	
+
+		// Creating new note
+		this.props.createNote(note);
+
 	}
 
 	render(){
@@ -182,10 +202,10 @@ class CreateNote extends Component{
 				<hr/>
 				<div className="row">
 					<div className="col-md-12">
-						<button onClick={this.createNote} className="btn btn-primary">Encrypt</button>
+						<button onClick={this.selectMethod} className="btn btn-primary">Encrypt</button>
 					</div>
 				</div>
-				<EncryptModal data={this.state} show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})} />
+				<EncryptModal onSelected={this.createNote.bind(this)} data={this.state} show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})} />
 			</div>
 		)
 	}
@@ -201,7 +221,9 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotebooks,clearNotebooks,displayBread,fetchSections},dispatch);
+	return bindActionCreators({
+		fetchNotebooks,clearNotebooks,
+		displayBread,fetchSections,createNote},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(CreateNote);

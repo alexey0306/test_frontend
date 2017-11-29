@@ -9,9 +9,7 @@ import {vsprintf} from 'sprintf-js';
 
 
 // Function used to return the name of icon based on MIME type
-export function get_icon(mime){
-
-	console.log(mime);
+export function get_icon(mime){	
 
 	// Returning icon name based on MIME
 	if (mime == MIME_TYPES.pdf){

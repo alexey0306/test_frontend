@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Modal,Button, Alert} from 'react-bootstrap';
-import {createNote} from '../../actions/notes_actions';
 import EncryptionMethod from '../common/encryption_method';
 
 
@@ -11,41 +10,34 @@ class EncryptModal extends Component{
 	
 	constructor(props){
 		super(props);
-		this.state = {method: "", password: "", keys: [], alertVisible:false, alertText: ''}
+		this.state = {method: "password", password: "", keys: [], alertVisible:false, alertText: ''}
 	}
 
 	selectMethod(data){
-		this.setState({method:data.method, password: data.password, keys: data.keys})
+		this.setState({method:data.method,password: data.password,keys:data.keys});		
 	}
 
 	handleAlertDismiss() {
     	this.setState({ alertVisible: false});
  	}
 
-	createNote(){
+	onFinish(){
 
 		// Double-checking password
 		if (this.state.method == "password" && this.state.password == ""){
 			this.setState({alertVisible:true, alertText: "Password cannot be empty"});
-			return;
+			return false;
 		}
 
-		// Preparing data for note creation
-		var note = {
-			account_id: this.props.data.account,
-			guid: (this.props.data.section != "" ? this.props.data.section : this.props.data.notebook),
-			title: this.props.data.noteTitle,
-			tags: this.props.data.tags,
-			content: this.props.data.content,
-			method: this.state.method,
-			password: this.state.password,
-			keys: this.state.keys
-		}
+		// Checking recipients
+		if ( this.state.method == "cms" && this.state.keys.length == 0 ){
+			this.setState({alertVisible:true,alertText:"No recipients selected"});
+			return false;
+		}	
 
-		// Sending request to create note
-		this.props.createNote(note);
-		this.props.onHide();
-		
+		// Sending data back to parent component
+		this.props.onSelected(this.state.method,this.state.password,this.state.keys);
+		//this.props.onHide();		
 	}
 
 	render(){
@@ -63,7 +55,7 @@ class EncryptModal extends Component{
 					<EncryptionMethod onMethodSelect={this.selectMethod.bind(this)} />
 				</Modal.Body>
 				<Modal.Footer>
-					<button type="submit" onClick={this.createNote.bind(this)} className="btn btn-primary">Apply</button>
+					<button type="submit" onClick={this.onFinish.bind(this)} className="btn btn-primary">Apply</button>
 					<button className="btn btn-danger" onClick={this.props.onHide}>Close</button>
 				</Modal.Footer>
 			</Modal>
@@ -72,7 +64,7 @@ class EncryptModal extends Component{
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({createNote},dispatch);
+	return bindActionCreators({},dispatch);
 }
 
 EncryptModal = connect(null, mapDispatchToProps)(EncryptModal);

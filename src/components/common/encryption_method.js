@@ -12,7 +12,7 @@ class EncryptionMethod extends Component{
 		this.updateData = this.updateData.bind(this);
 	}
 
-	updateData(){
+	updateData(){		
 		var stateVar = this.state;
 		this.props.onMethodSelect(stateVar);
 	}
@@ -42,10 +42,10 @@ class EncryptionMethod extends Component{
 					<div className={this.state.method != "password" ? 'disabledDiv' : '' } style={{paddingLeft:'20px'}}>
 						<div>Note will be encrypted using password. If you want to use your master password, check the Use Master option. If you want to use One-Time password, then type this password in the <strong>Password</strong> field
 						</div>
-						<div class="form-group">
+						<div className="form-group">
 							<Checkbox> Use master password </Checkbox>
 							<div className={this.state.method == "password" && this.state.password == "" ? 'has-error' : ''}>
-								<input onChange={this.onPasswordChange.bind(this)} value={this.state.password} type="password" class="form-control" placeholder="Type your password here" />								
+								<input onChange={this.onPasswordChange.bind(this)} value={this.state.password} type="password" className="form-control" placeholder="Type your password here" />								
 							</div>
 						</div>
 					</div><br/>
