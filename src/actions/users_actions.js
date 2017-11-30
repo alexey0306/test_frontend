@@ -1,6 +1,9 @@
 // Import section
 import axios from 'axios';
-import {FETCH_USERS,FETCH_USER,ROOT_URL,REQUEST_TIMEOUT,CREATE_USER,DELETE_USERS, SORT_USERS, TYPE_DANGER,TYPE_SUCCESS,success,handleError} from './index';
+import {FETCH_USERS,FETCH_USER,ROOT_URL,
+		REQUEST_TIMEOUT,CREATE_USER,DELETE_USERS, IMPORT_USERS, 
+		SORT_USERS, TYPE_DANGER,TYPE_SUCCESS,success,
+		handleError} from './index';
 import {showAlert,isLoading} from './alerts_actions';
 import {setLastItem} from './navigation_actions';
 
@@ -45,6 +48,10 @@ export function fetchUser(id){
 	}
 }
 
+// ---------------------------------------------------
+// 		Creating user
+// ---------------------------------------------------
+
 export function createUser(props){
 
 	// Preparing data
@@ -65,6 +72,10 @@ export function createUser(props){
 	}
 }
 
+// ---------------------------------------------------
+// 		Deleting users
+// ---------------------------------------------------
+
 export function deleteUsers(ids){
 	const URL = `${ROOT_URL}users/delete`;
 	return function(dispatch){
@@ -81,9 +92,32 @@ export function deleteUsers(ids){
 	}
 }
 
+// ---------------------------------------------------
+// 		Sorting users
+// ---------------------------------------------------
+
 export function sortUsers(sort){
 	return {
 		type: SORT_USERS,
 		payload: sort
+	}
+}
+
+// ---------------------------------------------------
+// 		Importing users
+// ---------------------------------------------------
+export function importUsers(jsonString){
+	const URL = `${ROOT_URL}users/import`;
+	return function(dispatch){
+		dispatch(isLoading(true));
+		axios.post(URL,jsonString,{headers: {'Content-Type': 'application/json'}})
+		.then((response) => {
+			dispatch(isLoading(false));
+			dispatch(showAlert(TYPE_SUCCESS,"Users have been successfully imported"));
+			dispatch(success(response,IMPORT_USERS));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
 	}
 }

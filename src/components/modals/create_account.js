@@ -1,7 +1,7 @@
 // Import section
 import React,{Component} from 'react';
 import {Modal,Button} from 'react-bootstrap';
-import {reduxForm, Field} from 'redux-form';
+import {reduxForm, Field,reset} from 'redux-form';
 import { createAccount } from '../../actions/accounts_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -15,8 +15,6 @@ class CreateAccountModal extends Component{
 		this.props.createAccount(props);
 		this.props.onHide();		
 	}
-
-
 
 	render(){
 
@@ -43,6 +41,8 @@ class CreateAccountModal extends Component{
 	}
 }
 
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset('CreateAccountForm'));
 
 function validate(values){
 	const errors = {};
@@ -71,6 +71,7 @@ function validate(values){
 CreateAccountModal = reduxForm({
 		form:'CreateAccountForm',
 		validate,
+		onSubmitSuccess: afterSubmit,
 
 })(CreateAccountModal);
 

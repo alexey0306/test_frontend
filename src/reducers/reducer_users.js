@@ -1,4 +1,4 @@
-import {FETCH_USERS,FETCH_USER,CREATE_USER,DELETE_USERS,SORT_USERS} from '../actions/index';
+import {FETCH_USERS,FETCH_USER,CREATE_USER,DELETE_USERS,SORT_USERS,IMPORT_USERS} from '../actions/index';
 import _ from 'lodash';
 
 const INITIAL_STATE = { all:[], user:null };
@@ -29,6 +29,10 @@ export default function(state = INITIAL_STATE,action){
 				});
 			}
 			return { ...state, all: newArray};
+
+		case IMPORT_USERS:
+			var users = state.all
+			return {...state,all: users.concat(action.payload.data) }
 		default:
 			return state;
 	}

@@ -10,6 +10,7 @@ export const FETCH_USER = "FETCH_USER";
 export const CREATE_USER = "CREATE_USER";
 export const DELETE_USERS = "DELETE_USERS";
 export const SORT_USERS = "SORT_USERS";
+export const IMPORT_USERS = "IMPORT_USERS";
 
 // Group actions
 export const FETCH_GROUPS = "FETCH_GROUPS";
@@ -30,6 +31,7 @@ export const HANDLE_LOADER = "HANDLE_LOADER";
 export const FETCH_ACCOUNTS = "FETCH_ACCOUNTS";
 export const FETCH_ACCOUNT = "FETCH_ACCOUNT";
 export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
+export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
 
 // Notebook actions
 export const FETCH_NOTEBOOKS_START = "FETCH_NOTEBOOKS_START";

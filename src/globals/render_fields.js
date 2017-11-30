@@ -37,6 +37,21 @@ export const textAreaField = ({input,label,placeholder,type,meta: {touched, erro
 	</div>
 );
 
+export const textAreaField_lg = ({input,label,placeholder,type,meta: {touched, error, warning}}) => (
+	<div className={`form-group ${ touched && error ? 'has-error' : '' }`}>
+		<label>{label}</label>
+		<div>
+			<textarea rows="20"
+				className="form-control" {...input} 
+				placeholder={placeholder} 
+				type={type}
+			></textarea>
+			{touched && ((error && <div className="help-block">{error}</div>)) }
+		</div>
+	</div>
+);
+
+
 export const renderSelectField = ({ input, label, type, meta: { touched, error }, children }) => (
   <div className={`form-group ${ touched && error ? 'has-error' : '' }`}>
     <label>{label}</label>

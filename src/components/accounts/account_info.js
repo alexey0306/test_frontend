@@ -8,7 +8,6 @@ class AccountInfo extends Component{
 	}
 
 	render(){
-		console.log(this.props.account);
 		return (
 			<div>
 				<ul className="list-group">

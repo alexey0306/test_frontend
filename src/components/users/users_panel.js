@@ -14,13 +14,15 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import GroupsDropdown from '../groups/groups_dropdown';
 import SearchBar from '../common/search_bar';
+import UsersActions from './users_actions';
+import ImportUsersModal from '../modals/import_users'; 
 
 // Declaring class
 class UsersPanel extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {lgShow: false,term:''}
+		this.state = {lgShow: false,term:'',importModal:false}
 		this.onDelete = this.onDelete.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.onSearchClick = this.onSearchClick.bind(this);
@@ -46,6 +48,21 @@ class UsersPanel extends Component{
 		this.setState({term:event.target.value});
 	}
 
+	onActionSelect(action){
+		switch (action){
+			case "create":
+				this.setState({lgShow:true});
+				break;
+			case "delete":
+				this.onDelete();
+				break;
+			case "import":
+				this.setState({importModal:true});
+				break;
+
+		}
+	}
+
 	onGroupAdd(group_id){
 		this.props.groupUsers(group_id,this.props.selected);
 	}
@@ -60,16 +77,7 @@ class UsersPanel extends Component{
 			<div className="row">
 				<div className="col-md-11">
 					<div className="col-md-6">
-						<span>
-							<button type="button" onClick={() => this.setState({lgShow:true})} className="btn btn-default" title="Create a new user">
-								<i className="fa fa-plus" aria-hidden="true"></i> Create
-							</button>
-						</span>
-						<span>
-							<button type="button" onClick={this.onDelete} className="btn btn-default" title="Delete users">
-								<i className="fa fa-trash" aria-hidden="true"></i> Delete
-							</button>
-						</span>
+						<UsersActions onChange={this.onActionSelect.bind(this)} />
 						<div className="inline">
 							<GroupsDropdown onGroupAdd={this.onGroupAdd.bind(this)} mode="groupadd" />
 							<GroupsDropdown onGroupSort={this.onGroupSort.bind(this)} mode="sort" />
@@ -83,6 +91,7 @@ class UsersPanel extends Component{
 				</div>
 			</div><br/>
 			<CreateUserModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>
+			<ImportUsersModal show={this.state.importModal} onHide={()=> this.setState({importModal:false})}/>
 			</div>
 		);
 	}

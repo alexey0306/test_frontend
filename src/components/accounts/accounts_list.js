@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import {bindActionCreators} from 'redux';
-import {fetchAccounts,fetchAccount} from '../../actions/accounts_actions';
+import {fetchAccounts,fetchAccount,deleteAccount} from '../../actions/accounts_actions';
 import {no_accounts_found} from '../../globals/globals';
 import {get_account} from '../../globals/helpers';
 import Breadcrumb from '../common/breadcrumb';
@@ -27,26 +27,33 @@ class AccountsList extends Component{
 		this.onLogout = this.onLogout.bind(this);
 		this.onInfoClick = this.onInfoClick.bind(this);
 		this.onNewClick = this.onNewClick.bind(this);
+		this.deleteAccount = this.deleteAccount.bind(this);
 	}
 
-	onInfoClick(event){
-		this.props.fetchAccount(event.target.id,event.target.name);
+	onInfoClick(id,service){
+		this.props.fetchAccount(id,service);
 		this.setState({modalInfo:true});
-		this.setState({service: event.target.name});
+		this.setState({service: service});
 	}
 
 	onNewClick(event){
 		this.setState({modalCreate:true});
 	}
 
-	onLogout(event){
+	onLogout(id,service){
 		return "";
 	}
 
-	onLogin(event){
-		const URL = `${ROOT_URL}accounts/login/${event.target.id}/${event.target.name}`;
+	deleteAccount(id){
+		if (window.confirm("Are you sure that you want to delete this account?")){
+			this.props.deleteAccount([id]);
+		}
+	}
 
-		switch (parseInt(event.currentTarget.name)){
+	onLogin(id,service){
+		const URL = `${ROOT_URL}accounts/login/${id}/${service}`;
+
+		switch (parseInt(service)){
 			case SERVICE_ONENOTE:
 				axios.get(URL)
 					.then((response) => {
@@ -88,17 +95,18 @@ class AccountsList extends Component{
 					<h3 className="card-title">{account.name}</h3>
 					<p className="card-text">{account.dscr}</p>
 					{ !account.loggedIn ? (
-						<a id={account.id} name={account.service} onClick={this.onLogin} className="btn btn-primary">Login</a>
+						<a onClick={() => this.onLogin(account.id,account.service) } className="btn btn-primary">Login</a>
 					) :
 					(
-						<a id={account.id} name={account.service} onClick={this.onLogout} className="btn btn-primary">Logout</a>
+						<a onClick={() => this.onLogout(account.id,account.service)} className="btn btn-primary">Logout</a>
 					)
 					 }
-					<a id={account.id} name={account.service} onClick={this.onInfoClick} className="btn btn-primary">Info</a>
+					<a onClick={() => this.onInfoClick(account.id,account.service)} className="btn btn-primary">Info</a>
 					
 				</div>
 				<div className="card-footer">
 					Created: {account.created}
+					<div className="pull-right"><i title="Delete account" onClick={() => this.deleteAccount(account.id)} class="fa fa-trash" aria-hidden="true"></i></div>
 				</div>
 			</div>
 		);
@@ -115,7 +123,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchAccounts,fetchAccount,displayBread},dispatch);
+	return bindActionCreators({fetchAccounts,fetchAccount,displayBread,deleteAccount},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(AccountsList);
