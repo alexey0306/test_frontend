@@ -379,3 +379,10 @@ i.custom-icon:hover{
 	color: #999;
 
 }
+.searchItem:hover{
+	cursor:pointer;
+	background: #eee;
+}
+.fa-search:hover{
+	cursor:pointer;
+}

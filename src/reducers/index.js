@@ -13,6 +13,7 @@ import CertificatesReducer from './reducer_certificates';
 import NavigationReducer from './reducer_navigation';
 import SectionsReducer from './reducer_sections';
 import GlobalsReducer from './reducer_globals';
+import SearchReducer from './reducer_search';
 
 const rootReducer = (state, action) => {
   return appReducer(state,action);
@@ -32,7 +33,8 @@ const appReducer = combineReducers({
   certificates: CertificatesReducer,
   breadcrumbs: NavigationReducer,
   sections: SectionsReducer,
-  globals: GlobalsReducer
+  globals: GlobalsReducer,
+  search: SearchReducer
 });
 
 export default rootReducer;
