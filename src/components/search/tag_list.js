@@ -7,6 +7,22 @@ import {Panel,ListGroup, ListGroupItem} from 'react-bootstrap';
 import _ from 'lodash';
 
 // Init section
+const styles = {
+	none:{
+
+	},
+	shown:{
+		maxHeight:'300px',
+		overflowY:'auto'
+	},
+	header: {
+		background:'#394165',
+		color:'#fff',
+		height:'40px',
+		padding:'10px',
+		paddingLeft:'20px',
+	}
+}
 
 
 // Class section
@@ -39,36 +55,48 @@ class TagList extends Component{
 
 	renderTag(tag){
 		return (
-			<ListGroupItem onClick={() => this.onTagSelected(tag.guid)} className="searchItem">{tag.name} {_.includes(this.state.selected,tag.guid) ? (<div className="pull-right"><i className="fa fa-check" aria-hidden="true"></i></div>) : ('')}</ListGroupItem>
+			<ListGroupItem key={tag.guid} onClick={() => this.onTagSelected(tag.guid)} className="searchItem">{tag.name} {_.includes(this.state.selected,tag.guid) ? (<div className="pull-right"><i className="fa fa-check" aria-hidden="true"></i></div>) : ('')}</ListGroupItem>
 		);
 	}
 
 	render(){
 
-		if (this.props.tags.length == 0){
-			return (
-				<ListGroup>
-					<ListGroupItem style={{background:'#394165',color:'#fff'}}>Tags </ListGroupItem>
-					<ListGroupItem><i> -- No tags found -- </i></ListGroupItem>
-				</ListGroup>
-			);
+		var tagList = null;
+		var style = styles.none;
+
+		if (this.props.loading){
+			tagList = <ListGroupItem> -- Loading -- </ListGroupItem>;
 		}
-		
+		else{
+			if (this.props.tags.length == 0){
+				tagList = <ListGroupItem><i> -- No tags found -- </i></ListGroupItem>;
+			}
+			else{
+				tagList = this.props.tags.map(this.renderTag);
+				style = styles.shown;
+			}
+		}
+
+
 		return (
-				<div style={{height:'300px',overflowY:'auto'}}>
-				<ListGroup>
-					<ListGroupItem style={{background:'#394165',color:'#fff'}}>Tags <div className="pull-right"><i title="Start search" onClick={this.startSearch} class="fa fa-search" aria-hidden="true"></i></div></ListGroupItem>
-					{this.props.tags.map(this.renderTag)}
-				</ListGroup>
+			<div>
+				<div style={styles.header}> Tags <div className="pull-right">
+					<i title="Start search" onClick={this.startSearch} className="fa fa-search" aria-hidden="true"></i></div>
 				</div>
-				
-			);		
+				<ListGroup style={style}>
+					{tagList}
+				</ListGroup>
+			</div>
+		);
 	}
 
 }
 
 function mapStateToProps(state){
-	return { tags: state.search.tags };
+	return { 
+		tags: state.search.tags,
+		loading: state.search.tagsLoading
+	};
 }
 
 export default connect(mapStateToProps,null)(TagList);

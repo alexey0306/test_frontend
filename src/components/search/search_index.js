@@ -5,8 +5,8 @@ import {bindActionCreators} from 'redux';
 import {fetchAccounts} from '../../actions/accounts_actions';
 import Breadcrumb from '../common/breadcrumb';
 import {displayBread} from '../../actions/navigation_actions';
-import {fetchTags,fetchSearches,fetchRecipients} from '../../actions/search_actions';
-import NotesSearch from '../notes/notes_search';
+import {fetchTags,fetchSearches,fetchRecipients,searchNotes,clearAll} from '../../actions/search_actions';
+import NotesSearch from './search_results';
 import AccountsDropdown from '../accounts/accounts_dropdown';
 import TagList from './tag_list';
 import SavedSearchList from './savedsearch_list';
@@ -20,13 +20,16 @@ class SearchIndex extends Component{
 
 	constructor(props){
 		super(props);
+		this.state = {account:""}
 		this.onTagSelected = this.onTagSelected.bind(this);
 		this.onUserSelected = this.onUserSelected.bind(this);
+		this.onSearchSelected = this.onSearchSelected.bind(this);
 	}
 
 	componentDidMount(){
 		this.props.displayBread(items);
-		this.props.fetchAccounts();		
+		this.props.fetchAccounts();
+		this.props.clearAll();	
 	}
 
 	onTagSelected(type,tags){
@@ -37,13 +40,32 @@ class SearchIndex extends Component{
 		this.searchNotes(type,serials);
 	}
 
+	onSearchSelected(type,queries){
+		this.searchNotes(type,queries);
+	}
+
 	searchNotes(type,items){
-		console.log(type);
-		console.log(items);
+		
+		// Checking
+		if (this.state.account == ""){
+			alert("Account not selected");
+			return false;
+		}
+
+		// Checking items
+	    if (items.length == 0){
+	    	alert("Search items not specified");
+			return false;	
+	    }
+
+	    // Sending request
+	    this.props.searchNotes({account:this.state.account,type:type,items:items});
+
 	}
 
 	onAccountSelect(account){
 		if (account != ""){
+			this.setState({account})
 			this.props.fetchTags(account);
 			this.props.fetchSearches(account);
 			this.props.fetchRecipients();
@@ -75,7 +97,7 @@ class SearchIndex extends Component{
 							<br/>
 							<div className="row">
 								<div className="col-md-12">
-									<SavedSearchList />
+									<SavedSearchList onStartSearch={this.onSearchSelected} />
 								</div>
 							</div>
 						</div>
@@ -102,7 +124,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
 		displayBread,fetchAccounts,fetchTags,
-		fetchSearches,fetchRecipients},dispatch);
+		fetchSearches,fetchRecipients,searchNotes,clearAll},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(SearchIndex);

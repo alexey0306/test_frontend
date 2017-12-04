@@ -7,6 +7,22 @@ import {Panel,ListGroup, ListGroupItem} from 'react-bootstrap';
 import _ from 'lodash';
 
 // Init section
+const styles = {
+	none:{
+
+	},
+	shown:{
+		maxHeight:'300px',
+		overflowY:'auto'
+	},
+	header: {
+		background:'#394165',
+		color:'#fff',
+		height:'40px',
+		padding:'10px',
+		paddingLeft:'20px',
+	}
+}
 
 
 // Class section
@@ -39,13 +55,14 @@ class RecipientList extends Component{
 
 	renderUser(user){
 		return (
-			<ListGroupItem onClick={() => this.onUserSelected(user.serial)} className="searchItem">{user.name} {_.includes(this.state.selected,user.serial) ? (<div className="pull-right"><i className="fa fa-check" aria-hidden="true"></i></div>) : ('')}</ListGroupItem>
+			<ListGroupItem key={user.id} onClick={() => this.onUserSelected(user.serial)} className="searchItem">{user.name} {_.includes(this.state.selected,user.serial) ? (<div className="pull-right"><i className="fa fa-check" aria-hidden="true"></i></div>) : ('')}</ListGroupItem>
 		);
 	}
 
 	render(){
 
 		var userList = null;
+		var style = styles.none;
 
 		if (this.props.loading){
 			userList = <ListGroupItem> -- Loading -- </ListGroupItem>;
@@ -56,15 +73,20 @@ class RecipientList extends Component{
 			}
 			else{
 				userList = this.props.recipients.map(this.renderUser);
+				style = styles.shown;
 			}
 		}
 
 
 		return (
-			<ListGroup>
-				<ListGroupItem style={{background:'#394165',color:'#fff'}}>Users <div className="pull-right"><i title="Start search" onClick={this.startSearch} class="fa fa-search" aria-hidden="true"></i></div></ListGroupItem>
+			<div>
+				<div style={styles.header}> Users <div className="pull-right">
+					<i title="Start search" onClick={this.startSearch} className="fa fa-search" aria-hidden="true"></i></div>
+				</div>
+				<ListGroup style={style}>
 					{userList}
-			</ListGroup>
+				</ListGroup>
+			</div>
 		);
 	}
 
