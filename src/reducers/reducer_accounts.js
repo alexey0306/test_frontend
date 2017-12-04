@@ -4,7 +4,7 @@ import {DEFAULT_SERVICE} from '../globals/globals';
 import _ from 'lodash';
 
 // Init section
-const INITIAL_STATE = { all: [], account:{},service: DEFAULT_SERVICE };
+const INITIAL_STATE = { all: [], account:{},service: DEFAULT_SERVICE,selected:null};
 
 // Function section
 export default function (state = INITIAL_STATE, action){

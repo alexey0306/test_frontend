@@ -6,6 +6,7 @@ import {fetchAccounts} from '../../actions/accounts_actions';
 import Breadcrumb from '../common/breadcrumb';
 import {displayBread} from '../../actions/navigation_actions';
 import {fetchTags,fetchSearches,fetchRecipients,searchNotes,clearAll} from '../../actions/search_actions';
+import {fetchNotebooks} from '../../actions/notebooks_actions';
 import NotesSearch from './search_results';
 import AccountsDropdown from '../accounts/accounts_dropdown';
 import TagList from './tag_list';
@@ -29,7 +30,7 @@ class SearchIndex extends Component{
 	componentDidMount(){
 		this.props.displayBread(items);
 		this.props.fetchAccounts();
-		this.props.clearAll();	
+		this.props.clearAll();
 	}
 
 	onTagSelected(type,tags){
@@ -69,6 +70,7 @@ class SearchIndex extends Component{
 			this.props.fetchTags(account);
 			this.props.fetchSearches(account);
 			this.props.fetchRecipients();
+			this.props.fetchNotebooks(account);
 		}
 	}
 
@@ -101,9 +103,8 @@ class SearchIndex extends Component{
 								</div>
 							</div>
 						</div>
-						<div className="col-md-9">
-							<NotesSearch />
-							
+						<div className="col-md-9" style={{paddingLeft:'30px'}}>
+							<NotesSearch account={this.state.account} notebooks={this.props.notebooks} />							
 						</div>
 					</div>
 				</div>				
@@ -117,14 +118,15 @@ function mapStateToProps(state){
 		accounts: state.accounts.all,
 		tags: state.search.tags,
 		searches: state.search.searches,
-		users: state.search.recipients
+		users: state.search.recipients,
+		notebooks: state.notebooks.all
 	};
 }
 
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
 		displayBread,fetchAccounts,fetchTags,
-		fetchSearches,fetchRecipients,searchNotes,clearAll},dispatch);
+		fetchSearches,fetchRecipients,searchNotes,clearAll,fetchNotebooks},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(SearchIndex);

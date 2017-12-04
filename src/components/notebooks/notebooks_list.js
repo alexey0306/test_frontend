@@ -63,6 +63,16 @@ class NotebooksList extends Component {
 		this.setState({selected: arrayVar});
 	}
 
+	onAllChange(event){
+		var arrayVar = [];
+		if (event.target.checked){
+			this.props.notebooks.map(function(notebook){
+				arrayVar.push(notebook.guid);
+			})
+		}
+		this.setState({selected:arrayVar});
+	}
+
 	onSortClick(event){
 
 		// Sorting the notebooks
@@ -96,6 +106,7 @@ class NotebooksList extends Component {
 				<td><Link to={link}>{notebook.name}</Link></td>
 				<td>{notebook.guid}</td>
 				<td>{notebook.created}</td>
+				<td>{notebook.shared ? 'Shared' : 'n/a'}</td>
 			</tr>
 		);
 	}
@@ -108,11 +119,11 @@ class NotebooksList extends Component {
 	render(){
 		return (
 			<div>
-			<NotebooksPanel notebook_id={this.props.params.id} />
+			<NotebooksPanel selected={this.state.selected} account={this.props.params.id} />
 			<table className="table table-hover table-striped">
 				<thead>
 					<tr>
-						<th><input type="checkbox"/></th>
+						<th><input onChange={this.onAllChange.bind(this)} type="checkbox" id='selectAll'/></th>
 						<th>Name <i className="fa fa-fw fa-sort sort" id="name" onClick={this.onSortClick}></i></th>
 						<th>GUID</th>
 						<th>Created <i id="created" className="fa fa-fw fa-sort sort" onClick={this.onSortClick}></i></th>

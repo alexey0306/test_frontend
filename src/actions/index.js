@@ -40,6 +40,7 @@ export const SORT_NOTEBOOKS = "SORT_NOTEBOOKS";
 export const SET_NOTEBOOK = "SET_NOTEBOOK";
 export const LIST_NOTEBOOKS = "LIST_NOTEBOOKS";
 export const CLEAR_NOTEBOOKS = "CLEAR_NOTEBOOKS";
+export const ENCRYPT_NOTEBOOK = "ENCRYPT_NOTEBOOK";
 
 // Notes actions
 export const FETCH_NOTES = "FETCH_NOTES";

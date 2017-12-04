@@ -1,5 +1,9 @@
+// Import section
 import React, {Component} from 'react';
 
+// Init section
+
+// Class section
 class AccountsDropdown extends Component {
 
 	constructor(props){

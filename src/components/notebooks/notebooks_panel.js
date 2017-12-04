@@ -7,24 +7,54 @@
 
 // Import section
 import React, {Component} from 'react';
-import CreateUserModal from '../modals/create_user';
-import {fetchNotebooks} from '../../actions/notebooks_actions';
+import {fetchNotebooks,encryptNotebooks} from '../../actions/notebooks_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import SearchBar from '../common/search_bar';
+import {Alert} from 'react-bootstrap';
+import EncryptModal from '../modals/encrypt_method';
 
 // Declaring class
 class NotebooksPanel extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {term:''}
+		this.state = {term:'',alertVisible:false,alertText:'',lgShow:false}
 		this.onChange = this.onChange.bind(this);
 		this.onSearchClick = this.onSearchClick.bind(this);
 		this.onRefresh = this.onRefresh.bind(this);
 	}
 
+	handleAlertDismiss() {
+    	this.setState({ alertVisible: false});
+ 	}
+
 	onRefresh(){
-		this.props.fetchNotebooks(this.props.notebook_id,true,this.state.term);
+		this.props.fetchNotebooks(this.props.account,true,this.state.term);
+	}
+
+	onEncrypt(){
+		if (this.props.selected.length == 0){
+			this.setState({alertVisible:true,alertText:"Please select notebooks to encrypt"});
+			return false;
+		}
+		this.setState({alertVisible:false,lgShow:true});
+		/*this.props.encryptNotebooks({
+			account:this.props.account,
+			guids:this.props.selected,
+			method:"pass",
+			psw: "testtest"
+		})*/
+	}
+
+	encryptNotebook(method,password,keys){
+		this.props.encryptNotebooks({
+			account:this.props.account,
+			guids: this.props.selected,
+			method:method,
+			psw: password,
+			keys: keys
+		});
 	}
 
 	
@@ -40,6 +70,11 @@ class NotebooksPanel extends Component{
 	render(){
 		return (
 			<div>
+			{this.state.alertVisible ? 
+				(<Alert bsStyle="danger" onDismiss={this.handleAlertDismiss.bind(this)}>
+					<p>{this.state.alertText}</p>
+				</Alert>
+			) : ''}
 			<div className="row">
 				<div className="col-md-11">
 					<div className="col-md-3">
@@ -49,26 +84,17 @@ class NotebooksPanel extends Component{
 							</button>
 						</span>
 						<span>
-							<button type="button" onClick={this.onDelete} className="btn btn-default" title="Encrypt selected notebooks">
+							<button type="button" onClick={this.onEncrypt.bind(this)} className="btn btn-default" title="Encrypt selected notebooks">
 								<i className="fa fa-lock" aria-hidden="true"></i> Encrypt
 							</button>
 						</span>
 					</div>
 					<div className="col-md-9">
-						<form onSubmit={this.onSearchClick}>
-						<div className="input-group">
-						<input type="text" onChange={this.onChange} className="form-control searchBar" placeholder="Type name to search"/>
-							<span className="input-group-btn">					
-							<button type="submit" className="btn btn-default" title="Search">
-								<i className="fa fa-search" aria-hidden="true"></i>
-							</button>
-							</span>
-							</div>
-						</form>
-					</div>
-					
+						<SearchBar onSearch={this.onSearchClick} />
+					</div>					
 				</div>
 			</div><br/>
+			<EncryptModal onSelected={this.encryptNotebook.bind(this)} show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})} />
 			</div>
 		);
 	}
@@ -76,7 +102,7 @@ class NotebooksPanel extends Component{
 
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotebooks},dispatch);
+	return bindActionCreators({fetchNotebooks,encryptNotebooks},dispatch);
 }
 
 export default connect(null,mapDispatchToProps)(NotebooksPanel);

@@ -1,4 +1,8 @@
-import {FETCH_NOTEBOOKS, FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS,SET_NOTEBOOK, LIST_NOTEBOOKS,CLEAR_NOTEBOOKS,REQUEST_TIMEOUT, ROOT_URL, success, TYPE_DANGER, handleError} from './index';
+import {
+		FETCH_NOTEBOOKS, FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS,
+		SET_NOTEBOOK, LIST_NOTEBOOKS,CLEAR_NOTEBOOKS,REQUEST_TIMEOUT,
+		ENCRYPT_NOTEBOOK,ROOT_URL, success, TYPE_DANGER, handleError
+} from './index';
 import axios from 'axios';
 import {showAlert,isLoading} from './alerts_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
@@ -66,5 +70,28 @@ export function listNotebooks(account_id,policy_id){
 export function clearNotebooks(){
 	return function(dispatch){
 		dispatch(success(null,CLEAR_NOTEBOOKS));
+	}
+}
+
+// ---------------------------------------------------
+// 		Encrypting the selected notebooks
+// ---------------------------------------------------
+export function encryptNotebooks(data){
+	const URL = `${ROOT_URL}notebooks/encrypt`;
+	return function(dispatch){
+
+		// Displaying the progress
+		dispatch(isLoading(true));
+
+		// Sending the request
+		axios.post(URL,data)
+		.then((response) => {
+			dispatch(isLoading(false));
+			dispatch(success(response,ENCRYPT_NOTEBOOK));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
+
 	}
 }
