@@ -15,13 +15,18 @@ import {bindActionCreators} from 'redux';
 import GroupsDropdown from '../groups/groups_dropdown';
 import {PFX_DSCR} from '../../globals/messages';
 import SearchBar from '../common/search_bar';
+import PanelAlert from '../common/panel_alert';
 
 // Declaring class
 class CertificatesPanel extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {lgShow: false,term:'',group:null,psShow:false}
+		this.state = {
+			lgShow: false,term:'',
+			group:null,psShow:false,
+			alertVisible:false,alertText:''
+		}
 		this.onDelete = this.onDelete.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.onSearchClick = this.onSearchClick.bind(this);
@@ -31,13 +36,17 @@ class CertificatesPanel extends Component{
 	onDelete(){
 
 		if (this.props.items.length == 0){
-			alert("Please select certificates to delete");
+			this.setState({alertVisible:true, alertText:"Please select certificates to delete"});
 			return false;
 		}
 
 		if (window.confirm("Are you sure that you want to delete selected certificates?")){
 			this.props.deleteCertificates(this.props.items);
 		}
+	}
+
+	dismissAlert(){
+		this.setState({alertVisible:false})
 	}
 
 	onSearchClick(term){
@@ -63,6 +72,7 @@ class CertificatesPanel extends Component{
 	render(){
 		return (
 			<div>
+			<PanelAlert show={this.state.alertVisible} text={this.state.alertText} onDismiss={this.dismissAlert.bind(this)} />
 			<div className="row">
 				<div className="col-md-11">
 					<div className="col-md-6">

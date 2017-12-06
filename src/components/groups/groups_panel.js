@@ -12,13 +12,14 @@ import {fetchGroups,deleteGroups} from '../../actions/groups_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import SearchBar from '../common/search_bar';
+import PanelAlert from '../common/panel_alert';
 
 // Declaring class
 class GroupsPanel extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {lgShow: false,term:''}
+		this.state = {lgShow: false,term:'',alertVisible: false,alertText:""}
 		this.onDelete = this.onDelete.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.onSearchClick = this.onSearchClick.bind(this);
@@ -27,7 +28,7 @@ class GroupsPanel extends Component{
 	onDelete(){
 
 		if (this.props.selected.length == 0){
-			alert("Please select groups to delete");
+			this.setState({alertVisible:true, alertText:"Please select groups to delete"});
 			return false;
 		}
 
@@ -40,6 +41,10 @@ class GroupsPanel extends Component{
 		this.props.fetchGroups(term);
 	}
 
+	dismissAlert(){
+		this.setState({alertVisible:false});
+	}
+
 	onChange(event){
 		this.setState({term:event.target.value});
 	}
@@ -47,6 +52,7 @@ class GroupsPanel extends Component{
 	render(){
 		return (
 			<div>
+			<PanelAlert show={this.state.alertVisible} text={this.state.alertText} onDismiss={this.dismissAlert.bind(this)} />
 			<div className="row">
 				<div className="col-md-11">
 					<div className="col-md-3">

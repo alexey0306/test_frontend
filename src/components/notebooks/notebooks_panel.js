@@ -13,6 +13,7 @@ import {bindActionCreators} from 'redux';
 import SearchBar from '../common/search_bar';
 import {Alert} from 'react-bootstrap';
 import EncryptModal from '../modals/encrypt_method';
+import PanelAlert from '../common/panel_alert';
 
 // Declaring class
 class NotebooksPanel extends Component{
@@ -25,7 +26,7 @@ class NotebooksPanel extends Component{
 		this.onRefresh = this.onRefresh.bind(this);
 	}
 
-	handleAlertDismiss() {
+	dismissAlert() {
     	this.setState({ alertVisible: false});
  	}
 
@@ -38,13 +39,7 @@ class NotebooksPanel extends Component{
 			this.setState({alertVisible:true,alertText:"Please select notebooks to encrypt"});
 			return false;
 		}
-		this.setState({alertVisible:false,lgShow:true});
-		/*this.props.encryptNotebooks({
-			account:this.props.account,
-			guids:this.props.selected,
-			method:"pass",
-			psw: "testtest"
-		})*/
+		this.setState({alertVisible:false,lgShow:true});		
 	}
 
 	encryptNotebook(method,password,keys){
@@ -70,11 +65,7 @@ class NotebooksPanel extends Component{
 	render(){
 		return (
 			<div>
-			{this.state.alertVisible ? 
-				(<Alert bsStyle="danger" onDismiss={this.handleAlertDismiss.bind(this)}>
-					<p>{this.state.alertText}</p>
-				</Alert>
-			) : ''}
+			<PanelAlert onDismiss={this.dismissAlert.bind(this)} show={this.state.alertVisible} text={this.state.alertText} />
 			<div className="row">
 				<div className="col-md-11">
 					<div className="col-md-3">

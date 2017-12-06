@@ -3,11 +3,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import SectionsList from './sections_list';
+import SectionsPanel from './sections_panel';
 
 class SectionsIndex extends Component{
 
 	constructor(props){
 		super(props);
+		this.state = {selected:[]}
 	}
 
 	componentDidMount(){
@@ -24,7 +26,8 @@ class SectionsIndex extends Component{
 	render(){
 		return (
 			<div>
-				<SectionsList notebook={this.props.params.notebook_name} id={this.props.params.id} guid={this.props.params.notebook_guid} />
+				<SectionsPanel selected={this.state.selected} account={this.props.params.id} notebook={this.props.params.notebook_guid} />
+				<SectionsList onChange={(selected) => this.setState({selected}) } notebook={this.props.params.notebook_name} id={this.props.params.id} guid={this.props.params.notebook_guid} />
 			</div>
 		);	
 	}

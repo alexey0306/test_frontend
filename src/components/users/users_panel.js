@@ -15,14 +15,20 @@ import {bindActionCreators} from 'redux';
 import GroupsDropdown from '../groups/groups_dropdown';
 import SearchBar from '../common/search_bar';
 import UsersActions from './users_actions';
-import ImportUsersModal from '../modals/import_users'; 
+import ImportUsersModal from '../modals/import_users';
+import PanelAlert from '../common/panel_alert';
 
 // Declaring class
 class UsersPanel extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {lgShow: false,term:'',importModal:false}
+		this.state = {
+			lgShow: false,
+			term:'',importModal:false, 
+			alertVisible:false,
+			alertText:""
+		}
 		this.onDelete = this.onDelete.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.onSearchClick = this.onSearchClick.bind(this);
@@ -30,12 +36,14 @@ class UsersPanel extends Component{
 
 	onDelete(){
 
+		// Checking that at least user was selected
 		if (this.props.selected.length == 0){
-			alert("Please select users to delete");
+			this.setState({alertVisible:true,alertText:'Please select users to delete'});
 			return false;
 		}
 
-		if (window.confirm("Are you sure that you want to delete selected users?")){
+		// Confirmation
+		if (window.confirm("Do you really want to delete selected users?")){
 			this.props.deleteUsers(this.props.selected);
 		}
 	}
@@ -46,6 +54,10 @@ class UsersPanel extends Component{
 
 	onChange(event){		
 		this.setState({term:event.target.value});
+	}
+
+	dismissAlert(){
+		this.setState({alertVisible:false});
 	}
 
 	onActionSelect(action){
@@ -74,6 +86,7 @@ class UsersPanel extends Component{
 	render(){
 		return (
 			<div>
+			<PanelAlert onDismiss={this.dismissAlert.bind(this)} show={this.state.alertVisible} text={this.state.alertText} />
 			<div className="row">
 				<div className="col-md-11">
 					<div className="col-md-6">
@@ -91,7 +104,7 @@ class UsersPanel extends Component{
 				</div>
 			</div><br/>
 			<CreateUserModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>
-			<ImportUsersModal show={this.state.importModal} onHide={()=> this.setState({importModal:false})}/>
+			<ImportUsersModal show={this.state.importModal} onHide={()=> this.setState({importModal:false})}/>			
 			</div>
 		);
 	}

@@ -15,6 +15,7 @@ class SectionsList extends Component{
 		this.onRowClick = this.onRowClick.bind(this);
 		this.onSectionClick = this.onSectionClick.bind(this);
 		this.renderSection = this.renderSection.bind(this);
+		this.onAllChange = this.onAllChange.bind(this);
 	}
 
 	componentDidMount(){
@@ -65,6 +66,18 @@ class SectionsList extends Component{
 			});
 		}
 		this.setState({selected: arrayVar});
+		this.props.onChange(arrayVar);
+	}
+
+	onAllChange(event){
+		var arrayVar = [];
+		if (event.target.checked){
+			this.props.sections.map(function(section){
+				arrayVar.push(section.guid);
+			})
+		}
+		this.setState({selected:arrayVar});
+		this.props.onChange(arrayVar);
 	}
 
 	render(){
@@ -73,7 +86,7 @@ class SectionsList extends Component{
 			<table className="table table-hover table-striped">
 				<thead>
 					<tr>
-						<th><input type="checkbox"/></th>
+						<th><input onChange={this.onAllChange} type="checkbox" id='selectAll'/></th>
 						<th>Name <i className="fa fa-fw fa-sort sort" id="name" onClick={this.onSortClick}></i></th>
 						<th>GUID</th>
 						<th>Created <i id="created" className="fa fa-fw fa-sort sort" onClick={this.onSortClick}></i></th>

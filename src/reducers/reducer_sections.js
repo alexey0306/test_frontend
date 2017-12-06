@@ -1,6 +1,11 @@
-import { FETCH_SECTIONS, FETCH_SECTIONS_START, LIST_SECTIONS } from '../actions/index';
+// Import section
+import { FETCH_SECTIONS, FETCH_SECTIONS_START, LIST_SECTIONS,SEARCH_SECTIONS} from '../actions/index';
+import _ from 'lodash';
+
+// Init section
 const INITIAL_STATE = { all:[], select:[] };
 
+// Function section
 export default function (state = INITIAL_STATE, action){
 	switch (action.type){
 
@@ -20,6 +25,10 @@ export default function (state = INITIAL_STATE, action){
 		
 			// Sending updated state
 			return { ...state, select: arrayVar }
+
+		// Searching sections
+		case SEARCH_SECTIONS:
+			return state;
 
 		default:
 			return state;

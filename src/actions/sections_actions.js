@@ -1,6 +1,9 @@
 // Import section
 import axios from 'axios';
-import {FETCH_SECTIONS_START, FETCH_SECTIONS, LIST_SECTIONS,ROOT_URL,REQUEST_TIMEOUT,success,handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
+import {
+		FETCH_SECTIONS_START, FETCH_SECTIONS, LIST_SECTIONS,ENCRYPT_SECTIONS,SEARCH_SECTIONS,
+		ROOT_URL,REQUEST_TIMEOUT,success,handleError,
+		TYPE_DANGER,TYPE_SUCCESS} from './index';
 import {showAlert,isLoading} from './alerts_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
 
@@ -46,4 +49,33 @@ export function listSections(account_id,guid,policy_id){
 		});
 
 	};
+}
+
+// ---------------------------------------------------
+// 		Encrypting the selected sections
+// ---------------------------------------------------
+export function encryptSections(data){
+	const URL = `${ROOT_URL}sections/encrypt`;
+	return function(dispatch){
+
+		// Sending the request
+		axios.post(URL,data)
+		.then((response) => {
+			dispatch(showAlert(response.data.type,response.data.message))
+			dispatch(success(response,ENCRYPT_SECTIONS));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
+
+	}
+}
+
+// ---------------------------------------------------
+// 		Searching sections
+// ---------------------------------------------------
+export function searchSections(term){
+	return function(dispatch){
+		dispatch(success(term,SEARCH_SECTIONS));
+	}
 }

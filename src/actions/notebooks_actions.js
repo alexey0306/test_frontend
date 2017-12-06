@@ -1,7 +1,7 @@
 import {
 		FETCH_NOTEBOOKS, FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS,
 		SET_NOTEBOOK, LIST_NOTEBOOKS,CLEAR_NOTEBOOKS,REQUEST_TIMEOUT,
-		ENCRYPT_NOTEBOOK,ROOT_URL, success, TYPE_DANGER, handleError
+		ENCRYPT_NOTEBOOK,ROOT_URL, success, TYPE_DANGER,TYPE_SUCCESS,handleError
 } from './index';
 import axios from 'axios';
 import {showAlert,isLoading} from './alerts_actions';
@@ -80,13 +80,10 @@ export function encryptNotebooks(data){
 	const URL = `${ROOT_URL}notebooks/encrypt`;
 	return function(dispatch){
 
-		// Displaying the progress
-		dispatch(isLoading(true));
-
 		// Sending the request
 		axios.post(URL,data)
 		.then((response) => {
-			dispatch(isLoading(false));
+			dispatch(showAlert(response.data.type,response.data.message))
 			dispatch(success(response,ENCRYPT_NOTEBOOK));
 		})
 		.catch((err) => {

@@ -106,7 +106,7 @@ class NotebooksList extends Component {
 				<td><Link to={link}>{notebook.name}</Link></td>
 				<td>{notebook.guid}</td>
 				<td>{notebook.created}</td>
-				<td>{notebook.shared ? 'Shared' : 'n/a'}</td>
+				<td>{notebook.shared ? (<i title="Shared" class="fa fa-users" aria-hidden="true"></i>) : 'n/a'}</td>
 			</tr>
 		);
 	}

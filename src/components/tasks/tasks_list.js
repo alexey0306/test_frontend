@@ -99,6 +99,8 @@ class TasksList extends Component{
 				</td>
 				<td><a href="" onClick={this.showTask.bind(this)} id={task.id}>{task.name}</a></td>
 				<td>{task.dscr}</td>
+				<td>{task.created}</td>
+				<td>{task.stopped}</td>
 				<td>{status}</td>
 			</tr>
 		);
@@ -117,6 +119,8 @@ class TasksList extends Component{
 						<th><input onChange={this.onAllChange.bind(this)} type="checkbox" id='selectAll'/></th>
 						<th>Name <i className="fa fa-fw fa-sort sort" id="name" onClick={this.onSortClick}></i></th>
 						<th>Description</th>
+						<th>Created</th>
+						<th>Stopped</th>
 						<th>Status</th>
 					</tr>
 				</thead>
