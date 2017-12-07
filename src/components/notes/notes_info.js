@@ -10,6 +10,7 @@ import DecryptPanel from '../common/panel_decrypt';
 import DecryptNoteModal from '../modals/decrypt_note';
 import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import Spinner from '../common/spinner';
+import {fetchTags} from '../../actions/search_actions';
 
 
 class NotesInfo extends Component{
@@ -29,6 +30,7 @@ class NotesInfo extends Component{
 		this.props.fetchNote(this.props.params.id, this.props.params.guid);
 		this.props.clearNote();
 		this.props.displayBread(this.generateItems());
+		this.props.fetchTags(this.props.params.id);
 	}
 
 	componentWillUnmount(){
@@ -60,6 +62,7 @@ class NotesInfo extends Component{
 		if (this.props.note.content){
 			return (
 				<div>
+					<NotesInfoPanel tags={this.props.tags} note={this.props.note} />
 					<div dangerouslySetInnerHTML={{__html: this.props.note.content}}></div>
 					{this.props.note.encrypted ? <DecryptPanel onRestore={this.restoreNote.bind(this)} backedup={this.props.note.backedup} onDecrypt={this.onDecrypt} recipients={this.props.note.recipients} /> : '' }
 					<DecryptNoteModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>			
@@ -105,14 +108,15 @@ function mapStateToProps(state){
 	return { 
 			note: state.notes.note, 
 			active: state.notebooks.active,
-			decrypted: state.notes.decrypted
+			decrypted: state.notes.decrypted,
+			tags: state.search.tags
 		 };
 }
 
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
 		fetchNote,decryptNote,clearNote,
-		displayBread,setLastItem,restoreNotes},dispatch);
+		displayBread,setLastItem,restoreNotes,fetchTags},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesInfo);
