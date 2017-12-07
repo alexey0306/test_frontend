@@ -9,6 +9,7 @@ import NotesPanel from './notes_panel';
 import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import {vsprintf} from 'sprintf-js';
 import md5 from 'md5';
+import {ROOT_URL} from '../../actions/index';
 
 class NotesList extends Component {
 
@@ -87,7 +88,13 @@ class NotesList extends Component {
 		return isFavourite;
 	}
 
+	getBackup(event,guid){
+		event.stopPropagation();
+		window.location.href = `${ROOT_URL}files/backup/${guid}`;
+	}
+
 	renderNote(note){
+		console.log(note.backedup);
 		return (
 			<tr key={note.guid} onClick={this.onRowClick} id={note.guid} className="selected">
 				<td><input
@@ -100,10 +107,18 @@ class NotesList extends Component {
 					<Link to={this.generateLink(note.guid)}>{note.title}</Link>
 					{ this.isFavourite(note.guid) ? 
 					(
-						<i style={{marginLeft:'10px'}} name={note.title} id={note.guid} onClick={(event) => this.setFavourite(event,note.guid,note.title) } class="fa fa-star" aria-hidden="true"></i>
+						<i style={{marginLeft:'10px'}} name={note.title} id={note.guid} onClick={(event) => this.setFavourite(event,note.guid,note.title) } className="fa fa-star" aria-hidden="true"></i>
 					):
 					(
-						<i style={{marginLeft:'10px'}} name={note.title} id={note.guid} onClick={(event) => this.setFavourite(event,note.guid,note.title) } class="fa fa-star-o" aria-hidden="true"></i>	
+						<i style={{marginLeft:'10px'}} name={note.title} id={note.guid} onClick={(event) => this.setFavourite(event,note.guid,note.title) } className="fa fa-star-o" aria-hidden="true"></i>	
+					) }
+
+					{ note.backedup ? 
+					(
+						<i style={{marginLeft:'10px'}} title="Download note backup" onClick={(event) => this.getBackup(event,note.guid)} className="fa fa-cloud-download" aria-hidden="true"></i>
+					):
+					(
+						<span></span>
 					) }
 					
 				</td>

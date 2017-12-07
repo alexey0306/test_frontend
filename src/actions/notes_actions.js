@@ -1,7 +1,8 @@
 import {
 		FETCH_NOTES, SORT_NOTES, REQUEST_TIMEOUT, 
 		FETCH_NOTES_START, FETCH_NOTE, FETCH_NOTE_START,CREATE_NOTE, SET_LAST_ITEM,
-		DECRYPT_NOTE,CLEAR_DECRYPTED,SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,BATCH_CREATE_NOTES,ROOT_URL, 
+		DECRYPT_NOTE,CLEAR_DECRYPTED,SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,
+		BATCH_CREATE_NOTES,RESTORE_NOTES,ROOT_URL, 
 		success, handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
 import axios from 'axios';
 import {showAlert,isLoading} from './alerts_actions';
@@ -226,5 +227,31 @@ export function batchCreate(data){
 			handleError(dispatch,err);
 		});
 
+	}
+}
+
+// ---------------------------------------------------
+// 		Restoring notes
+// ---------------------------------------------------
+
+export function restoreNotes(data){
+	console.log(data);
+
+	const URL = `${ROOT_URL}notes/restore`;
+
+	return function(dispatch){
+
+		axios.post(URL,data)
+		.then((response) => {
+
+			// Displaying alert
+			dispatch(showAlert(TYPE_SUCCESS,response.data.message));
+
+			// Passing data to reducer
+			dispatch(success(response,RESTORE_NOTES));
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
 	}
 }

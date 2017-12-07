@@ -35,6 +35,10 @@ class DecryptPanel extends Component{
 		this.props.onDecrypt("pass",this.state.password,null);
 	}
 
+	restoreNote(){
+		this.props.onRestore();
+	}
+
 
 
 	renderRecipient(recip){
@@ -68,6 +72,15 @@ class DecryptPanel extends Component{
 							</div>
 							<div style={{marginTop:'10px'}} className="centered">
 								<button onClick={this.onClick.bind(this)} className="btn btn-default">Decrypt</button>
+								{
+									this.props.backedup ? 
+									(
+										<button title="This note has a backed up copy. Click this button to restore the note from backup" onClick={this.restoreNote.bind(this)} className="btn btn-default">Restore</button>		
+									)
+									:(
+										<span></span>
+									)
+								}
 							</div>
 							</div>
 						</Panel>

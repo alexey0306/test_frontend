@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {decryptNote} from '../../actions/notes_actions';
 import Spinner from '../common/spinner';
+import ContentIFrame from '../common/iframe_content';
 
 
 class DecryptNoteModal extends Component{
@@ -23,8 +24,7 @@ class DecryptNoteModal extends Component{
 				<Modal.Body className="modalBody bodyModal">
 					{this.props.note ? 
 					(
-						<div dangerouslySetInnerHTML={{__html: this.props.note.content}}>
-						</div>
+						<ContentIFrame content={this.props.note.content} />
 					) : <Spinner />}
 				</Modal.Body>
 				<Modal.Footer>

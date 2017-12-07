@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchNote,decryptNote,clearNote} from '../../actions/notes_actions';
+import {fetchNote,decryptNote,clearNote,restoreNotes} from '../../actions/notes_actions';
 import Breadcrumb from '../common/breadcrumb';
 import DOMPurify from 'dompurify';
 import NotesInfoPanel from './notes_info_panel';
@@ -48,13 +48,20 @@ class NotesInfo extends Component{
 		this.props.decryptNote(data);
 	}
 
+	restoreNote(){
+		this.props.restoreNotes({
+			account: this.props.params.id,
+			guids: [this.props.params.guid]
+		});
+	}
+
 	render(){
 
 		if (this.props.note.content){
 			return (
 				<div>
 					<div dangerouslySetInnerHTML={{__html: this.props.note.content}}></div>
-					{this.props.note.encrypted ? <DecryptPanel onDecrypt={this.onDecrypt} recipients={this.props.note.recipients} /> : '' }
+					{this.props.note.encrypted ? <DecryptPanel onRestore={this.restoreNote.bind(this)} backedup={this.props.note.backedup} onDecrypt={this.onDecrypt} recipients={this.props.note.recipients} /> : '' }
 					<DecryptNoteModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>			
 				</div>
 			);
@@ -103,7 +110,9 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNote,decryptNote,clearNote,displayBread,setLastItem},dispatch);
+	return bindActionCreators({
+		fetchNote,decryptNote,clearNote,
+		displayBread,setLastItem,restoreNotes},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesInfo);
