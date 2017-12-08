@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchNote,decryptNote,clearNote,restoreNotes} from '../../actions/notes_actions';
+import {fetchNote,decryptNote,clearNote,restoreNotes,encryptNotes} from '../../actions/notes_actions';
 import Breadcrumb from '../common/breadcrumb';
 import DOMPurify from 'dompurify';
 import NotesInfoPanel from './notes_info_panel';
 import {Panel,ListGroup,ListGroupItem} from 'react-bootstrap';
 import DecryptPanel from '../common/panel_decrypt';
 import DecryptNoteModal from '../modals/decrypt_note';
+import EncryptModal from '../modals/encrypt_method';
 import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import Spinner from '../common/spinner';
 import {fetchTags} from '../../actions/search_actions';
@@ -17,9 +18,10 @@ class NotesInfo extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {lgShow:false};
+		this.state = {lgShow:false,modalEncrypt: false};
 		this.onDecrypt = this.onDecrypt.bind(this);
 		this.generateItems = this.generateItems.bind(this);
+		this.restoreNote = this.restoreNote.bind(this);
 	}
 
 	clear(){
@@ -57,15 +59,31 @@ class NotesInfo extends Component{
 		});
 	}
 
+	encryptNotes(method,password,keys){
+		this.props.encryptNotes({
+			account: this.props.params.id,
+			guids:[this.props.params.guid],
+			method: method,
+			password: password,
+			keys: keys
+		});
+	}
+
 	render(){
 
 		if (this.props.note.content){
 			return (
 				<div>
-					<NotesInfoPanel tags={this.props.tags} note={this.props.note} />
+					<NotesInfoPanel 
+						onRestore={() => this.restoreNote()} 
+						onEncrypt={() => this.setState({modalEncrypt:true})} 
+						onRefresh={() => this.props.fetchNote(this.props.params.id, this.props.params.guid)} 
+						tags={this.props.tags} 
+						note={this.props.note} />
 					<div dangerouslySetInnerHTML={{__html: this.props.note.content}}></div>
-					{this.props.note.encrypted ? <DecryptPanel onRestore={this.restoreNote.bind(this)} backedup={this.props.note.backedup} onDecrypt={this.onDecrypt} recipients={this.props.note.recipients} /> : '' }
-					<DecryptNoteModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>			
+					{this.props.note.encrypted ? <DecryptPanel backedup={this.props.note.backedup} onDecrypt={this.onDecrypt} recipients={this.props.note.recipients} /> : '' }
+					<DecryptNoteModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>
+					<EncryptModal onSelected={this.encryptNotes.bind(this)} show={this.state.modalEncrypt} onHide={()=> this.setState({modalEncrypt:false})} />			
 				</div>
 			);
 		}
@@ -116,7 +134,8 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
 		fetchNote,decryptNote,clearNote,
-		displayBread,setLastItem,restoreNotes,fetchTags},dispatch);
+		displayBread,setLastItem,restoreNotes,
+		encryptNotes,fetchTags},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesInfo);

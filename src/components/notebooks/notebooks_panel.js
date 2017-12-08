@@ -47,7 +47,7 @@ class NotebooksPanel extends Component{
 			account:this.props.account,
 			guids: this.props.selected,
 			method:method,
-			psw: password,
+			password: password,
 			keys: keys
 		});
 	}

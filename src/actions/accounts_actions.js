@@ -3,6 +3,8 @@ import axios from 'axios';
 import {FETCH_ACCOUNTS,FETCH_ACCOUNT,DELETE_ACCOUNT,ROOT_URL,REQUEST_TIMEOUT,success,handleError,TYPE_DANGER,TYPE_SUCCESS,CREATE_ACCOUNT} from './index';
 import {showAlert,isLoading} from './alerts_actions';
 axios.defaults.timeout = REQUEST_TIMEOUT;
+axios.defaults.headers.common['Authorization'] = "JWT eyJhbGciOiJIUzI1NiIsImV4cCI6MTUxMjgzNDUyMSwiaWF0IjoxNTEyNzQ4MTIxfQ.eyJpZCI6NH0.qqlcFMFG4Ia0M8WsargbqRyyEuf357ium8zTvvtzZck";
+
 var message = "";
 
 // ---------------------------------------------------

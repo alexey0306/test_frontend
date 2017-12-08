@@ -14,6 +14,7 @@ import NavigationReducer from './reducer_navigation';
 import SectionsReducer from './reducer_sections';
 import GlobalsReducer from './reducer_globals';
 import SearchReducer from './reducer_search';
+import AuthReducer from './reducer_auth';
 
 const rootReducer = (state, action) => {
   return appReducer(state,action);
@@ -34,7 +35,8 @@ const appReducer = combineReducers({
   breadcrumbs: NavigationReducer,
   sections: SectionsReducer,
   globals: GlobalsReducer,
-  search: SearchReducer
+  search: SearchReducer,
+  auth: AuthReducer
 });
 
 export default rootReducer;

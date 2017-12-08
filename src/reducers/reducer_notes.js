@@ -1,5 +1,10 @@
 // Import section
-import {FETCH_NOTES, SORT_NOTES, CREATE_NOTE,FETCH_NOTES_START, FETCH_NOTE_START, FETCH_NOTE,DECRYPT_NOTE,CLEAR_DECRYPTED, SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,BATCH_CREATE_NOTES} from '../actions/index';
+import {
+	FETCH_NOTES, SORT_NOTES, CREATE_NOTE,FETCH_NOTES_START, 
+	FETCH_NOTE_START, FETCH_NOTE,DECRYPT_NOTE,CLEAR_DECRYPTED, 
+	SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,BATCH_CREATE_NOTES,
+	ENCRYPT_NOTES
+} from '../actions/index';
 import _ from 'lodash';
 import md5 from 'md5';
 
@@ -88,6 +93,10 @@ export default function (state = INITIAL_STATE, action) {
 				return !_.includes(action.payload.data,item.id);
 			});
 			return {...state, favourites: array};
+
+		// Encrypting the existing notes
+		case ENCRYPT_NOTES:
+			return state;
 
 		default:
 			return state;

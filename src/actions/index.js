@@ -56,6 +56,7 @@ export const FETCH_FAVOURITES = "FETCH_FAVOURITES";
 export const DELETE_FAVOURITES = "DELETE_FAVOURITES";
 export const BATCH_CREATE_NOTES = "BATCH_CREATE_NOTES";
 export const RESTORE_NOTES = "RESTORE_NOTES";
+export const ENCRYPT_NOTES = "ENCRYPT_NOTES";
 
 // Policies actions
 export const FETCH_POLICIES = "FETCH_POLICIES";
@@ -82,6 +83,10 @@ export const FETCH_SECTIONS = "FETCH_SECTIONS";
 export const LIST_SECTIONS = "LIST_SECTIONS";
 export const ENCRYPT_SECTIONS = "ENCRYPT_SECTIONS";
 export const SEARCH_SECTIONS = "SEARCH_SECTIONS";
+
+// Authentication actions
+export const ADMIN_LOGIN = "ADMIN_LOGIN";
+export const CHECK_LOGIN = "CHECK_LOGIN";
 
 // Alert types
 export const TYPE_DANGER = "danger";

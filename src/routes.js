@@ -20,6 +20,7 @@ import SectionsIndex from './components/sections/sections_index';
 import FavouritesIndex from './components/favourites/favourites_index';
 import BatchCreateIndex from './components/batch/batch_create_index';
 import SearchIndex from './components/search/search_index';
+import LoginIndex from './components/login/login_index';
 
 
 export default (
@@ -45,5 +46,6 @@ export default (
 		<Route path="favourites" component={FavouritesIndex}></Route>
 		<Route path="batch_create" component={BatchCreateIndex}></Route>
 		<Route path="search" component={SearchIndex}></Route>
+		<Route path="login" component={LoginIndex}></Route>
 	</Route>
 );

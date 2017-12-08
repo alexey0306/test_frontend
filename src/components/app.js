@@ -51,6 +51,15 @@ class App extends Component {
   render() {
     this.props.setService(this.props.params.id);
     const header = <BreadcrumbNew service={this.props.service} style={{margin:'0px'}} />
+
+    // Checking if user is authenticated
+    if (this.props.loggedIn){
+      return (
+        <div>{this.props.children}</div>
+      )
+    }
+    
+
     return (
       <div>
         <Sidebar 
@@ -79,7 +88,8 @@ class App extends Component {
 function mapStateToProps(state){
   return {
     service: state.accounts.service,
-    sidebarOpened: state.breadcrumbs.sidebarOpened
+    sidebarOpened: state.breadcrumbs.sidebarOpened,
+    loggedIn: state.auth.loggedIn
   };
 }
 function mapDispatchToProps(dispatch){

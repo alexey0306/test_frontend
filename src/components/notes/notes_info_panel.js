@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchNote} from '../../actions/notes_actions';
 import DecryptNoteModal from '../modals/decrypt_note';
 import {millisToDate} from '../../globals/helpers';
 import {DropdownButton,MenuItem,Popover,OverlayTrigger,Button} from 'react-bootstrap';
@@ -59,8 +58,6 @@ class NotesInfoPanel extends Component{
 			</Popover>
 		);
 
-		console.log(popoverTags)
-
 		const popoverInfo = (
 			<Popover id="popoverInfo">
 				<div><strong>Created:</strong> {this.toDate(this.props.note.created)}</div>
@@ -74,9 +71,22 @@ class NotesInfoPanel extends Component{
 					<div className="col-md-12" style={{paddingLeft:'10px'}}>
 						
 						<div style={styles.created} className="pull-right">
-							<span><button title="Redownload the note from the server" className="btn btn-default"><i className="fa fa-refresh" aria-hidden="true"></i> Refresh</button></span>
-							<span><button className="btn btn-default" title="Encrypt note"><i className="fa fa-lock" aria-hidden="true"></i> Encrypt</button></span>
-							<span><button title="Add to Favourites/Remove from Favourites" className="btn btn-default"><i  className="fa fa-star" aria-hidden="true"></i> Favourite</button></span>							 
+							<span><button onClick={() => this.props.onRefresh()} title="Redownload the note from the server" className="btn btn-default"><i className="fa fa-refresh" aria-hidden="true"></i> Refresh</button></span>
+
+							{ this.props.note.encrypted ? 
+								(<span></span>)
+								:
+								(<span><button onClick={() => this.props.onEncrypt()}className="btn btn-default" title="Encrypt note"><i className="fa fa-lock" aria-hidden="true"></i> Encrypt</button></span>
+								)
+							}
+
+							{ this.props.note.backedup ? 
+								(<span><button onClick={() => this.props.onRestore()} title="Restore the note from the backup" className="btn btn-default"><i className="fa fa-cloud-upload" aria-hidden="true"></i> Restore</button></span>)
+								:
+								(<span></span>)
+							}
+							
+							<span><button onClick={() => this.props.onFavourite()} title="Add to Favourites/Remove from Favourites" className="btn btn-default"><i  className="fa fa-star" aria-hidden="true"></i> Favourite</button></span>							 
 							<OverlayTrigger trigger="click" placement="bottom" overlay={popoverTags}>
       							<Button><i className="fa fa-tags" aria-hidden="true"></i> Tags</Button>
     						</OverlayTrigger>
@@ -93,7 +103,7 @@ class NotesInfoPanel extends Component{
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNote},dispatch);
+	return bindActionCreators({},dispatch);
 }
 
 export default connect(null,mapDispatchToProps)(NotesInfoPanel);
