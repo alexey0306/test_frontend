@@ -1,5 +1,4 @@
 // Import section
-import axios from 'axios';
 import {FETCH_MENU} from '../actions/index';
 
 // Constants

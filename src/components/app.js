@@ -11,6 +11,7 @@ import {setService} from '../actions/globals_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Sidebar from 'react-sidebar';
+import {browserHistory} from 'react-router';
 
 // Init section
 const mql = window.matchMedia(`(min-width: 800px)`);
@@ -25,7 +26,13 @@ class App extends Component {
     this.onSetOpen = this.onSetOpen.bind(this);
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
     this.onBarsClicked = this.onBarsClicked.bind(this);        
-  }  
+  }
+
+  componentDidMount(){
+    if (!this.props.signedIn){
+      browserHistory.push("/signin")
+    }
+  }
 
   componentWillMount(){
     mql.addListener(this.mediaQueryChanged);
@@ -53,9 +60,13 @@ class App extends Component {
     const header = <BreadcrumbNew service={this.props.service} style={{margin:'0px'}} />
 
     // Checking if user is authenticated
-    if (this.props.loggedIn){
+    if (!this.props.signedIn){
       return (
-        <div>{this.props.children}</div>
+       <div className="content">
+        {this.props.children}
+          <Loader show={initial_state} />
+          <Notification />
+       </div>
       )
     }
     
@@ -89,7 +100,7 @@ function mapStateToProps(state){
   return {
     service: state.accounts.service,
     sidebarOpened: state.breadcrumbs.sidebarOpened,
-    loggedIn: state.auth.loggedIn
+    signedIn: state.auth.signedIn
   };
 }
 function mapDispatchToProps(dispatch){
