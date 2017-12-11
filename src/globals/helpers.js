@@ -3,8 +3,9 @@ import {
 		SERVICE_EVERNOTE, EVERNOTE_COLOR,ONENOTE_COLOR, DEFAULT_COLOR,
 		TMPL_FILE_ATTACH,TMPL_IMG_ATTACH
 } from './globals';
-import {ROOT_URL} from '../actions/index';
+import {ROOT_URL,REQUEST_TIMEOUT} from '../actions/index';
 import {vsprintf} from 'sprintf-js';
+import axios from 'axios';
 
 
 
@@ -155,4 +156,22 @@ export function millisToDate(timestamp){
 	var sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
 	var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
 	return time;
+}
+
+
+// Create custom axios wrapper
+export function custom_axios(){
+
+	// Getting token
+	axios.defaults.timeout = REQUEST_TIMEOUT;
+	const token = localStorage.getItem('token')
+	const defaultOptions = {
+	        headers: {Authorization: token ? `JWT ${token}` : ''},
+	    };
+    return {
+        	get: (url, options = {}) => axios.get(url, { ...defaultOptions, ...options }),
+        	post: (url, data, options = {}) => axios.post(url, data, { ...defaultOptions, ...options }),
+        	put: (url, data, options = {}) => axios.put(url, data, { ...defaultOptions, ...options }),
+        	delete: (url, options = {}) => axios.delete(url, { ...defaultOptions, ...options }),
+	}
 }

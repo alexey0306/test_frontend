@@ -1,7 +1,7 @@
 // Import section
 import React,{Component} from 'react';
 import {Modal,Button} from 'react-bootstrap';
-import {reduxForm, Field} from 'redux-form';
+import {reduxForm, Field,reset} from 'redux-form';
 import { createGroup } from '../../actions/groups_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -44,7 +44,7 @@ function validate(values){
 	const errors = {};
 
 	if (!values.name){
-		errors.username = "Required";
+		errors.name = "Required";
 	}
 	else if (values.name.length > 64) {
     	errors.username = 'Must be 64 characters or less'
@@ -52,10 +52,13 @@ function validate(values){
 	return errors;
 }
 
+// Action to be performed after the form is submitted
+const afterSubmit = (result, dispatch) => dispatch(reset('CreateGroupForm'));
 
 CreateGroupModal = reduxForm({
 		form:'CreateGroupForm',
-		validate
+		validate,
+		onSubmitSuccess: afterSubmit,
 })(CreateGroupModal);
 
 function mapDispatchToProps(dispatch){

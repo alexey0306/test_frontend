@@ -15,6 +15,8 @@ import SectionsReducer from './reducer_sections';
 import GlobalsReducer from './reducer_globals';
 import SearchReducer from './reducer_search';
 import AuthReducer from './reducer_auth';
+import AdminReducer from './reducer_admin';
+import StatusReducer from './reducer_status';
 
 const rootReducer = (state, action) => {
   return appReducer(state,action);
@@ -36,7 +38,9 @@ const appReducer = combineReducers({
   sections: SectionsReducer,
   globals: GlobalsReducer,
   search: SearchReducer,
-  auth: AuthReducer
+  auth: AuthReducer,
+  admin: AdminReducer,
+  status: StatusReducer
 });
 
 export default rootReducer;

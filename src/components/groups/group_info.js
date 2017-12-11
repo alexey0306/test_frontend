@@ -10,7 +10,7 @@ import Breadcrumb from '../common/breadcrumb';
 import {renderField, textAreaField} from '../../globals/render_fields';
 import {groupValidate} from '../../globals/validate';
 import GroupUserList from './group_userlist';
-import {displayBread} from '../../actions/navigation_actions';
+import {displayBread,setLastItem} from '../../actions/navigation_actions';
 
 // Initializing variables
 const items = [{id:1, name: "Groups","link":"/groups",isLink: true}]
@@ -28,6 +28,10 @@ class GroupInfo extends Component {
 		this.props.fetchGroup(this.props.params.gid);
 		this.props.displayBread(items);
 		//this.props.initialize({ name: this.props.group.name })
+	}
+
+	componentWillUnmount(){
+		this.props.setLastItem(null);
 	}
 
 	render(){
@@ -58,7 +62,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchGroup,updateGroup,displayBread},dispatch);
+	return bindActionCreators({fetchGroup,updateGroup,displayBread,setLastItem},dispatch);
 }
 
 GroupInfo = reduxForm({

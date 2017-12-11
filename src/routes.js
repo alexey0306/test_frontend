@@ -46,6 +46,5 @@ export default (
 		<Route path="favourites" component={FavouritesIndex}></Route>
 		<Route path="batch_create" component={BatchCreateIndex}></Route>
 		<Route path="search" component={SearchIndex}></Route>
-		<Route path="signin" component={SigninIndex}></Route>
 	</Route>
 );

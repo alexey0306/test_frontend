@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {Navbar, NavItem, Nav} from 'react-bootstrap';
-export default class Header extends Component{
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {signout} from '../../actions/auth_actions';
+import {fetchAdmin} from '../../actions/admin_actions';
+
+class Header extends Component{
 
 	constructor(props){
 		super(props);
@@ -9,6 +14,10 @@ export default class Header extends Component{
 
 	onBarsClick(){
 		this.props.onBarsClicked();
+	}
+
+	componentDidMount(){
+		this.props.fetchAdmin();
 	}
 
 	render(){
@@ -21,7 +30,7 @@ export default class Header extends Component{
 						<div style={{display:'inline',marginRight:'30px'}} className="pull-right">
 							<i title="User profile" className="fa fa-user fa-2x custom-icon"></i>
 							<i title="Get help" className="fa fa-question fa-2x custom-icon"></i>
-							<i title="Log out" className="fa fa-sign-out fa-2x custom-icon"></i>
+							<i onClick={() => this.props.signout()} title="Log out" className="fa fa-sign-out fa-2x custom-icon"></i>
 						</div>
 					</div>					
 				</div>
@@ -29,3 +38,13 @@ export default class Header extends Component{
 		);
 	}
 }
+
+function mapStateToProps(state){
+	return { admin: state.admin.admin };
+}
+
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({signout,fetchAdmin},dispatch);
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Header);

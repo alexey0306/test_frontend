@@ -1,5 +1,7 @@
 // Import section
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 // Init section
 const styles = {
@@ -19,11 +21,15 @@ class StatusBar extends Component{
 				<div>
 					<i className="fa fa-user-o fa-2x profile"></i>
 				</div>
-				<div style={{marginTop:'10px'}}>Alexey Zelenkin</div>
-				<div style={{color: '#ccc'}}>alexey.zelenkin@gmail.com</div>
+				<div style={{marginTop:'10px'}}>{this.props.admin.name}</div>
+				<div style={{color: '#ccc'}}>{this.props.admin.email}</div>
 			</div>
 		);
 	}
 }
 
-export default StatusBar;
+function mapStateToProps(state){
+	return { admin: state.admin.admin };
+}
+
+export default connect(mapStateToProps,null)(StatusBar);

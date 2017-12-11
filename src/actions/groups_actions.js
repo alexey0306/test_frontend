@@ -3,8 +3,8 @@ import axios from 'axios';
 import {FETCH_GROUPS,ROOT_URL,REQUEST_TIMEOUT,CREATE_GROUP,success,handleError,TYPE_DANGER,TYPE_SUCCESS,FETCH_GROUP, DELETE_USERS_GROUP, UPDATE_GROUP, GROUP_USERS, DELETE_GROUPS} from './index';
 import {showAlert,isLoading} from './alerts_actions';
 import {setLastItem} from './navigation_actions';
-axios.defaults.timeout = REQUEST_TIMEOUT;
-var message = "";
+import {custom_axios} from '../globals/helpers';
+import {messages} from '../globals/messages';
 
 
 // ---------------------------------------------------
@@ -13,12 +13,19 @@ var message = "";
 
 export function fetchGroups(){
 	const URL = `${ROOT_URL}groups/list`;
-	var message = "";
 	return function(dispatch){
+		
+		// Displaying progress
 		dispatch(isLoading(true));
-		axios.get(URL)
+		
+		// Sending request
+		custom_axios().get(URL)
 		.then((response) => {
+
+			// Hiding progress
 			dispatch(isLoading(false));
+
+			// Sending message to Reducer
 			dispatch(success(response,FETCH_GROUPS));
 		})
 		.catch((err) => {
@@ -34,10 +41,14 @@ export function createGroup(props){
 	const URL = `${ROOT_URL}groups/create`;
 	
 	return function(dispatch){
-		axios.post(URL,props)
+		custom_axios().post(URL,props)
 		.then((response) => {
+
+			// Send message to Reducer
 			dispatch(success(response,CREATE_GROUP));
-			dispatch(showAlert(TYPE_SUCCESS,"Group has been successfully created"));
+			
+			// Display notification
+			dispatch(showAlert(TYPE_SUCCESS,messages.group_created_ok));
 		})
 		.catch((err) => {
 			handleError(dispatch,err);
@@ -52,9 +63,13 @@ export function createGroup(props){
 export function fetchGroup(id){
 	const URL = `${ROOT_URL}groups/get/${id}`;
 	return function(dispatch){
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
+
+			// Sending message to Reducer
 			dispatch(success(response,FETCH_GROUP));
+			
+			// Setting the last item in Breadcrumb
 			dispatch(setLastItem(response));
 		})
 		.catch((err) => {
@@ -77,10 +92,18 @@ export function deleteUsers(group_id,uids){
 		// Sending request
 		axios.put(URL,uids)
 		.then((response) => {
+
+			// Sending message to Reducer
 			dispatch(success(response,DELETE_USERS_GROUP));
-			dispatch(showAlert(TYPE_SUCCESS,"Users have been successfully deleted from the group"));
+
+			// Display notification
+			dispatch(showAlert(TYPE_SUCCESS,messages.group_users_deleted));
 		})
-		.catch((err) => {handleError(dispatch,err);});
+		.catch((err) => {
+
+			// Handling error response
+			handleError(dispatch,err);
+		});
 
 	}
 }
@@ -92,10 +115,14 @@ export function deleteUsers(group_id,uids){
 export function updateGroup(values){
 	const URL = `${ROOT_URL}groups/update/${values.id}`;
 	return function(dispatch){
-		axios.put(URL,{name: values.name, dscr: values.dscr})
+		custom_axios().put(URL,{name: values.name, dscr: values.dscr})
 		.then((response) => {
+
+			// Sending message to Reducer
 			dispatch(success(response,UPDATE_GROUP));
-			dispatch(showAlert(TYPE_SUCCESS,"Group has been successfully updated"));
+
+			// Display notification
+			dispatch(showAlert(TYPE_SUCCESS,messages.group_updated));
 		})
 		.catch((err) => {
 			handleError(dispatch,err);
@@ -112,10 +139,14 @@ export function groupUsers(group, uids){
 	
 	const URL = `${ROOT_URL}groups/addusers/${group}`;
 	return function(dispatch){
-		axios.put(URL,uids)
+		custom_axios().put(URL,uids)
 		.then((response) => {
+
+			// Sending message to Reducer
 			dispatch(success(response,GROUP_USERS));
-			dispatch(showAlert(TYPE_SUCCESS,"Users have been successfully added to the group"));
+
+			// Display notification
+			dispatch(showAlert(TYPE_SUCCESS,messages.group_users_added));
 		})
 		.catch((err) => {
 			handleError(dispatch,err);
@@ -134,8 +165,12 @@ export function deleteGroups(groups){
 		// Sending request
 		axios.delete(URL,{data: groups})
 		.then((response) => {
+
+			// Sending message to Reducer
 			dispatch(success(response,DELETE_GROUPS));
-			dispatch(showAlert(TYPE_SUCCESS,"Groups have been successfully deleted"));
+
+			// Display notification
+			dispatch(showAlert(TYPE_SUCCESS,messages.groups_deleted));
 		})
 		.catch((err) => {
 			handleError(dispatch,err);

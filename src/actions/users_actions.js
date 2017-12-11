@@ -7,16 +7,18 @@ import {FETCH_USERS,FETCH_USER,ROOT_URL,
 import {showAlert,isLoading} from './alerts_actions';
 import {setLastItem} from './navigation_actions';
 
-// Variables section
+// Init section
+const token = localStorage.getItem('token');
 axios.defaults.timeout = REQUEST_TIMEOUT;
-var message = "";
+axios.defaults.headers.common['Authorization'] = `JWT ${token}`;
+
+
 // ---------------------------------------------------
 // 		Listing users
 // ---------------------------------------------------
 
 export function fetchUsers(term = "",sort = "asc",group = ""){
 	const URL = `${ROOT_URL}users/list?term=${term}&asc=${sort}&group=${group}`;
-	var message = "";
 	return function(dispatch){
 		dispatch(isLoading(true));
 		axios.get(URL)

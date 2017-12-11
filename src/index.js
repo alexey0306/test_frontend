@@ -9,17 +9,15 @@ import promise from 'redux-promise';
 import reduxThunk from 'redux-thunk';
 import 'font-awesome/css/font-awesome.min.css';
 import $ from "jquery";
-import {ADMIN_LOGIN} from './actions/index';
+import {ADMIN_LOGIN,ADMIN_LOGOUT} from './actions/index';
 window.$ = $;
 window.jQuery = $;
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 const token = localStorage.getItem('token');
-if (token){
-	console.log(token);
-	store.dispatch({type: ADMIN_LOGIN});
-}
+if (token){store.dispatch({type: ADMIN_LOGIN});}
+else{store.dispatch({type: ADMIN_LOGOUT});}
 
 ReactDOM.render(
   <Provider store={store}>

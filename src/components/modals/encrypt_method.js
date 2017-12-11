@@ -37,7 +37,7 @@ class EncryptModal extends Component{
 
 		// Sending data back to parent component
 		this.props.onSelected(this.state.method,this.state.password,this.state.keys);
-		//this.props.onHide();		
+		this.props.onHide();		
 	}
 
 	render(){

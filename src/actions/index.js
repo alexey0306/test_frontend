@@ -87,6 +87,11 @@ export const SEARCH_SECTIONS = "SEARCH_SECTIONS";
 // Authentication actions
 export const ADMIN_LOGIN = "ADMIN_LOGIN";
 export const CHECK_LOGIN = "CHECK_LOGIN";
+export const ADMIN_LOGOUT = "ADMIN_LOGOUT";
+export const FETCH_ADMIN = "FETCH_ADMIN";
+
+// System actions
+export const FETCH_STATUS = "FETCH_STATUS";
 
 // Alert types
 export const TYPE_DANGER = "danger";
@@ -122,6 +127,7 @@ export function success(response,type){
 }
 
 export function handleError(dispatch,err){
+	console.log(err);
 	var message = "";
 	if (err.response){message = err.response.data.message;}
 	else{message = err.toString();}

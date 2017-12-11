@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Sidebar from 'react-sidebar';
 import {browserHistory} from 'react-router';
+import SigninIndex from './auth/signin_index';
 
 // Init section
 const mql = window.matchMedia(`(min-width: 800px)`);
@@ -63,7 +64,7 @@ class App extends Component {
     if (!this.props.signedIn){
       return (
        <div className="content">
-        {this.props.children}
+          <SigninIndex />
           <Loader show={initial_state} />
           <Notification />
        </div>
