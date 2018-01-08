@@ -6,12 +6,7 @@ import {FETCH_USERS,FETCH_USER,ROOT_URL,
 		handleError} from './index';
 import {showAlert,isLoading} from './alerts_actions';
 import {setLastItem} from './navigation_actions';
-
-// Init section
-const token = localStorage.getItem('token');
-axios.defaults.timeout = REQUEST_TIMEOUT;
-axios.defaults.headers.common['Authorization'] = `JWT ${token}`;
-
+import {custom_axios} from '../globals/helpers';
 
 // ---------------------------------------------------
 // 		Listing users
@@ -21,7 +16,7 @@ export function fetchUsers(term = "",sort = "asc",group = ""){
 	const URL = `${ROOT_URL}users/list?term=${term}&asc=${sort}&group=${group}`;
 	return function(dispatch){
 		dispatch(isLoading(true));
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success(response,FETCH_USERS));			
@@ -39,7 +34,7 @@ export function fetchUsers(term = "",sort = "asc",group = ""){
 export function fetchUser(id){
 	const URL = `${ROOT_URL}users/get/${id}`;
 	return function(dispatch){
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(success(response,FETCH_USER));
 			dispatch(setLastItem(response));		
@@ -63,7 +58,7 @@ export function createUser(props){
 
 	// Sending request and handling the response
 	return function(dispatch){
-		axios.post(URL,props)
+		custom_axios().post(URL,props)
 		.then((response) => {
 			dispatch(showAlert(TYPE_SUCCESS,"User has been successfully created"));
 			dispatch(success(response,CREATE_USER));
@@ -82,7 +77,7 @@ export function deleteUsers(ids){
 	const URL = `${ROOT_URL}users/delete`;
 	return function(dispatch){
 		dispatch(isLoading(true));
-		axios.delete(URL,{data: ids})
+		custom_axios().delete(URL,{data: ids})
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(showAlert(TYPE_SUCCESS,"Users have been successfully deleted"));
@@ -112,7 +107,7 @@ export function importUsers(jsonString){
 	const URL = `${ROOT_URL}users/import`;
 	return function(dispatch){
 		dispatch(isLoading(true));
-		axios.post(URL,jsonString,{headers: {'Content-Type': 'application/json'}})
+		custom_axios().post(URL,jsonString,{headers: {'Content-Type': 'application/json'}})
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(showAlert(TYPE_SUCCESS,"Users have been successfully imported"));

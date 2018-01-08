@@ -2,7 +2,7 @@
 import axios from 'axios';
 import {FETCH_TASKS_START, FETCH_TASKS, FETCH_TASK, DELETE_TASKS,ROOT_URL,REQUEST_TIMEOUT,success,handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
 import {showAlert,isLoading} from './alerts_actions';
-axios.defaults.timeout = REQUEST_TIMEOUT;
+import {custom_axios} from '../globals/helpers';
 
 
 // ---------------------------------------------------
@@ -18,7 +18,7 @@ export function fetchTasks(){
 		dispatch(success(null,FETCH_TASKS_START));
 		dispatch(isLoading(true));
 
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success(response,FETCH_TASKS));

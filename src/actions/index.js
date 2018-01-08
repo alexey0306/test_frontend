@@ -127,7 +127,6 @@ export function success(response,type){
 }
 
 export function handleError(dispatch,err){
-	console.log(err);
 	var message = "";
 	if (err.response){message = err.response.data.message;}
 	else{message = err.toString();}
