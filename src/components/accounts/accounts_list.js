@@ -12,6 +12,7 @@ import AccountInfoModal from '../modals/account_info';
 import CreateAccountModal from '../modals/create_account';
 import {displayBread} from '../../actions/navigation_actions';
 import {SERVICE_ONENOTE,SERVICE_EVERNOTE} from '../../globals/globals';
+import {custom_axios} from '../../globals/helpers';
 
 // Initializing variables
 const items = [{id:1, name: "Accounts", link: "/accounts", isLink: false}];
@@ -55,7 +56,7 @@ class AccountsList extends Component{
 
 		switch (parseInt(service)){
 			case SERVICE_ONENOTE:
-				axios.get(URL)
+				custom_axios().get(URL)
 					.then((response) => {
 						window.open(response.data,"_blank","width=600,height=400");
 					})
