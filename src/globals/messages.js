@@ -10,4 +10,7 @@ export const messages = {
 	group_updated: "Group has been successfully updated",
 	group_users_added: "Users have been successfully added to the group",
 	groups_deleted: "Groups have been successfully deleted",
+	removed_from_favourites: "Items have been successfully removed from favourites",
+	note_status_updated: "Note status updated",
+	request_sent: "Request has been successfully sent"
 }

@@ -12,6 +12,7 @@ import EncryptModal from '../modals/encrypt_method';
 import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import Spinner from '../common/spinner';
 import {fetchTags} from '../../actions/search_actions';
+import ContentIFrame from '../common/iframe_content';
 
 
 class NotesInfo extends Component{
@@ -71,6 +72,15 @@ class NotesInfo extends Component{
 
 	render(){
 
+		// Defining the content panel
+		var contentPanel = null;
+		if (this.props.note.encrypted){
+			contentPanel = <div><ContentIFrame width='100%' height='300px' borderStyle='none' content={this.props.note.content} /><DecryptPanel backedup={this.props.note.backedup} onDecrypt={this.onDecrypt} recipients={this.props.note.recipients} /></div>;
+		}
+		else{
+			contentPanel = <ContentIFrame width='100%' height='800px' borderStyle='none' content={this.props.note.content} />;
+		}
+
 		if (this.props.note.content){
 			return (
 				<div>
@@ -80,8 +90,7 @@ class NotesInfo extends Component{
 						onRefresh={() => this.props.fetchNote(this.props.params.id, this.props.params.guid)} 
 						tags={this.props.tags} 
 						note={this.props.note} />
-					<div dangerouslySetInnerHTML={{__html: this.props.note.content}}></div>
-					{this.props.note.encrypted ? <DecryptPanel backedup={this.props.note.backedup} onDecrypt={this.onDecrypt} recipients={this.props.note.recipients} /> : '' }
+					{contentPanel}
 					<DecryptNoteModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>
 					<EncryptModal onSelected={this.encryptNotes.bind(this)} show={this.state.modalEncrypt} onHide={()=> this.setState({modalEncrypt:false})} />			
 				</div>

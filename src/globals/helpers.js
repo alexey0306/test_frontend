@@ -164,10 +164,25 @@ export function custom_axios(){
 
 	// Getting token
 	axios.defaults.timeout = REQUEST_TIMEOUT;
-	const token = localStorage.getItem('token')
+	const token = localStorage.getItem('token');
 	const defaultOptions = {
-	        headers: {Authorization: token ? `JWT ${token}` : ''},
-	    };
+	    headers: {Authorization: token ? `JWT ${token}` : ''},
+	};
+    return {
+        	get: (url, options = {}) => axios.get(url, { ...defaultOptions, ...options }),
+        	post: (url, data, options = {}) => axios.post(url, data, { ...defaultOptions, ...options }),
+        	put: (url, data, options = {}) => axios.put(url, data, { ...defaultOptions, ...options }),
+        	delete: (url, options = {}) => axios.delete(url, { ...defaultOptions, ...options }),
+	}
+}
+
+export function custom_file_axios(){
+	// Getting token
+	axios.defaults.timeout = REQUEST_TIMEOUT;
+	const token = localStorage.getItem('token');
+	const defaultOptions = {
+	    headers: {Authorization: token ? `JWT ${token}` : '', },
+	};
     return {
         	get: (url, options = {}) => axios.get(url, { ...defaultOptions, ...options }),
         	post: (url, data, options = {}) => axios.post(url, data, { ...defaultOptions, ...options }),

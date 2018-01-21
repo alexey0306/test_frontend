@@ -3,10 +3,8 @@ import {
 		SET_NOTEBOOK, LIST_NOTEBOOKS,CLEAR_NOTEBOOKS,REQUEST_TIMEOUT,
 		ENCRYPT_NOTEBOOK,ROOT_URL, success, TYPE_DANGER,TYPE_SUCCESS,handleError
 } from './index';
-import axios from 'axios';
+import {custom_axios} from '../globals/helpers';
 import {showAlert,isLoading} from './alerts_actions';
-axios.defaults.timeout = REQUEST_TIMEOUT;
-var message = "";
 
 // ---------------------------------------------------
 // 		Fetching notebooks
@@ -18,9 +16,13 @@ export function fetchNotebooks(id, refresh = false, term = ""){
 	if (refresh){URL = URL+"&refresh";}
 
 	return function(dispatch){
+		
+		// Displaying progress
 		dispatch(success(null,FETCH_NOTEBOOKS_START));
 		dispatch(isLoading(true));
-		axios.get(URL)
+		
+		// Sending request
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success(response,FETCH_NOTEBOOKS));
@@ -52,7 +54,7 @@ export function listNotebooks(account_id,policy_id){
 	
 	return function(dispatch){
 		dispatch(isLoading(true));
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success({id:policy_id,data:response.data},LIST_NOTEBOOKS));
@@ -81,7 +83,7 @@ export function encryptNotebooks(data){
 	return function(dispatch){
 
 		// Sending the request
-		axios.post(URL,data)
+		custom_axios().post(URL,data)
 		.then((response) => {
 			dispatch(showAlert(response.data.type,response.data.message))
 			dispatch(success(response,ENCRYPT_NOTEBOOK));
