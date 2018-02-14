@@ -1,5 +1,4 @@
 // Import section
-import axios from 'axios';
 import {
 	SEARCH_FETCH_TAGS,SEARCH_FETCH_SEARCHES,
 	SEARCH_FETCH_RECIPIENTS,SEARCH_FETCH_RECIPIENTS_START,
@@ -8,9 +7,7 @@ import {
 	ROOT_URL, REQUEST_TIMEOUT,success,handleError,
 	TYPE_DANGER,TYPE_SUCCESS,CREATE_ACCOUNT} from './index';
 import {isLoading} from './alerts_actions';
-
-// Init section
-axios.defaults.timeout = REQUEST_TIMEOUT;
+import {custom_axios} from '../globals/helpers';
 
 // Functions
 
@@ -25,7 +22,7 @@ export function fetchTags(account_id){
 		// Displaying progress
 		dispatch(success(null,SEARCH_FETCH_TAGS_START));
 
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(success(response,SEARCH_FETCH_TAGS));
 		})
@@ -47,7 +44,7 @@ export function fetchSearches(account_id){
 		// Displaying progress
 		dispatch(success(null,SEARCH_FETCH_SEARCHES_START));
 
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(success(response,SEARCH_FETCH_SEARCHES));
 		})
@@ -69,7 +66,7 @@ export function fetchRecipients(){
 		// Displaying progress
 		dispatch(success(null,SEARCH_FETCH_RECIPIENTS_START));
 
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(success(response,SEARCH_FETCH_RECIPIENTS));
 		})
@@ -92,7 +89,7 @@ export function searchNotes(data){
 		dispatch(success(null, SEARCH_NOTES_START));
 
 		// Sending request and processing response
-		axios.post(URL,data)
+		custom_axios().post(URL,data)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success(response,SEARCH_NOTES));

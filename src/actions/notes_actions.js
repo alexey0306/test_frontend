@@ -4,12 +4,11 @@ import {
 		DECRYPT_NOTE,CLEAR_DECRYPTED,SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,
 		BATCH_CREATE_NOTES,RESTORE_NOTES,ENCRYPT_NOTES,ROOT_URL, 
 		success, handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
-import axios from 'axios';
+import {custom_axios} from '../globals/helpers';
+import {messages} from '../globals/messages';
 import {showAlert,isLoading} from './alerts_actions';
 import {showNotification} from '../globals/helpers';
 import {setLastItem} from './navigation_actions';
-
-axios.defaults.timeout = REQUEST_TIMEOUT;
 
 // ---------------------------------------------------
 // 		Fetching notes
@@ -23,7 +22,7 @@ export function fetchNotes(id, guid, refresh = false, term = "", type = "noteboo
 	return function(dispatch){
 		dispatch(success(null,FETCH_NOTES_START));
 		dispatch(isLoading(true));
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success(response,FETCH_NOTES));
@@ -59,7 +58,7 @@ export function fetchNote(id,guid){
 		dispatch(setLastItem(null,SET_LAST_ITEM))
 
 		// Sending request
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(setLastItem(response,SET_LAST_ITEM))
 			dispatch(success(response,FETCH_NOTE));
@@ -82,11 +81,11 @@ export function createNote(data){
 	return function(dispatch){
 		
 		// Sending the request
-		axios.post(URL,data)
+		custom_axios().post(URL,data)
 		.then((response) => {
 
 			// Displaying the result of operation
-			dispatch(showAlert(TYPE_SUCCESS,"Request has been successfully sent"));
+			dispatch(showAlert(TYPE_SUCCESS,messages.request_sent));
 
 			// Sending message to reducer
 			dispatch(success(response, CREATE_NOTE));
@@ -108,7 +107,7 @@ export function decryptNote(data){
 	return function(dispatch){
 
 		// Sending the decrypt request
-		axios.post(URL,data)
+		custom_axios().post(URL,data)
 		.then((response) => {
 			dispatch(success(response,DECRYPT_NOTE));
 		})
@@ -136,7 +135,7 @@ export function clearNote(){
 export function fetchFavourites(data){
 	const URL = `${ROOT_URL}notes/favourites/list`;
 	return function(dispatch){
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 
 			// Sending the message to reducer
@@ -155,11 +154,11 @@ export function fetchFavourites(data){
 export function setFavourite(data){
 	const URL = `${ROOT_URL}notes/favourites/set`;
 	return function(dispatch){
-		axios.post(URL,data)
+		custom_axios().post(URL,data)
 		.then((response) => {
 
 			// Displaying the notifications
-			dispatch(showAlert(TYPE_SUCCESS,"Note status updated"));
+			dispatch(showAlert(TYPE_SUCCESS,messages.note_status_updated));
 
 			// Sending the message to reducer
 			dispatch(success(response,SET_FAVOURITE));
@@ -178,10 +177,10 @@ export function deleteFavourites(ids){
 	const URL = `${ROOT_URL}notes/favourites/delete`;
 	return function(dispatch){
 		dispatch(isLoading(true));
-		axios.delete(URL,{data: ids})
+		custom_axios().delete(URL,{data: ids})
 		.then((response) => {
 			dispatch(isLoading(false));
-			dispatch(showAlert(TYPE_SUCCESS,"Items have been successfully removed from favourites"));
+			dispatch(showAlert(TYPE_SUCCESS,messages.removed_from_favourites));
 			dispatch(success(response,DELETE_FAVOURITES));
 		})
 		.catch((err) => {
@@ -197,6 +196,7 @@ export function deleteFavourites(ids){
 export function batchCreate(data){
 
 	const URL = `${ROOT_URL}notes/batch`;
+	const token = localStorage.getItem('token');
 
 	// Creating form data
 	var formData = new FormData();
@@ -213,8 +213,16 @@ export function batchCreate(data){
 
 	return function(dispatch){
 
+		// Displaying progress
+		dispatch(showAlert(TYPE_SUCCESS,messages.request_sent));
+
 		// Sending request
-		axios.post(URL,formData,{headers: {'Content-Type': 'multipart/form-data'}})
+		custom_axios().post(URL,formData,{
+			headers: {
+				'Content-Type': 'multipart/form-data',
+				'Authorization': 'JWT ' + token
+			}
+		})
 		.then((response) => {
 
 			// Displaying alert
@@ -238,7 +246,7 @@ export function restoreNotes(data){
 	const URL = `${ROOT_URL}notes/restore`;
 	return function(dispatch){
 
-		axios.post(URL,data)
+		custom_axios().post(URL,data)
 		.then((response) => {
 
 			// Displaying alert
@@ -262,7 +270,7 @@ export function encryptNotes(data){
 	return function(dispatch){
 
 		// Sending request to the server
-		axios.post(URL,data)
+		custom_axios().post(URL,data)
 		.then((response) => {
 
 			// Displaying response from server

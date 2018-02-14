@@ -41,6 +41,15 @@ class ContentIFrame extends Component{
    	}
 
 	render(){
+
+		const styles = {
+			iframe: {
+				width: this.props.width,
+				height: this.props.height,
+				borderStyle: this.props.borderStyle
+			}
+		}
+
 		return (
 			<iframe style={styles.iframe} ref="iframe"/>
 		);

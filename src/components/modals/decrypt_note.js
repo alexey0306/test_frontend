@@ -24,7 +24,7 @@ class DecryptNoteModal extends Component{
 				<Modal.Body className="modalBody bodyModal">
 					{this.props.note ? 
 					(
-						<ContentIFrame content={this.props.note.content} />
+						<ContentIFrame height='800px' width='100%' borderStyle='none' content={this.props.note.content} />
 					) : <Spinner />}
 				</Modal.Body>
 				<Modal.Footer>
