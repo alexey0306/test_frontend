@@ -8,7 +8,8 @@ import {Link} from 'react-router';
 import _ from 'lodash';
 import {selectItem,selectAll} from '../../globals/helpers';
 import {ROOT_URL} from '../../actions/index';
-
+import fileDownload from 'js-file-download';
+import {custom_axios} from '../../globals/helpers';
 
 class CertificatesList extends Component{
 	constructor(props){
@@ -46,12 +47,17 @@ class CertificatesList extends Component{
 
 	downloadPFX(event){
 		const URL = `${ROOT_URL}certificates/pfx/${event.target.id}`;
-		window.location.href = URL;
+		custom_axios().get(URL).then((response) => {
+			window.location.href = `${ROOT_URL}certificates/${response.data}`;
+		});
+		
 	}
 
 	downloadPublic(event){
 		const URL = `${ROOT_URL}certificates/public/${event.target.id}`;
-		window.location.href = URL;
+		custom_axios().get(URL).then((response) => {
+			window.location.href = `${ROOT_URL}certificates/${response.data}`;
+		});
 	}
 
 	getStatus(status){
@@ -73,8 +79,8 @@ class CertificatesList extends Component{
 				<td><Link to={"users/"+cert.user.id}>{cert.user.name}</Link></td>
 				<td>{this.getStatus(cert.status)}</td>
 				<td>
-					<button id={cert.id} title="Download PFX" onClick={this.downloadPFX.bind(this)} className="btn btn-default">PFX</button>
-					<button id={cert.id} title="Download Public Key" onClick={this.downloadPublic.bind(this)} className="btn btn-default">Public</button>
+					<button id={cert.id} name={cert.user.name} title="Download PFX" onClick={this.downloadPFX.bind(this)} className="btn btn-default">PFX</button>
+					<button id={cert.id} name={cert.user.name} title="Download Public Key" onClick={this.downloadPublic.bind(this)} className="btn btn-default">Public</button>
 				</td>
 			</tr>
 		)

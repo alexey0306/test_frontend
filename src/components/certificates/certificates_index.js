@@ -11,7 +11,7 @@ import {displayBread} from '../../actions/navigation_actions';
 import _ from 'lodash';
 
 // Initializing variables
-const items = [{name:"Certificates",link:"/certificates",isLink:false}];
+const items = [{id:1,name:"Certificates",link:"/certificates",isLink:false}];
 
 
 // Declaring class
