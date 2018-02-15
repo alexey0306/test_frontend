@@ -2,16 +2,30 @@ import {Route,IndexRoute} from 'react-router';
 import React from 'react';
 import App from './components/app';
 import Welcome from './components/common/welcome';
+
+// User components
 import UsersIndex from './components/users/users_index';
 import UsersInfo from './components/users/users_info';
+
+// Group components
 import GroupsList from './components/groups/groups_list';
 import GroupInfo from './components/groups/group_info';
+
+// Account components
 import AccountsList from './components/accounts/accounts_list';
+
+// Notebook components
 import NotebooksList from './components/notebooks/notebooks_list';
+
+// Importing note components
 import NotesList from './components/notes/notes_list';
 import NotesInfo from './components/notes/notes_info';
+import NotesEdit from './components/notes/notes_edit';
+
+// Policies components
 import PoliciesList from './components/policies/policies_list';
 import PolicyInfo from './components/policies/policy_info';
+
 import TasksIndex from './components/tasks/tasks_index.js';
 import CreateNote from './components/notes/create_note';
 import CertificatesIndex from './components/certificates/certificates_index';
@@ -20,7 +34,7 @@ import SectionsIndex from './components/sections/sections_index';
 import FavouritesIndex from './components/favourites/favourites_index';
 import BatchCreateIndex from './components/batch/batch_create_index';
 import SearchIndex from './components/search/search_index';
-import SigninIndex from './components/auth/signin_index';
+
 
 
 export default (
@@ -36,6 +50,7 @@ export default (
 		<Route path="notes/:id/list/:notebook_name/:notebook_guid/:section_name/:container_id" component={NotesList}></Route>
 		<Route path="notes/:id/:notebook_name/:notebook_guid/:guid" component={NotesInfo} />
 		<Route path="notes/:id/:notebook_name/:notebook_guid/:section_name/:section_guid/:guid" component={NotesInfo} />
+		<Route path="notes/:id/edit/:guid" component={NotesEdit} />
 		<Route path="policies" component={PoliciesList}></Route>
 		<Route path="policies/:pid" component={PolicyInfo}></Route>
 		<Route path="tasks" component={TasksIndex}></Route>

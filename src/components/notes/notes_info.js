@@ -1,18 +1,27 @@
+// Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchNote,decryptNote,clearNote,restoreNotes,encryptNotes} from '../../actions/notes_actions';
-import Breadcrumb from '../common/breadcrumb';
 import DOMPurify from 'dompurify';
-import NotesInfoPanel from './notes_info_panel';
 import {Panel,ListGroup,ListGroupItem} from 'react-bootstrap';
+
+//// Import custom components
 import DecryptPanel from '../common/panel_decrypt';
+import Spinner from '../common/spinner';
+import ContentIFrame from '../common/iframe_content';
+import Breadcrumb from '../common/breadcrumb';
+import NotesInfoPanel from './notes_info_panel';
+
+//// Importing modal window components
 import DecryptNoteModal from '../modals/decrypt_note';
 import EncryptModal from '../modals/encrypt_method';
+
+//// Import actions
+import {fetchNote,decryptNote,clearNote,restoreNotes,encryptNotes} from '../../actions/notes_actions';
 import {displayBread,setLastItem} from '../../actions/navigation_actions';
-import Spinner from '../common/spinner';
 import {fetchTags} from '../../actions/search_actions';
-import ContentIFrame from '../common/iframe_content';
+import {custom_axios} from '../../globals/helpers';
+import {ROOT_URL} from '../../actions/index';
 
 
 class NotesInfo extends Component{
@@ -70,8 +79,36 @@ class NotesInfo extends Component{
 		});
 	}
 
-	render(){
+	editNote(){
 
+		// Constructing URL
+		const URL = `${ROOT_URL}notes/`;
+
+		// Preparing data
+		const data = {};
+		data.guid = this.props.params.guid;
+		data.notebook_guid = this.props.params.notebook_guid;
+		data.notebook_name = this.props.params.notebook_name;
+		data.section_guid = ( this.props.params.section_guid ? this.props.params.section_guid : "" );
+		data.section_name = ( this.props.params.section_name ? this.props.params.section_name : "" );
+		data.account = this.props.params.id;
+		data.content = this.props.decrypted.content;
+		data.title = this.props.note.name;
+		data.recipients = this.props.note.recipients;
+
+		// Sending a request to server to temporarily store the edited note
+		custom_axios().post(`${URL}save`, data)
+		.then((response) => {
+			this.props.router.push(`${URL}${this.props.params.id}/edit/${response.data}`);
+		})
+		.catch((err) => {
+			alert(err);
+		});
+		
+
+	}
+
+	render(){
 		// Defining the content panel
 		var contentPanel = null;
 		if (this.props.note.encrypted){
@@ -91,7 +128,7 @@ class NotesInfo extends Component{
 						tags={this.props.tags} 
 						note={this.props.note} />
 					{contentPanel}
-					<DecryptNoteModal show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>
+					<DecryptNoteModal onEdit={this.editNote.bind(this)} show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})}/>
 					<EncryptModal onSelected={this.encryptNotes.bind(this)} show={this.state.modalEncrypt} onHide={()=> this.setState({modalEncrypt:false})} />			
 				</div>
 			);

@@ -94,7 +94,6 @@ class NotesList extends Component {
 	}
 
 	renderNote(note){
-		console.log(note.backedup);
 		return (
 			<tr key={note.guid} onClick={this.onRowClick} id={note.guid} className="selected">
 				<td><input

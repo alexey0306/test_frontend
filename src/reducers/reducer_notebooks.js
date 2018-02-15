@@ -1,6 +1,5 @@
 // Import section
 import {FETCH_NOTEBOOKS,FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS,CLEAR_NOTEBOOKS,SET_NOTEBOOK, LIST_NOTEBOOKS} from '../actions/index';
-import _ from 'lodash';
 
 // Initializing variables
 const INITIAL_STATE = { all: [], active: {}, notebook_list:[]};

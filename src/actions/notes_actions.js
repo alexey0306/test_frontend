@@ -2,7 +2,7 @@ import {
 		FETCH_NOTES, SORT_NOTES, REQUEST_TIMEOUT, 
 		FETCH_NOTES_START, FETCH_NOTE, FETCH_NOTE_START,CREATE_NOTE, SET_LAST_ITEM,
 		DECRYPT_NOTE,CLEAR_DECRYPTED,SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,
-		BATCH_CREATE_NOTES,RESTORE_NOTES,ENCRYPT_NOTES,ROOT_URL, 
+		BATCH_CREATE_NOTES,RESTORE_NOTES,ENCRYPT_NOTES,EDIT_NOTE,ROOT_URL, 
 		success, handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
 import {custom_axios} from '../globals/helpers';
 import {messages} from '../globals/messages';
@@ -225,16 +225,17 @@ export function batchCreate(data){
 		})
 		.then((response) => {
 
+			// Passing data to reducer
+			dispatch(success(response,BATCH_CREATE_NOTES));
+
 			// Displaying alert
 			dispatch(showAlert(TYPE_SUCCESS,response.data.message));
 
-			// Passing data to reducer
-			dispatch(success(response,BATCH_CREATE_NOTES));
+			
 		})
 		.catch((err) => {
 			handleError(dispatch,err);
 		});
-
 	}
 }
 
@@ -284,5 +285,27 @@ export function encryptNotes(data){
 		});
 
 
+	}
+}
+
+// ---------------------------------------------------
+// 		Getting the note for editing
+// ---------------------------------------------------
+
+export function editNote(id){
+
+	const URL = `${ROOT_URL}notes/edit/${id}`;
+	return function(dispatch){
+		// Sending request
+		custom_axios().get(URL)
+		.then((response) => {
+			
+			// Passing data to reducer
+			dispatch(success(response,EDIT_NOTE));		
+
+		})
+		.catch((err) => {
+			handleError(dispatch,err);
+		});
 	}
 }

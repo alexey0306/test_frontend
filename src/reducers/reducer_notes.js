@@ -3,13 +3,13 @@ import {
 	FETCH_NOTES, SORT_NOTES, CREATE_NOTE,FETCH_NOTES_START, 
 	FETCH_NOTE_START, FETCH_NOTE,DECRYPT_NOTE,CLEAR_DECRYPTED, 
 	SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,BATCH_CREATE_NOTES,
-	ENCRYPT_NOTES
+	ENCRYPT_NOTES, EDIT_NOTE
 } from '../actions/index';
 import _ from 'lodash';
 import md5 from 'md5';
 
 // Initi section 
-const INITIAL_STATE = {all: [], note: {}, decrypted:{}, favourites: []};
+const INITIAL_STATE = {all: [], note: {}, decrypted:{}, favourites: [], edited: {}};
 
 // Functions section
 export default function (state = INITIAL_STATE, action) {
@@ -97,6 +97,10 @@ export default function (state = INITIAL_STATE, action) {
 		// Encrypting the existing notes
 		case ENCRYPT_NOTES:
 			return state;
+
+		// Getting the note for editing
+		case EDIT_NOTE:
+			return { ...state, edited:action.payload.data } 
 
 		default:
 			return state;

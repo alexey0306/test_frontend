@@ -28,6 +28,7 @@ class DecryptNoteModal extends Component{
 					) : <Spinner />}
 				</Modal.Body>
 				<Modal.Footer>
+					<button className="btn btn-primary" onClick={this.props.onEdit}>Edit</button>
 					<button className="btn btn-danger" onClick={this.props.onHide}>Close</button>
 				</Modal.Footer>
 			</Modal>	

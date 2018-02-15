@@ -5,6 +5,7 @@ class NotebooksDropdown extends Component {
 	constructor(props){
 		super(props);
 		this.onChange = this.onChange.bind(this);
+		this.renderNotebook = this.renderNotebook.bind(this);
 	}
 
 	onChange(event){
@@ -19,7 +20,7 @@ class NotebooksDropdown extends Component {
 
 	render(){
 		return (
-			<select onChange={this.onChange} className="form-control">
+			<select onChange={this.onChange} className="form-control" value={this.props.guid || ""}>
 				<option value=""> -- Select notebook -- </option>
 				{this.props.notebooks.length != 0 ? this.props.notebooks.map(this.renderNotebook) : ''}
 			</select>

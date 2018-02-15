@@ -27,7 +27,7 @@ class DropzoneArea extends Component{
           		<ul className="list-group">
           			{
           				this.state.files.map(f => 
-          					<li class="list-group-item" key={f.name}> <img style={{marginRight:'10px'}} src={`images/${get_icon(f.type)}`}/> {f.name} ({f.size} bytes)</li>)
+          					<li className="list-group-item" key={f.name}> <img style={{marginRight:'10px'}} src={`images/${get_icon(f.type)}`}/> {f.name} ({f.size} bytes)</li>)
           			}
           		</ul>          		
           	</div>
