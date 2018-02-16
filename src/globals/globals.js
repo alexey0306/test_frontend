@@ -3,7 +3,7 @@ import React from 'react';
 // HTML templates
 export const TMPL_ATTACH = "<div className=''>File name: %s, Type: %s, Size: %s</div>";
 //export const TMPL_FILE_ATTACH = "<div class=\"attachment\"><div class=\"row\"><div class=\"col-md-10\" style=\"display:inline-block\"><span style=\"margin-left:10px\"><img src=\"/images/%s\"/></span><span style=\"margin-left:10px\"><a href=\"%sstatic/%s\">%s (Size: %s)</a></span><span id='enml'><en-media data-type=\"%s\" data-hash=\"%s\" data-filename=\"%s\"/></span></div><div class=\"col-md-2\"><span id='txtFilename' style='display:none'>%s</span><span class=\"pull-right\" style=\"margin-right:10px\"><span id='removeAttach' class=\"glyphicon glyphicon-remove link\" aria-hidden=\"true\"></span></span></div></div></div><br/>";
-export const TMPL_FILE_ATTACH = "<table class=\"table table-bordered\"><tbody><tr><td><span style='margin-left:10px'><img src='/images/%s'></span><span style='margin-left:10px'><a href='%sstatic/%s'>%s (Size: %s)</a></span><span id='enml'><en-media data-type='%s' data-hash='%s' data-filename='%s'/></span><span class='pull-right' style='margin-right:10px'></span></td></tr></tbody></table><p><br></p>";
+export const TMPL_FILE_ATTACH = "<table class=\"table table-bordered\"><tbody><tr><td><span style='margin-left:10px'><img src='/images/%s'></span><span style='margin-left:10px'><a href='%sstatic/%s'>%s (Size: %s)</a></span><span id='enml'><en-media data-type='%s' data-hash='%s' data-filename='%s'/></span></td></tr></tbody></table><p><br></p>";
 export const TMPL_IMG_ATTACH = "<img class='attach' style='max-width:%s;max-height=%s' data-type='%s' data-filename='%s' data-hash='%s' src='%sstatic/%s'/>";
 
 // HTML outputs

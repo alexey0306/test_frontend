@@ -95,6 +95,7 @@ class NotesInfo extends Component{
 		data.content = this.props.decrypted.content;
 		data.title = this.props.note.name;
 		data.recipients = this.props.note.recipients;
+		data.service = this.props.decrypted.service;
 
 		// Sending a request to server to temporarily store the edited note
 		custom_axios().post(`${URL}save`, data)

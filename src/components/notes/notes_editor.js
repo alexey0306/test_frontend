@@ -21,6 +21,10 @@ class NoteEditor extends Component {
     this.uploadFile  = this.uploadFile.bind(this);
   }
 
+  componentWillReceiveProps(newProps){
+    this.setState({content: newProps.content});
+  }
+
   onChange(content) {
     this.setState({content: content});
     this.props.onChange(content);
