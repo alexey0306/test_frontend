@@ -1,12 +1,15 @@
 // Import section
 import React,{Component} from 'react';
+import ReactDom from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 //// Importing actions
-import {editNote} from '../../actions/notes_actions';
+import {editNote,updateNote} from '../../actions/notes_actions';
 import {fetchNotebooks} from '../../actions/notebooks_actions';
 import {fetchSections} from '../../actions/sections_actions';
+import {displayBread} from '../../actions/navigation_actions';
+import {messages} from '../../globals/messages';
 
 //// Import additional components
 import Spinner from '../common/spinner';
@@ -14,18 +17,22 @@ import NotebooksDropdown from '../notebooks/notebooks_dropdown';
 import SectionsDropdown from '../sections/sections_dropdown';
 import RecipientsList from '../common/recipients_list';
 import NoteEditor from './notes_editor';
+import PanelAlert from '../common/panel_alert';
 
 // Init section
 const html = "<strong>Test</strong>"
+var items = [{id:1, name: "Edit note" , link: "", isLink: false}];
 
 // Class section
 class NotesEdit extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {isTitle: true, title: "Default title", 
-			notebook_guid: "", section_guid: "", isNotebook: true, isSection: true,
-			content: "", recipients: [],service: 0
+		this.state = {
+			isTitle: true, title: "Default title", 
+			content: "", recipients: [],
+			password: "",
+			isAlert: false, alertText: ""
 		};
 	}
 
@@ -36,27 +43,61 @@ class NotesEdit extends Component{
 			// Updating the state
 			this.setState({
 				title: newProps.edited.title,
-				notebook_guid: newProps.edited.notebook_guid,
-				section_guid: newProps.edited.section_guid,
 				content: newProps.edited.content,
-				service: parseInt(newProps.edited.service),
-				recipients: newProps.edited.recipients
+				method: ( newProps.edited.recipients.length == 0 ? "password" : "cms" )
 			});
+
+			// Updating items
+			items.push({id:2, name: newProps.edited.title , link: "", isLink: false});
+			this.props.displayBread(items);
+
 		}
 
 	}
 
 	componentDidMount(){
 		this.props.editNote(this.props.params.guid);
-		this.props.fetchNotebooks(this.props.params.id);
-		if (this.state.section_guid != ""){
-			this.props.fetchSections(this.props.params.id, this.state.section_guid,true);
-		}
 	}
 
 	onContentChanged(content){
 		this.setState({content:content});
 		if (content == ""){this.setState({isContent: false});}
+	}
+
+	dismissAlert(){
+		this.setState({isAlert: false,alertText:""});
+	}
+
+	update(){
+
+		// If we have password encrypted note, then we need to check password
+		if ( this.state.method == "password" && this.state.password == "" ){
+			this.setState({isAlert: true, alertText: messages.password_mandatory});
+			this.el.scrollIntoView({ behavior: 'smooth' });
+			this.inputPass.focus();
+			return;
+		}
+
+		// If we have CMS encrypted note, then we need to check that list of recipients is not empty
+		if ( this.state.method == "cms" && this.state.recipients.length == 0 ){
+			this.setState({isAlert: true, alertText: messages.no_recipients});
+			this.el.scrollIntoView({ behavior: 'smooth' });
+			return;
+		}
+
+
+
+
+		// Preparing data
+		const data = {
+			account: this.props.edited.account,
+			guid: this.props.params.guid,
+			recipients: this.state.recipients,
+			title: this.state.title,
+			password: this.state.password
+		}
+
+		
 	}
 
 	render(){
@@ -67,8 +108,10 @@ class NotesEdit extends Component{
 		else{
 			return (
 				<div>
+					<div ref={ el => {this.el = el} }></div>
+					<PanelAlert onDismiss={this.dismissAlert.bind(this)} show={this.state.isAlert} text={this.state.alertText} />
 					<div className={`form-group ${ !this.state.isTitle ? 'has-error' : '' }`}>
-						<label>Title</label>
+						<label>Title:</label>
 						<input
 							value={this.state.title || '' } 
 							onChange={ (event) => {this.setState({title:event.target.value,isTitle:true})} } 
@@ -78,22 +121,34 @@ class NotesEdit extends Component{
 							{ this.state.isTitle ? ('') : (<div className="help-block">Note title is required</div>) }
 							
 					</div>
-					<div className={`form-group ${ !this.state.isNotebook ? 'has-error' : '' }`}>
-						<label>Notebook</label>
-						<NotebooksDropdown guid={this.props.edited.notebook_guid} notebooks={this.props.notebooks} />
-						{ this.state.isNotebook ? ('') : (<div className="help-block">Notebook GUID is required</div>) }
-					</div>
-					<div className={`form-group ${ !this.state.isSection ? 'has-error' : '' }`}>
-						<label>Section</label>
-						<SectionsDropdown sections={this.props.sections} service={this.state.service} />
-						{ this.state.isSection ? ('') : (<div className="help-block">Section ID is required</div>) }
-					</div>
-					<div>
-						<label>Recipients</label>
-						<RecipientsList selected={this.state.recipients} />
-					</div>
+
+					{ this.props.edited.recipients == 0 ? (
+
+						<div>
+							<label>Password:</label>
+							<input
+								ref = { inputPass => {this.inputPass = inputPass} }
+								onChange={(event) => {this.setState({password:event.target.value})}} 
+								type="password" className="form-control" placeholder="Password to encrypt this note"/>
+						</div>
+
+					) :
+					(
+						<div>
+							<label>Recipients</label>
+							<RecipientsList recipients={this.props.edited.recipients} />
+						</div>
+					) }
+
+					<br/>
 					<div className={`form-group ${ !this.state.isContent ? 'has-error' : '' }`}>
 						<NoteEditor content={this.state.content} onChange={this.onContentChanged.bind(this)} />
+					</div>
+					<hr/>
+					<div className="row">
+						<div className="col-md-12">
+							<button onClick={this.update.bind(this)} className="btn btn-primary">Update</button>
+						</div>
 					</div>
 				</div>
 			);
@@ -110,7 +165,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({editNote,fetchNotebooks},dispatch);
+	return bindActionCreators({editNote,fetchNotebooks,displayBread},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesEdit);

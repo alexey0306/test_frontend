@@ -6,6 +6,11 @@ import React,{Component} from 'react';
 // Class section
 class CertificatesDropdown extends Component{
 
+	constructor(props){
+		super(props);
+		this.state = {id: 0, name: "", serial: ""}
+	}
+
 
 	renderCertificate(certificate){
 		return (
@@ -14,18 +19,30 @@ class CertificatesDropdown extends Component{
 	}
 
 	onChange(event){
-		this.props.onChange(
-			event.target.value,
-			event.target.options[event.target.selectedIndex].id,
-			event.target.options[event.target.selectedIndex].id);
+
+		// Getting currently selected recipient
+		this.setState({
+			id: parseInt(event.target.value),
+			serial: event.target.options[event.target.selectedIndex].id,
+			name: event.target.options[event.target.selectedIndex].text 
+		})		
+	}
+
+	addRecipient(){
+		this.props.onRecipientSelected(this.state.id, this.state.serial, this.state.name);
 	}
 
 	render(){
 		return (
-			<select onChange={this.onChange} className="form-control">
-				<option value="*"> -- Select recipient -- </option>
-				{this.props.certificates.length != 0 ? this.props.certificates.map(this.renderCertificate) : ''}
-			</select>
+			<div className="input-group">
+				<select onChange={this.onChange.bind(this)} className="form-control">
+					<option value="0" id=""> -- Select recipient -- </option>
+					{this.props.certificates.length != 0 ? this.props.certificates.map(this.renderCertificate) : ''}
+				</select>
+				<span className="input-group-btn">
+					<button className="btn btn-default" onClick={this.addRecipient.bind(this)} type="submit">Add</button>
+				</span>
+			</div>
 		);
 	}
 

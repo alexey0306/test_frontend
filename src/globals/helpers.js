@@ -65,11 +65,10 @@ export function insert_node(item){
 		case MIME_TYPES.gif:
 		case MIME_TYPES.png:
 			node.innerHTML = vsprintf(TMPL_IMG_ATTACH,["70%","70%",item.type,item.hash,item.name,ROOT_URL,item.name]);
-			console.log(node.innerHTML);
 			break;
 		default:
 			node.innerHTML = vsprintf(TMPL_FILE_ATTACH,
-          [get_icon(item.type),ROOT_URL,item.name,item.name,item.size,item.type,item.hash,item.name]);
+          [get_icon(item.type),ROOT_URL,item.name,item.name,item.type,item.hash,item.name]);
 			break;
 	}
 

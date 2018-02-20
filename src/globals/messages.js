@@ -12,5 +12,7 @@ export const messages = {
 	groups_deleted: "Groups have been successfully deleted",
 	removed_from_favourites: "Items have been successfully removed from favourites",
 	note_status_updated: "Note status updated",
-	request_sent: "Request has been successfully sent"
+	request_sent: "Request has been successfully sent",
+	password_mandatory: "Password is mandatory",
+	no_recipients: "List of recipients is empty"
 }

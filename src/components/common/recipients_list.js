@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import _ from 'lodash';
 
 //// Importing additional components
 import CertificatesDropdown from '../certificates/certificates_dropdown.js';
@@ -10,13 +11,13 @@ import CertificatesDropdown from '../certificates/certificates_dropdown.js';
 import {fetchCertificates} from '../../actions/certificates_actions';
 
 // Init section
-//const no_recipients_found = <div>No recipients found</div>
+const no_recipients_found = <li className="list-group-item"><i> -- No recipients found -- </i></li>
 const styles = {
 	icon:{
 		marginRight: '5px'
 	},
 	dropdown: {
-		width:'50%'
+		width:'100%'
 	}
 
 }
@@ -27,6 +28,8 @@ class RecipientsList extends Component{
 	constructor(props){
 		super(props);
 		this.state = {recipients: []}
+		this.renderRecipient = this.renderRecipient.bind(this);
+		this.removeRecipient = this.removeRecipient.bind(this);
 	}
 
 	componentDidMount(){
@@ -39,23 +42,57 @@ class RecipientsList extends Component{
 		}
 	}
 
+	renderRecipient(item){
+		return (
+			<li key={item.id} className="list-group-item">
+				<span style={styles.icon}><i className="fa fa-user"></i></span> {item.name}
+					<i 
+						className="fa fa-times selected pull-right"
+						onClick={() => this.removeRecipient(item.id)} title='Remove recipient'>
+					</i>
+			</li>
+		);
+	}
+
+	addRecipient(id,serial,name){
+		
+		// Getting the current list of recipients
+		if (id != 0){
+			
+			// Creating recipient object
+			const recipient = {id: id, serial: serial, name: name}
+
+			// Adding object to the collection			
+			if (!_.find(this.state.recipients,recipient)){
+				this.setState({
+				  recipients: [...this.state.recipients, recipient]
+				})
+			}
+		}		
+	}
+
+	removeRecipient(id){
+		
+		// Creating new array
+		var recipients = this.state.recipients.filter(function( obj ) {
+  			return obj.id !== id;
+		});
+		
+		// Updating the state
+		this.setState({recipients});
+
+
+	}
+
 	render(){
 		return (
 			<div>
-				<div className="input-group">
-					<CertificatesDropdown certificates={this.props.certificates} />
-					<span className="input-group-btn">
-						<button className="btn btn-default" type="submit">Add</button>
-					</span>
-				</div><br/>
+				<CertificatesDropdown onRecipientSelected={this.addRecipient.bind(this)} certificates={this.props.certificates} />
+				<br/>
 				<ul className="list-group" style={styles.dropdown}>
-					{this.props.selected.map(function(item){
-						return (
-							<li key={item.id} className="list-group-item">
-								<span style={styles.icon}><i className="fa fa-user"></i></span> {item.name}<i className="fa fa-times selected pull-right" title='Remove recipient'></i>
-							</li>
-						)
-					})}
+					{
+						this.state.recipients.length == 0 ? no_recipients_found : this.state.recipients.map(this.renderRecipient)
+					}
 				</ul>
 			</div>
 		);

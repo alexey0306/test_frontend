@@ -20,7 +20,7 @@ class NotebooksDropdown extends Component {
 
 	render(){
 		return (
-			<select onChange={this.onChange} className="form-control" value={this.props.guid || ""}>
+			<select onChange={this.onChange} className="form-control">
 				<option value=""> -- Select notebook -- </option>
 				{this.props.notebooks.length != 0 ? this.props.notebooks.map(this.renderNotebook) : ''}
 			</select>

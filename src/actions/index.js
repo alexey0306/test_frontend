@@ -58,6 +58,7 @@ export const BATCH_CREATE_NOTES = "BATCH_CREATE_NOTES";
 export const RESTORE_NOTES = "RESTORE_NOTES";
 export const ENCRYPT_NOTES = "ENCRYPT_NOTES";
 export const EDIT_NOTE = "EDIT_NOTE";
+export const UPDATE_NOTE = "UPDATE_NOTE";
 
 // Policies actions
 export const FETCH_POLICIES = "FETCH_POLICIES";
