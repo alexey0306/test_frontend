@@ -6,7 +6,6 @@ import {
 	ENCRYPT_NOTES, EDIT_NOTE
 } from '../actions/index';
 import _ from 'lodash';
-import md5 from 'md5';
 
 // Initi section 
 const INITIAL_STATE = {all: [], note: {}, decrypted:{}, favourites: [], edited: {}};
@@ -72,7 +71,7 @@ export default function (state = INITIAL_STATE, action) {
 		// Adding or removing note to Favourites
 		case SET_FAVOURITE:
 			
-			var array = new Array();
+			var array = [];
 			var item = action.payload.data;
 			
 			// Removing the element from 

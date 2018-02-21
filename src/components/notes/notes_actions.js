@@ -7,8 +7,7 @@ import {DropdownButton,MenuItem} from 'react-bootstrap';
 // Init section
 const actions = [
 	{id:1, title:"Encrypt", value: "encrypt",icon: 'lock'},
-	{id:2, title:"Restore", value: "restore",icon:'refresh'},
-	{id:3, title:"Reencrypt", value: "reencrypt",icon:'lock'}
+	{id:2, title:"Restore", value: "restore",icon:'refresh'}
 ];
 
 // Class section
@@ -23,7 +22,7 @@ class NotesActions extends Component{
 
 	render(){
 		return (
-			<DropdownButton onSelect={this.onActionSelect.bind(this)} title={<span><i className="fa fa-tasks" aria-hidden="true"></i> Actions</span>}>
+			<DropdownButton id="btnAction" onSelect={this.onActionSelect.bind(this)} title={<span><i className="fa fa-tasks" aria-hidden="true"></i> Actions</span>}>
 				{actions.map(this.renderAction)}
 			</DropdownButton> 
 		);

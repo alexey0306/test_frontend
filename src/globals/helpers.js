@@ -3,9 +3,10 @@ import {
 		SERVICE_EVERNOTE, EVERNOTE_COLOR,ONENOTE_COLOR, DEFAULT_COLOR,
 		TMPL_FILE_ATTACH,TMPL_IMG_ATTACH
 } from './globals';
-import {ROOT_URL,REQUEST_TIMEOUT} from '../actions/index';
+import {ROOT_URL} from '../actions/index';
 import {vsprintf} from 'sprintf-js';
 import axios from 'axios';
+import {REQUEST_TIMEOUT} from './globals';
 
 
 
@@ -90,13 +91,17 @@ export function get_account(service_id){
 
 // Function used to select specific item
 export function selectItem(id,checked,state){
-	var arrayVar = state.selected;
+
+	// Getting current list of selected elements
+	var arrayVar = state.selected.slice();
+
+	// If checkbox is checked
 	if (checked){
-		arrayVar.push(parseInt(id));
+		arrayVar.push(id);
 	}
 	else{
 		arrayVar = arrayVar.filter(function(item){
-			return item !== parseInt(id);
+			return item !== id;
 		});
 	}
 

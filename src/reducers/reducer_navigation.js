@@ -1,6 +1,5 @@
 // Import section
 import {DISPLAY_BREAD,SET_LAST_ITEM,TOGGLE_SIDEBAR} from '../actions/index';
-import _ from 'lodash';
 
 // Initializing variables
 const INITIAL_STATE = { items: [],lastItem:null,sidebarOpened: false};

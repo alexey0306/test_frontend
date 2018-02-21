@@ -16,3 +16,8 @@ export const messages = {
 	password_mandatory: "Password is mandatory",
 	no_recipients: "List of recipients is empty"
 }
+
+// Confirmation messages
+export const confirmations = {
+	restore_notes: "Do you really want to restore selected note(s) from the backup?",
+}

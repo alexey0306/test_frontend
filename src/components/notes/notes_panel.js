@@ -1,18 +1,23 @@
-/*
-	Name: NotesPanel
-	Purpose: This component is used to hold the buttons and search bar for the Notes list
-	Created: 17.10.2017
-	Author: Alexey Zelenkin
-*/
-
 // Import section
 import React, {Component} from 'react';
-import CreateUserModal from '../modals/create_user';
-import {fetchNotes} from '../../actions/notes_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types';
+
+//// Import additional actions
+import {fetchNotes,restoreNotes} from '../../actions/notes_actions';
+import {confirmations} from '../../globals/messages';
+
+
+//// Import additional components
+import CreateUserModal from '../modals/create_user';
 import NotesFilter from './notes_filter';
 import NotesActions from './notes_actions';
+
+// Init section
+const ACTION_ENCRYPT = "encrypt";
+const ACTION_RESTORE = "restore";
+
 
 // Declaring class
 class NotesPanel extends Component{
@@ -26,16 +31,30 @@ class NotesPanel extends Component{
 	}
 
 	onRefresh(){
-		this.props.fetchNotes(this.props.id,this.props.guid,true,this.state.term);
+		this.props.fetchNotes(this.props.account,this.props.guid,true,this.state.term);
 	}
 
 	onActionSelect(value){
-		console.log(value);
+		
+		switch (value){
+			case ACTION_ENCRYPT:
+				break;
+			case ACTION_RESTORE:
+				if (window.confirm(confirmations.restore_notes)){
+					this.props.restoreNotes({
+						guids: this.props.selected,
+						account: this.props.account
+					});
+				}
+				break;
+			default:
+				return false;
+		}
 	}
 	
 	onSearchClick(event){
 		event.preventDefault();
-		this.props.fetchNotes(this.props.id, this.props.guid, false,this.state.term);
+		this.props.fetchNotes(this.props.account, this.props.guid, false,this.state.term);
 	}
 
 	onChange(event){		
@@ -54,7 +73,7 @@ class NotesPanel extends Component{
 							</button>
 						</span>
 						<NotesActions onChange={this.onActionSelect.bind(this)} />
-						<NotesFilter search={this.state.term} id={this.props.id} guid={this.props.guid} />
+						<NotesFilter search={this.state.term} id={this.props.account} guid={this.props.guid} />
 					</div>
 					<div className="col-md-6">
 						<form onSubmit={this.onSearchClick}>
@@ -67,8 +86,7 @@ class NotesPanel extends Component{
 							</span>
 							</div>
 						</form>
-					</div>
-					
+					</div>					
 				</div>
 			</div><br/>
 			</div>
@@ -76,9 +94,24 @@ class NotesPanel extends Component{
 	}
 }
 
+// Properties section
+NotesPanel.propTypes = {
+
+	// Account ID
+	account: PropTypes.string,
+
+	// Notebook/Section GUID
+	guid: PropTypes.string,
+
+	// List of selected notes
+	selected: PropTypes.array
+}
+
+
+
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchNotes},dispatch);
+	return bindActionCreators({fetchNotes,restoreNotes},dispatch);
 }
 
 export default connect(null,mapDispatchToProps)(NotesPanel);

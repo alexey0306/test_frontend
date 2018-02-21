@@ -6,8 +6,6 @@ import {bindActionCreators} from 'redux';
 import {fetchGroups} from '../../actions/groups_actions';
 import _ from 'lodash';
 import {Link} from 'react-router';
-import Breadcrumb from '../common/breadcrumb';
-import CreateGroupModal from '../modals/create_group';
 import GroupsPanel from './groups_panel';
 import {no_groups_found} from '../../globals/globals';
 import {displayBread} from '../../actions/navigation_actions';

@@ -18,6 +18,8 @@ export const no_sections_found = <tr><td colSpan="10" className="not_found"> [ N
 export const no_tasks_found = <tr><td colSpan="10" className="not_found"> [ No tasks found ] </td></tr>;
 export const no_favourites_found = <tr><td colSpan="10" className="not_found"> [ No favourites found ] </td></tr>;
 
+// Request timeout
+export const REQUEST_TIMEOUT = 20000;
 
 // Service IDs
 export const DEFAULT_SERVICE = -1;

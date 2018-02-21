@@ -2,10 +2,9 @@
 import axios from 'axios';
 import {
 		FETCH_SECTIONS_START, FETCH_SECTIONS, LIST_SECTIONS,ENCRYPT_SECTIONS,SEARCH_SECTIONS,
-		ROOT_URL,REQUEST_TIMEOUT,success,handleError,
-		TYPE_DANGER,TYPE_SUCCESS} from './index';
+		ROOT_URL,success,handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
 import {showAlert,isLoading} from './alerts_actions';
-axios.defaults.timeout = REQUEST_TIMEOUT;
+import {custom_axios} from '../globals/helpers';
 
 
 // ---------------------------------------------------
@@ -20,7 +19,7 @@ export function fetchSections(account_id,guid,refresh = false){
 		// Displaying progress
 		dispatch(success(null,FETCH_SECTIONS_START));
 		dispatch(isLoading(true));
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success(response,FETCH_SECTIONS));
@@ -40,7 +39,7 @@ export function listSections(account_id,guid,policy_id){
 	var URL = `${ROOT_URL}sections/${account_id}/list/${guid}?refresh`;
 	return function(dispatch){
 		// Displaying progress
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(success({id: policy_id, data: response.data},LIST_SECTIONS));
 		})
@@ -59,7 +58,7 @@ export function encryptSections(data){
 	return function(dispatch){
 
 		// Sending the request
-		axios.post(URL,data)
+		custom_axios().post(URL,data)
 		.then((response) => {
 			dispatch(showAlert(response.data.type,response.data.message))
 			dispatch(success(response,ENCRYPT_SECTIONS));

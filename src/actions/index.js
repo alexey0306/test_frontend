@@ -24,7 +24,6 @@ export const DELETE_GROUPS = "DELETE_GROUPS";
 // Alert actions
 export const SHOW_ALERT = "SHOW_ALERT";
 export const CLEAR_ALERTS = "CLEAR_ALERTS";
-export const REQUEST_TIMEOUT = 20000;
 export const HANDLE_LOADER = "HANDLE_LOADER";
 
 // Account actions
@@ -99,6 +98,7 @@ export const FETCH_STATUS = "FETCH_STATUS";
 export const TYPE_DANGER = "danger";
 export const TYPE_SUCCESS = "success";
 export const TYPE_WARN = "warning";
+export const TYPE_INFO = "info";
 
 // Breadcrumb actions
 export const SHOW_BREAD = "SHOW_BREAD";

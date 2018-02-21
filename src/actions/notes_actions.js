@@ -1,5 +1,5 @@
 import {
-		FETCH_NOTES, SORT_NOTES, REQUEST_TIMEOUT, 
+		FETCH_NOTES, SORT_NOTES, 
 		FETCH_NOTES_START, FETCH_NOTE, FETCH_NOTE_START,CREATE_NOTE, SET_LAST_ITEM,
 		DECRYPT_NOTE,CLEAR_DECRYPTED,SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,
 		BATCH_CREATE_NOTES,RESTORE_NOTES,ENCRYPT_NOTES,EDIT_NOTE,UPDATE_NOTE,ROOT_URL, 
@@ -85,7 +85,7 @@ export function createNote(data){
 		.then((response) => {
 
 			// Displaying the result of operation
-			dispatch(showAlert(TYPE_SUCCESS,messages.request_sent));
+			dispatch(showAlert(response.data.type,response.data.message));
 
 			// Sending message to reducer
 			dispatch(success(response, CREATE_NOTE));
@@ -251,7 +251,7 @@ export function restoreNotes(data){
 		.then((response) => {
 
 			// Displaying alert
-			dispatch(showAlert(TYPE_SUCCESS,response.data.message));
+			dispatch(showAlert(response.data.type,response.data.message));
 
 			// Passing data to reducer
 			dispatch(success(response,RESTORE_NOTES));
@@ -275,7 +275,7 @@ export function encryptNotes(data){
 		.then((response) => {
 
 			// Displaying response from server
-			dispatch(showAlert(TYPE_SUCCESS,response.data.message));
+			dispatch(showAlert(response.data.type,response.data.message));
 
 			// Passing data to reducer
 			dispatch(success(response,ENCRYPT_NOTES));

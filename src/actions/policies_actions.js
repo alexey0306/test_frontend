@@ -1,9 +1,7 @@
 // Import section
 import {FETCH_POLICIES,FETCH_POLICIES_START,FETCH_POLICY,FETCH_POLICY_START,CREATE_POLICY,REQUEST_TIMEOUT, ROOT_URL, success, TYPE_DANGER, handleError} from './index';
-import axios from 'axios';
 import {showAlert,isLoading} from './alerts_actions';
-axios.defaults.timeout = REQUEST_TIMEOUT;
-
+import {custom_axios} from '../globals/helpers';
 // ---------------------------------------------------
 // 		Fetching policies
 // ---------------------------------------------------
@@ -18,7 +16,7 @@ export function fetchPolicies(term = ''){
 		dispatch(isLoading(true));
 
 		// Sending request
-		axios.get(URL)
+		custom_axios().get(URL)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success(response,FETCH_POLICIES));
@@ -38,7 +36,7 @@ export function fetchPolicy(id){
 	return function(dispatch){
 		dispatch(success(null,FETCH_POLICY_START));
 		dispatch(isLoading(true));
-		axios.get()
+		custom_axios().get()
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success(response,FETCH_POLICY));
@@ -56,7 +54,7 @@ export function fetchPolicy(id){
 export function createPolicy(values){
 	const URL = `${ROOT_URL}policies/create`;
 	return function(dispatch){
-		axios.post(URL,values)
+		custom_axios().post(URL,values)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(success(response,CREATE_POLICY));

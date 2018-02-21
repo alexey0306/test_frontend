@@ -85,7 +85,11 @@ export function encryptNotebooks(data){
 		// Sending the request
 		custom_axios().post(URL,data)
 		.then((response) => {
+
+			// Displaying the response from the server
 			dispatch(showAlert(response.data.type,response.data.message))
+
+			// Passing the result to Reducer
 			dispatch(success(response,ENCRYPT_NOTEBOOK));
 		})
 		.catch((err) => {

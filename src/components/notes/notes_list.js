@@ -1,15 +1,22 @@
+// Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchNotes,sortNotes,setFavourite,fetchFavourites} from '../../actions/notes_actions';
-import {no_notes_found,PATHS} from '../../globals/globals';
 import {Link} from 'react-router';
 import _ from 'lodash';
-import NotesPanel from './notes_panel';
-import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import {vsprintf} from 'sprintf-js';
 import md5 from 'md5';
+
+//// Importing additional actions
+import {fetchNotes,sortNotes,setFavourite,fetchFavourites} from '../../actions/notes_actions';
+import {no_notes_found,PATHS} from '../../globals/globals';
+import {displayBread,setLastItem} from '../../actions/navigation_actions';
 import {ROOT_URL} from '../../actions/index';
+import {selectItem} from '../../globals/helpers';
+
+// Import additional components
+import NotesPanel from './notes_panel';
+
 
 class NotesList extends Component {
 
@@ -17,7 +24,6 @@ class NotesList extends Component {
 		super(props);
 		this.renderNote = this.renderNote.bind(this);
 		this.onNoteClick = this.onNoteClick.bind(this);
-		this.selectNote = this.selectNote.bind(this);
 		this.onRowClick = this.onRowClick.bind(this);
 		this.onSortClick = this.onSortClick.bind(this);
 		this.state = {selected: [], sort: 'asc', sortField: ''};
@@ -28,24 +34,26 @@ class NotesList extends Component {
 
 	onNoteClick(event){
 		event.stopPropagation();
-		this.selectNote(event.target.id,event.target.checked);
+		this.setState({
+			selected: selectItem(event.target.id,event.target.checked,this.state)
+		});
+	}
+
+	onAllChange(event){
+		var arrayVar = [];
+		if (event.target.checked){
+			this.props.notes.map(function(note){
+				arrayVar.push(note.guid);
+			})
+		}
+		this.setState({selected:arrayVar});
 	}
 
 	onRowClick(event){
 		var checked = event.currentTarget.querySelectorAll("input[type='checkbox']")[0].checked;
-		this.selectNote(event.currentTarget.id,!checked);
-		event.stopPropagation();
-	}
-
-	selectNote(id,checked){
-		var arrayVar = this.state.selected;
-		if (checked){arrayVar.push(id);}
-		else{
-			arrayVar = arrayVar.filter(function(item){
-				return item !== id;
-			});
-		}
+		var arrayVar = selectItem(event.currentTarget.id,!checked, this.state);
 		this.setState({selected: arrayVar});
+		event.stopPropagation();
 	}
 
 	componentWillUnmount() {
@@ -162,11 +170,11 @@ class NotesList extends Component {
 
 		return (
 			<div>
-			<NotesPanel id={this.props.params.id} guid={this.props.params.container_id} />
+			<NotesPanel selected={this.state.selected} account={this.props.params.id} guid={this.props.params.container_id} />
 			<table className="table table-hover table-striped">
 				<thead>
 					<tr>
-						<th><input type="checkbox"/></th>
+						<th><input type="checkbox" onClick={this.onAllChange.bind(this)}/></th>
 						<th>Name <i className="fa fa-fw fa-sort sort" id="title" onClick={this.onSortClick}></i></th>
 						<th>GUID</th>
 						<th>Created <i id="created" className="fa fa-fw fa-sort sort" onClick={this.onSortClick}></i></th>
