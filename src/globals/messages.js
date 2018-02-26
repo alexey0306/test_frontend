@@ -20,4 +20,5 @@ export const messages = {
 // Confirmation messages
 export const confirmations = {
 	restore_notes: "Do you really want to restore selected note(s) from the backup?",
+	update_note: "Do you really want to update the note?"
 }

@@ -72,7 +72,6 @@ export function insert_node(item){
           [get_icon(item.type),ROOT_URL,item.name,item.name,item.type,item.hash,item.name]);
 			break;
 	}
-
 	return node;
 
 }

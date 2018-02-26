@@ -9,7 +9,7 @@ import {editNote,updateNote} from '../../actions/notes_actions';
 import {fetchNotebooks} from '../../actions/notebooks_actions';
 import {fetchSections} from '../../actions/sections_actions';
 import {displayBread} from '../../actions/navigation_actions';
-import {messages} from '../../globals/messages';
+import {messages,confirmations} from '../../globals/messages';
 
 //// Import additional components
 import Spinner from '../common/spinner';
@@ -32,14 +32,15 @@ class NotesEdit extends Component{
 			isTitle: true, title: "Default title", 
 			content: "", recipients: [],
 			password: "",
-			isAlert: false, alertText: ""
+			isAlert: false, alertText: "",
+			node: null
 		};
 	}
 
 	componentWillReceiveProps(newProps){
 
 		if (this.props.edited != newProps.edited){
-
+			
 			// Updating the state
 			this.setState({
 				title: newProps.edited.title,
@@ -69,6 +70,8 @@ class NotesEdit extends Component{
 	}
 
 	update(){
+		console.log(this.state.content);	
+		return;
 
 		// If we have password encrypted note, then we need to check password
 		if ( this.state.method == "password" && this.state.password == "" ){
@@ -84,19 +87,21 @@ class NotesEdit extends Component{
 			this.el.scrollIntoView({ behavior: 'smooth' });
 			return;
 		}
-
-
-
+			
 
 		// Preparing data
 		const data = {
 			account: this.props.edited.account,
-			guid: this.props.params.guid,
+			guid: this.props.edited.guid,
 			recipients: this.state.recipients,
 			title: this.state.title,
-			password: this.state.password
+			password: this.state.password,
+			method: this.state.method,
+			content: this.state.content
 		}
 
+		// Sending the update request
+		this.props.updateNote(data);
 		
 	}
 
@@ -165,7 +170,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({editNote,fetchNotebooks,displayBread},dispatch);
+	return bindActionCreators({editNote,fetchNotebooks,displayBread,updateNote},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesEdit);

@@ -81,7 +81,7 @@ class NotesInfoPanel extends Component{
 							}
 
 							{ this.props.note.backedup ? 
-								(<span><button onClick={() => this.props.onRestore()} title="Restore the note from the backup" className="btn btn-default"><i className="fa fa-cloud-upload" aria-hidden="true"></i> Restore</button><button onClick={() => this.props.onDeleteBackup()} title="Delete the note backup" className="btn btn-default"><i className="fa fa-cloud-trash" aria-hidden="true"></i> Delete backup</button></span>)
+								(<span><button onClick={() => this.props.onRestore()} title="Restore the note from the backup" className="btn btn-default"><i className="fa fa-cloud-upload" aria-hidden="true"></i> Restore</button><button onClick={() => this.props.onDeleteBackup()} title="Delete the note backup" className="btn btn-default"><i className="fa fa-trash"></i> Delete backup</button></span>)
 								:
 								(<span></span>)
 							}

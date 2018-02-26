@@ -4,6 +4,7 @@ import 'react-summernote/dist/react-summernote.css'; // import styles
 import axios from 'axios';
 import {insert_node} from '../../globals/helpers';
 import {ROOT_URL} from '../../actions/index';
+import PropTypes from 'prop-types';
  
 // Import bootstrap(v3 or v4) dependencies
 import 'bootstrap/js/modal';
@@ -21,12 +22,7 @@ class NoteEditor extends Component {
     this.uploadFile  = this.uploadFile.bind(this);
   }
 
-  componentWillReceiveProps(newProps){
-    this.setState({content: newProps.content});
-  }
-
   onChange(content) {
-    this.setState({content: content});
     this.props.onChange(content);
   }
 
@@ -36,15 +32,12 @@ class NoteEditor extends Component {
 
   addFile(){
     this.fileUpload.click();
-    //var node = document.createElement('p');
-    //node.setAttribute("id","saferoomAttach");
-    //node.innerHTML = "<strong>Some text</strong>";
-    //ReactSummernote.insertNode(node);
   }
 
   uploadFile(event){
     
     const URL = `${ROOT_URL}upload/attach`;
+
     // Constructing a list of files to upload
     var files = event.target.files;
     var formData = new FormData();
@@ -72,8 +65,8 @@ class NoteEditor extends Component {
     return (
       <div>
       <ReactSummernote
-        value={this.state.content}
-        options={{
+        value={this.props.content} 
+        options={{          
           lang: 'ru-RU',
           height: 350,
           dialogsInBody: true,
@@ -97,6 +90,16 @@ class NoteEditor extends Component {
       </div>
     );
   }
+}
+
+// Properties section
+NoteEditor.propTypes = {
+
+  // Account ID
+  content: PropTypes.string,
+
+  // Notebook/Section GUID
+  initialNode: PropTypes.object
 }
  
 export default NoteEditor;

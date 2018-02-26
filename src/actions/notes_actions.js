@@ -299,7 +299,6 @@ export function editNote(id){
 		// Sending request
 		custom_axios().get(URL)
 		.then((response) => {
-			
 			// Passing data to reducer
 			dispatch(success(response,EDIT_NOTE));		
 
@@ -314,20 +313,20 @@ export function editNote(id){
 // 		Updating existing note
 // ---------------------------------------------------
 
-function updateNote(data){
+export function updateNote(data){
 
 	const URL = `${ROOT_URL}notes/update`;
 	return function(dispatch){
 
 		// Sending request
-		custom_axios().post(URL,data)
+		custom_axios().put(URL,data)
 		.then((response) => {
 			
 			// Displaying response from server
-			dispatch(showAlert(TYPE_SUCCESS,response.data.message));
-
+			//dispatch(showAlert(TYPE_SUCCESS,response.data.message));
+			console.log(response);
 			// Passing data to reducer
-			dispatch(success(response,UPDATE_NOTE));		
+			//dispatch(success(response,UPDATE_NOTE));		
 
 		})
 		.catch((err) => {

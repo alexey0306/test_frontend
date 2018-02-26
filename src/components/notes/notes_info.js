@@ -83,6 +83,7 @@ class NotesInfo extends Component{
 
 		// Constructing URL
 		const URL = `${ROOT_URL}notes/`;
+		var newContent = this.props.decrypted.content.replace(/\r?\n|\r/gm, '');
 
 		// Preparing data
 		const data = {};
@@ -92,7 +93,7 @@ class NotesInfo extends Component{
 		data.section_guid = ( this.props.params.section_guid ? this.props.params.section_guid : "" );
 		data.section_name = ( this.props.params.section_name ? this.props.params.section_name : "" );
 		data.account = this.props.params.id;
-		data.content = this.props.decrypted.content;
+		data.content = newContent.replace(/<style>.*?<\/style>/g, '').replace(/<link[^>]*><\/link>/g,'').trim();
 		data.title = this.props.note.name;
 		data.recipients = this.props.note.recipients;
 		data.service = this.props.decrypted.service;
