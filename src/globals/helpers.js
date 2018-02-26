@@ -58,14 +58,14 @@ export function insert_node(item){
 
 	// Initializing the node
 	var node = document.createElement("p");
-	node.setAttribute("id","saferoomAttach");
+	//node.setAttribute("id","saferoomAttach");
 
 	// Defining the MIME of inserted file
 	switch(item.type){
 		case MIME_TYPES.jpeg:
 		case MIME_TYPES.gif:
 		case MIME_TYPES.png:
-			node.innerHTML = vsprintf(TMPL_IMG_ATTACH,["70%","70%",item.type,item.hash,item.name,ROOT_URL,item.name]);
+			node.innerHTML = vsprintf(TMPL_IMG_ATTACH,["70%","70%",item.type,item.name,item.hash,ROOT_URL,item.name]);
 			break;
 		default:
 			node.innerHTML = vsprintf(TMPL_FILE_ATTACH,

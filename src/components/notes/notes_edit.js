@@ -70,14 +70,15 @@ class NotesEdit extends Component{
 	}
 
 	update(){
-		console.log(this.state.content);	
-		return;
 
+		// Hiding error
+		this.setState({isAlert:false});
+		
 		// If we have password encrypted note, then we need to check password
 		if ( this.state.method == "password" && this.state.password == "" ){
 			this.setState({isAlert: true, alertText: messages.password_mandatory});
-			this.el.scrollIntoView({ behavior: 'smooth' });
 			this.inputPass.focus();
+			this.el.scrollIntoView({ behavior: 'smooth' });			
 			return;
 		}
 
@@ -101,6 +102,7 @@ class NotesEdit extends Component{
 		}
 
 		// Sending the update request
+		console.log(this.state.content);
 		this.props.updateNote(data);
 		
 	}

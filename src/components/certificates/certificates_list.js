@@ -8,7 +8,6 @@ import {Link} from 'react-router';
 import _ from 'lodash';
 import {selectItem,selectAll} from '../../globals/helpers';
 import {ROOT_URL} from '../../actions/index';
-import fileDownload from 'js-file-download';
 import {custom_axios} from '../../globals/helpers';
 
 class CertificatesList extends Component{
