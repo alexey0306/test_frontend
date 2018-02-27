@@ -45,7 +45,8 @@ class NotesEdit extends Component{
 			this.setState({
 				title: newProps.edited.title,
 				content: newProps.edited.content,
-				method: ( newProps.edited.recipients.length == 0 ? "password" : "cms" )
+				method: ( newProps.edited.recipients.length == 0 ? "password" : "cms" ),
+				recipients: newProps.edited.recipients
 			});
 
 			// Updating items
@@ -69,6 +70,10 @@ class NotesEdit extends Component{
 		this.setState({isAlert: false,alertText:""});
 	}
 
+	updateRecipients(recipients){
+		this.setState({recipients});
+	}
+
 	update(){
 
 		// Hiding error
@@ -88,13 +93,16 @@ class NotesEdit extends Component{
 			this.el.scrollIntoView({ behavior: 'smooth' });
 			return;
 		}
-			
+
+		// Preparing keys
+		var keys = []
+		this.state.recipients.map(function(item){keys.push(item.id);})			
 
 		// Preparing data
 		const data = {
 			account: this.props.edited.account,
 			guid: this.props.edited.guid,
-			recipients: this.state.recipients,
+			keys: keys,
 			title: this.state.title,
 			password: this.state.password,
 			method: this.state.method,
@@ -102,7 +110,6 @@ class NotesEdit extends Component{
 		}
 
 		// Sending the update request
-		console.log(this.state.content);
 		this.props.updateNote(data);
 		
 	}
@@ -143,7 +150,7 @@ class NotesEdit extends Component{
 					(
 						<div>
 							<label>Recipients</label>
-							<RecipientsList recipients={this.props.edited.recipients} />
+							<RecipientsList onChange={this.updateRecipients.bind(this)} recipients={this.props.edited.recipients} />
 						</div>
 					) }
 

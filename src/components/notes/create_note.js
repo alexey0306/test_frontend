@@ -154,6 +154,8 @@ class CreateNote extends Component{
 		}	
 
 		// Creating new note
+		console.log(this.state.content);
+		return;
 		this.props.createNote(note);
 
 	}

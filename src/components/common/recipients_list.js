@@ -30,6 +30,7 @@ class RecipientsList extends Component{
 		this.state = {recipients: []}
 		this.renderRecipient = this.renderRecipient.bind(this);
 		this.removeRecipient = this.removeRecipient.bind(this);
+		this.onChange = this.onChange.bind(this);
 	}
 
 	componentDidMount(){
@@ -66,6 +67,8 @@ class RecipientsList extends Component{
 			if (!_.find(this.state.recipients,recipient)){
 				this.setState({
 				  recipients: [...this.state.recipients, recipient]
+				},function(){
+					this.onChange();
 				})
 			}
 		}		
@@ -79,9 +82,15 @@ class RecipientsList extends Component{
 		});
 		
 		// Updating the state
-		this.setState({recipients});
+		this.setState({recipients},function(){
+			this.onChange();
+		});
 
 
+	}
+
+	onChange(){
+		this.props.onChange(this.state.recipients);
 	}
 
 	render(){
