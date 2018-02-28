@@ -1,6 +1,9 @@
 // Import section
-import axios from 'axios';
-import {FETCH_CERTIFICATES_START,FETCH_CERTIFICATES,REQUEST_CERTIFICATES,DELETE_CERTIFICATES,ROOT_URL,REQUEST_TIMEOUT,success,handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
+import {
+		FETCH_CERTIFICATES_START,FETCH_CERTIFICATES,
+		REQUEST_CERTIFICATES,DELETE_CERTIFICATES,
+		ROOT_URL,
+		success,handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
 import {showAlert,isLoading} from './alerts_actions';
 import {setLastItem} from './navigation_actions';
 import {custom_axios} from '../globals/helpers';

@@ -1,20 +1,15 @@
 // Import section
 import React,{Component} from 'react';
-import ReactDom from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 //// Importing actions
 import {editNote,updateNote} from '../../actions/notes_actions';
-import {fetchNotebooks} from '../../actions/notebooks_actions';
-import {fetchSections} from '../../actions/sections_actions';
 import {displayBread} from '../../actions/navigation_actions';
 import {messages,confirmations} from '../../globals/messages';
 
 //// Import additional components
 import Spinner from '../common/spinner';
-import NotebooksDropdown from '../notebooks/notebooks_dropdown';
-import SectionsDropdown from '../sections/sections_dropdown';
 import RecipientsList from '../common/recipients_list';
 import NoteEditor from './notes_editor';
 import PanelAlert from '../common/panel_alert';
@@ -179,7 +174,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({editNote,fetchNotebooks,displayBread,updateNote},dispatch);
+	return bindActionCreators({editNote,displayBread,updateNote},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(NotesEdit);

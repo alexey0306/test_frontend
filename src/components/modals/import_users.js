@@ -1,6 +1,6 @@
 // Import section
 import React,{Component} from 'react';
-import {Modal,Button} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 import { importUsers } from '../../actions/users_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -38,7 +38,6 @@ class ImportUsersModal extends Component{
 
 	render(){
 
-		const { handleSubmit, pristine, reset, submitting } = this.props;
 		return (
 			<form>
 				<Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
@@ -60,16 +59,6 @@ class ImportUsersModal extends Component{
 				</form>			
 		);
 	}
-}
-
-
-function validate(values){
-	const errors = {};
-
-	if (!values.json){
-		errors.username = "Required";
-	}
-	return errors;
 }
 
 

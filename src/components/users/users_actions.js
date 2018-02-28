@@ -1,7 +1,5 @@
 // Import section
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {DropdownButton,MenuItem} from 'react-bootstrap';
 
 // Init section

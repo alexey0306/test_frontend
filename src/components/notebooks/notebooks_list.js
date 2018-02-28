@@ -1,21 +1,23 @@
+// Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchNotebooks,sortNotebooks} from '../../actions/notebooks_actions';
-import {no_notebooks_found, SERVICE_ONENOTE,SERVICE_EVERNOTE,PATHS} from '../../globals/globals';
 import {Link} from 'react-router';
 import _ from 'lodash';
+
+//// Importing additional components
 import NotebooksPanel from './notebooks_panel';
-import Breadcrumb from '../common/breadcrumb';
+
+//// Importing additional actions
+import {fetchNotebooks,sortNotebooks} from '../../actions/notebooks_actions';
+import {no_notebooks_found, SERVICE_ONENOTE,SERVICE_EVERNOTE,PATHS} from '../../globals/globals';
 import {displayBread} from '../../actions/navigation_actions';
 import {vsprintf} from 'sprintf-js';
-import {setService} from '../../actions/globals_actions';
-
 
 // Initializing variables
 const items = [{id:1, name: "Notebooks" , link: "", isLink: false}];
-var link = "";
 
+// Class section
 class NotebooksList extends Component {
 
 	constructor(props){

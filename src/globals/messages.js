@@ -14,11 +14,16 @@ export const messages = {
 	note_status_updated: "Note status updated",
 	request_sent: "Request has been successfully sent",
 	password_mandatory: "Password is mandatory",
-	no_recipients: "List of recipients is empty"
+	no_recipients: "List of recipients is empty",
+	no_users_selected: "Please select at least one user to continue",
+	no_certificates_selected: "Please select at least one certificate to continue"
 }
 
 // Confirmation messages
 export const confirmations = {
 	restore_notes: "Do you really want to restore selected note(s) from the backup?",
-	update_note: "Do you really want to update the note?"
+	update_note: "Do you really want to update the note?",
+	delete_account: "Are you sure that you want to delete this account? Please note that deleting your account won't affect your data stored in the cloud",
+	delete_users: "Do you really want to delete selected users?",
+	delete_certificates: "Do you really want to delete selected certificates?"
 }

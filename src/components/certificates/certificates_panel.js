@@ -1,21 +1,20 @@
-/*
-	Name: CertificatesPanel
-	Purpose: This component is used to hold the buttons and search bar for the Certificate list
-	Created: 07.11.2017
-	Author: Alexey Zelenkin
-*/
-
 // Import section
 import React, {Component} from 'react';
-import RequestCertificateModal from '../modals/request_certificate';
-import PasswordModal from '../modals/password';
-import {fetchCertificates,deleteCertificates,requestCertificates} from '../../actions/certificates_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
+//// Importing additional components
+import RequestCertificateModal from '../modals/request_certificate';
+import PasswordModal from '../modals/password';
 import GroupsDropdown from '../groups/groups_dropdown';
-import {PFX_DSCR} from '../../globals/messages';
 import SearchBar from '../common/search_bar';
 import PanelAlert from '../common/panel_alert';
+
+//// Importing additional actions
+import {fetchCertificates,deleteCertificates,requestCertificates} from '../../actions/certificates_actions';
+import {PFX_DSCR,confirmations,messages} from '../../globals/messages';
+
+
 
 // Declaring class
 class CertificatesPanel extends Component{
@@ -36,11 +35,11 @@ class CertificatesPanel extends Component{
 	onDelete(){
 
 		if (this.props.items.length == 0){
-			this.setState({alertVisible:true, alertText:"Please select certificates to delete"});
+			this.setState({alertVisible:true, alertText:messages.no_certificates_selected});
 			return false;
 		}
 
-		if (window.confirm("Are you sure that you want to delete selected certificates?")){
+		if (window.confirm(confirmations.delete_certificates)){
 			this.props.deleteCertificates(this.props.items);
 		}
 	}

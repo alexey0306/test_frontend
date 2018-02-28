@@ -2,19 +2,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import NoteEditor from './notes_editor';
-import Breadcrumb from '../common/breadcrumb';
+
+//// Importing additional actions
 import {fetchNotebooks,clearNotebooks} from '../../actions/notebooks_actions';
 import {fetchSections} from '../../actions/sections_actions';
+import {SERVICE_ONENOTE} from '../../globals/globals';
+import {displayBread} from '../../actions/navigation_actions';
+import {createNote} from '../../actions/notes_actions';
+
+//// Importing additional components
+import NoteEditor from './notes_editor';
 import AccountsDropdown from '../accounts/accounts_dropdown';
 import NotebooksDropdown from '../notebooks/notebooks_dropdown';
 import SectionsDropdown from '../sections/sections_dropdown';
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css'; // If using WebPack and style-loader
-import {SERVICE_ONENOTE} from '../../globals/globals';
 import EncryptModal from '../modals/encrypt_method';
-import {displayBread} from '../../actions/navigation_actions';
-import {createNote} from '../../actions/notes_actions';
+
 
 // Initializing variables
 const items = [{id:1, name: "Create new note", link: "", isLink: false}];

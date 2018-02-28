@@ -2,13 +2,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Breadcrumb from '../common/breadcrumb';
-import {fetchCertificates} from '../../actions/certificates_actions';
-import {no_certificates_found} from '../../globals/globals';
 import CertificatesPanel from './certificates_panel';
 import CertificatesList from './certificates_list';
 import {displayBread} from '../../actions/navigation_actions';
-import _ from 'lodash';
 
 // Initializing variables
 const items = [{id:1,name:"Certificates",link:"/certificates",isLink:false}];

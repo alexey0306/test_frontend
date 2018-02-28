@@ -1,16 +1,13 @@
 // Import section
 import React,{Component} from 'react';
-import {Modal,Button} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import Spinner from '../common/spinner';
 import TaskInfo from '../tasks/task_info';
-import {fetchTask} from '../../actions/tasks_actions';
 
 class TaskInfoModal extends Component{
 
 	render(){
-		const { handleSubmit, pristine, reset, submitting } = this.props;
 		return (
 			<form>
 				<Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
@@ -20,7 +17,7 @@ class TaskInfoModal extends Component{
 					<Modal.Body className="modalBody">
 						{ !this.props.task.name ? 
 							(<Spinner />) : 
-							(<TaskInfo task={this.props.task} />) 
+							(<TaskInfo task={this.props.task} />)
 						}
 					</Modal.Body>
 					<Modal.Footer>						

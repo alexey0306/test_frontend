@@ -1,11 +1,9 @@
 // Import section
 import React,{Component} from 'react';
-import {Modal,Button,Alert} from 'react-bootstrap';
-import {reduxForm, Field} from 'redux-form';
+import {Modal,Alert} from 'react-bootstrap';
 import {requestCertificates} from '../../actions/certificates_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {renderField,textAreaField} from '../../globals/render_fields';
 import UsersList from '../users/users_list';
 
 
@@ -48,7 +46,6 @@ class RequestCertificateModal extends Component{
 	}
 
 	render(){
-		const { handleSubmit, pristine, reset, submitting } = this.props;
 		return (
 			<form>
 				<Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">

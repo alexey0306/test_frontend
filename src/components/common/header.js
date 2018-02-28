@@ -1,7 +1,9 @@
+// Import section
 import React, {Component} from 'react';
-import {Navbar, NavItem, Nav} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
+//// Importing additional actions
 import {signout} from '../../actions/auth_actions';
 import {fetchAdmin} from '../../actions/admin_actions';
 
@@ -26,6 +28,7 @@ class Header extends Component{
 				<div className="header">
 					<div style={{paddingLeft:'30px'}} className="headerItem">
 						<div style={{display:'inline'}}><i onClick={this.onBarsClick} className="fa fa-bars fa-2x" aria-hidden="true"></i></div>
+						<div style={{display:'inline',marginLeft:'30px'}}><img style={{width:'auto', maxHeight:'40px'}} src='/images/logo_text_inverted.png' /></div>
 						{/*<div style={{display:'inline',marginLeft:'30px'}}><img style={{width:'auto', maxHeight:'40px'}} src='/images/logo_text_inverted.png' /></div> */}
 						<div style={{display:'inline',marginRight:'30px'}} className="pull-right">
 							<i title="User profile" className="fa fa-user fa-2x custom-icon"></i>

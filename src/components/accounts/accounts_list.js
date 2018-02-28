@@ -1,18 +1,20 @@
 // Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import axios from 'axios';
 import {bindActionCreators} from 'redux';
-import {fetchAccounts,fetchAccount,deleteAccount} from '../../actions/accounts_actions';
-import {no_accounts_found} from '../../globals/globals';
-import {get_account} from '../../globals/helpers';
-import Breadcrumb from '../common/breadcrumb';
-import {ROOT_URL} from '../../actions/index';
+
+//// Importing additional components
 import AccountInfoModal from '../modals/account_info';
 import CreateAccountModal from '../modals/create_account';
+import AccountCard from './account_card';
+
+//// Importing additional actions
+import {fetchAccounts,fetchAccount,deleteAccount} from '../../actions/accounts_actions';
+import {ROOT_URL} from '../../actions/index';
 import {displayBread} from '../../actions/navigation_actions';
-import {SERVICE_ONENOTE,SERVICE_EVERNOTE} from '../../globals/globals';
+import {SERVICE_ONENOTE} from '../../globals/globals';
 import {custom_axios} from '../../globals/helpers';
+import {confirmations} from '../../globals/messages';
 
 // Initializing variables
 const items = [{id:1, name: "Accounts", link: "/accounts", isLink: false}];
@@ -25,10 +27,6 @@ class AccountsList extends Component{
 		this.state = {modalInfo: false, modalCreate: false,service: 0}
 		this.onLogin = this.onLogin.bind(this);
 		this.renderAccount = this.renderAccount.bind(this);
-		this.onLogout = this.onLogout.bind(this);
-		this.onInfoClick = this.onInfoClick.bind(this);
-		this.onNewClick = this.onNewClick.bind(this);
-		this.deleteAccount = this.deleteAccount.bind(this);
 	}
 
 	onInfoClick(id,service){
@@ -45,8 +43,8 @@ class AccountsList extends Component{
 		return "";
 	}
 
-	deleteAccount(id){
-		if (window.confirm("Are you sure that you want to delete this account?")){
+	onDelete(id){
+		if (window.confirm(confirmations.delete_account)){
 			this.props.deleteAccount([id]);
 		}
 	}
@@ -79,38 +77,29 @@ class AccountsList extends Component{
 					</div>
 				</div>
 			</div>
-			<AccountInfoModal show={this.state.modalInfo} service={this.state.service} onHide={()=> this.setState({modalInfo:false})}/>
-			<CreateAccountModal show={this.state.modalCreate} onHide={()=> this.setState({modalCreate:false})}/>
+			<AccountInfoModal 
+				show={this.state.modalInfo} 
+				service={this.state.service} 
+				onHide={()=> this.setState({modalInfo:false})}/>
+			<CreateAccountModal 
+				show={this.state.modalCreate} 
+				onHide={()=> this.setState({modalCreate:false})}/>
 			</div>
 		);
 	}
 
 	renderAccount(account){
 		return (
-			<div key={account.id} className="card">
-				<div 
-					className="cardHeader" 
-					style={{backgroundColor: get_account(account.service)}}>
-				</div>
-				<div className="card-block">
-					<h3 className="card-title">{account.name}</h3>
-					<p className="card-text">{account.dscr}</p>
-					{ !account.loggedIn ? (
-						<a onClick={() => this.onLogin(account.id,account.service) } className="btn btn-primary">Login</a>
-					) :
-					(
-						<a onClick={() => this.onLogout(account.id,account.service)} className="btn btn-primary">Logout</a>
-					)
-					 }
-					<a onClick={() => this.onInfoClick(account.id,account.service)} className="btn btn-primary">Info</a>
-					
-				</div>
-				<div className="card-footer">
-					Created: {account.created}
-					<div className="pull-right"><i title="Delete account" onClick={() => this.deleteAccount(account.id)} class="fa fa-trash" aria-hidden="true"></i></div>
-				</div>
-			</div>
+			<AccountCard 
+				key={account.id} 
+				account={account}
+				onLogin={this.onLogin.bind(this)} 
+				onLogout={this.onLogout.bind(this)} 
+				onInfoClick={this.onInfoClick.bind(this)} 
+				onDelete={this.onDelete.bind(this)}
+			/>
 		);
+		
 	}
 
 	componentDidMount(){

@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 
 class TaskInfo extends Component{
 
-	constructor(props){
-		super(props);
-	}
-
 	renderOutput(output){
 		return (
 			<li className="list-group-item"><strong>{output.name}</strong>: {output.status}</li>

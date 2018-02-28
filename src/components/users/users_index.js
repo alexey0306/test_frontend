@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchUsers,sortUsers} from '../../actions/users_actions';
-import {Link} from 'react-router';
-import Breadcrumb from '../common/breadcrumb';
 import UsersPanel from './users_panel';
-import _ from 'lodash';
-import {no_users_found} from '../../globals/globals';
 import UsersList from './users_list';
 import {displayBread} from '../../actions/navigation_actions';
 

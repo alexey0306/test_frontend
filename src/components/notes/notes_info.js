@@ -2,14 +2,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import DOMPurify from 'dompurify';
-import {Panel,ListGroup,ListGroupItem} from 'react-bootstrap';
 
 //// Import custom components
 import DecryptPanel from '../common/panel_decrypt';
 import Spinner from '../common/spinner';
 import ContentIFrame from '../common/iframe_content';
-import Breadcrumb from '../common/breadcrumb';
 import NotesInfoPanel from './notes_info_panel';
 
 //// Importing modal window components

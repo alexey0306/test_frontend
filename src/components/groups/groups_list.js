@@ -1,7 +1,6 @@
 // Import section
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-// Import section
 import {bindActionCreators} from 'redux';
 import {fetchGroups} from '../../actions/groups_actions';
 import _ from 'lodash';
@@ -25,8 +24,8 @@ class GroupsList extends Component{
 	}
 
 	onRowClick(event){
-		var checked = event.currentTarget.querySelectorAll("input[type='checkbox']")[0].checked;
-		var id = parseInt(event.currentTarget.id);
+		let checked = event.currentTarget.querySelectorAll("input[type='checkbox']")[0].checked;
+		let id = parseInt(event.currentTarget.id);
 		this.selectGroup(id,!checked);
 		event.stopPropagation();
 	}
@@ -52,9 +51,7 @@ class GroupsList extends Component{
 	onAllChange(event){
 		var arrayVar = [];
 		if (event.target.checked){
-			this.props.groups.map(function(user){
-				arrayVar.push(user.id);
-			})
+			this.props.groups.map(function(user){arrayVar.push(user.id);})
 		}
 		this.setState({selected:arrayVar});
 	}

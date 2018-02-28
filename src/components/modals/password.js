@@ -1,8 +1,6 @@
 // Import section
 import React,{Component} from 'react';
-import {Modal,Button,Alert} from 'react-bootstrap';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {Modal} from 'react-bootstrap';
 
 // Class declaration
 class PasswordModal extends Component{

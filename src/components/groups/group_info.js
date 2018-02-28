@@ -4,9 +4,6 @@ import {connect} from 'react-redux';
 import {Field,reduxForm} from 'redux-form';
 import {bindActionCreators} from 'redux';
 import {fetchGroup,updateGroup} from '../../actions/groups_actions';
-import _ from 'lodash';
-import {Link} from 'react-router';
-import Breadcrumb from '../common/breadcrumb';
 import {renderField, textAreaField} from '../../globals/render_fields';
 import {groupValidate} from '../../globals/validate';
 import GroupUserList from './group_userlist';
@@ -16,10 +13,7 @@ import {displayBread,setLastItem} from '../../actions/navigation_actions';
 const items = [{id:1, name: "Groups","link":"/groups",isLink: true}]
 
 class GroupInfo extends Component {
-	constructor(props){
-		super(props);
-	}
-
+	
 	onSubmit(props){
 		this.props.updateGroup(props);
 	}

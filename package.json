@@ -19,6 +19,7 @@
     "react-bootstrap": "^0.31.3",
     "react-bs-notifier": "^4.4.4",
     "react-burger-menu": "^2.1.11",
+    "react-confirm-bootstrap": "^5.2.0",
     "react-dom": "^16.0.0",
     "react-draft-wysiwyg": "^1.10.12",
     "react-dropzone": "^4.2.3",
