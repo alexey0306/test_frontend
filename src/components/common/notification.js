@@ -4,18 +4,8 @@ import {Alert, AlertList} from 'react-bs-notifier';
 import {bindActionCreators} from 'redux';
 import {clearAlerts} from '../../actions/alerts_actions';
 
-const alerts = [{
-	id: 1,
-	type: "info",
-	message: "Hello, world"
-}, {
-	id: 2,
-	type: "success",
-	message: "Oh, hai"
-}];
-const timeout = 8000;
+const timeout = 10000;
 const position = "top-right";
-
 
 class Notification extends Component{
 
