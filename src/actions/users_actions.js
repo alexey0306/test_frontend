@@ -103,11 +103,11 @@ export function sortUsers(sort){
 // ---------------------------------------------------
 // 		Importing users
 // ---------------------------------------------------
-export function importUsers(jsonString){
+export function importUsers(data){
 	const URL = `${ROOT_URL}users/import`;
 	return function(dispatch){
 		dispatch(isLoading(true));
-		custom_axios().post(URL,jsonString,{headers: {'Content-Type': 'application/json'}})
+		custom_axios().post(URL,data)
 		.then((response) => {
 			dispatch(isLoading(false));
 			dispatch(showAlert(TYPE_SUCCESS,"Users have been successfully imported"));

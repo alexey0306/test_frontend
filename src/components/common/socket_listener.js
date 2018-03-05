@@ -15,7 +15,6 @@ class SocketListener extends Component{
 	componentDidMount(){
 		var self = this;
 		socket.on("task_finished",function(data){
-			console.log(data);
 			self.props.showAlert(TYPE_SUCCESS,data);
 		});
 	}

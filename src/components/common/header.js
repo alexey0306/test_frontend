@@ -27,7 +27,7 @@ class Header extends Component{
 			<div>
 				<div className="header">
 					<div style={{paddingLeft:'30px'}} className="headerItem">
-						<div style={{display:'inline'}}><i onClick={this.onBarsClick} className="fa fa-bars fa-2x" aria-hidden="true"></i></div>
+						{ this.props.displayBars ? (<div style={{display:'inline'}}><i onClick={this.onBarsClick} className="fa fa-bars fa-2x" aria-hidden="true"></i></div>): (<div></div>) }
 						<div style={{display:'inline',marginLeft:'30px'}}><img style={{width:'auto', maxHeight:'40px'}} src='/images/logo_text_inverted.png' /></div>
 						{/*<div style={{display:'inline',marginLeft:'30px'}}><img style={{width:'auto', maxHeight:'40px'}} src='/images/logo_text_inverted.png' /></div> */}
 						<div style={{display:'inline',marginRight:'30px'}} className="pull-right">

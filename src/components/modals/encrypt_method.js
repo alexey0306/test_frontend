@@ -29,6 +29,12 @@ class EncryptModal extends Component{
 			return false;
 		}
 
+		// Checking that password has been confirmed
+		if (this.state.method == "password" && (this.state.password != this.state.confirmPassword)){
+			this.setState({alertVisible:true, alertText: "Passwords don't match"});
+			return false;
+		}
+
 		// Checking recipients
 		if ( this.state.method == "cms" && this.state.keys.length == 0 ){
 			this.setState({alertVisible:true,alertText:"No recipients selected"});

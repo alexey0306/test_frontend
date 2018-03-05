@@ -122,8 +122,7 @@ class Navigation extends Component{
 					{ this.props.accounts.length == 0 ? 
 						no_accounts_found : this.props.accounts.map(this.renderAccount)
 					}
-				</ul>
-				
+				</ul>				
 			</div>
 		);
 	}

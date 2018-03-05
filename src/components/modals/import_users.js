@@ -22,7 +22,7 @@ class ImportUsersModal extends Component{
 		
 		if (this.state.jsonValid){
 			// Sending request to import users
-			this.props.importUsers(this.state.json);
+			this.props.importUsers(JSON.parse(this.state.json));
 			this.props.onHide();
 		}
 

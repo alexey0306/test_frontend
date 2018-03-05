@@ -75,10 +75,10 @@ class App extends Component {
       <div>
         <Sidebar 
             open={this.props.sidebarOpened} 
-            docked={false} shadow={true} 
+            docked={this.state.sidebarDocked} shadow={true} 
             pullRight={false} sidebar={sidebarContent} touch={false} 
             transitions={true} onSetOpen={this.onSetOpen} >
-            <Header onBarsClicked={this.onBarsClicked} />
+            <Header displayBars={!this.state.sidebarDocked} onBarsClicked={this.onBarsClicked} />
             <Notification />
             <div className="row">
               <div className="col-md-12" style={{padding:'40px'}}>

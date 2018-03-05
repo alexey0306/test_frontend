@@ -76,6 +76,8 @@ class CertificatesList extends Component{
 				<td><input id={cert.id} onClick={this.onCertificateSelect.bind(this)} checked={_.includes(this.state.selected,cert.id)} type="checkbox"/></td>
 				<td>{cert.name}</td>
 				<td><Link to={"users/"+cert.user.id}>{cert.user.name}</Link></td>
+				<td>{cert.serial}</td>
+				<td>{cert.created}</td>
 				<td>{this.getStatus(cert.status)}</td>
 				<td>
 					<button id={cert.id} name={cert.user.name} title="Download PFX" onClick={this.downloadPFX.bind(this)} className="btn btn-default">PFX</button>
@@ -93,6 +95,8 @@ class CertificatesList extends Component{
 							<th><input type="checkbox" onChange={this.onAllChange.bind(this)} /></th>
 							<th>Name</th>
 							<th>User</th>
+							<th>Serial</th>
+							<th>Created</th>
 							<th>Status</th>
 							<th>Actions</th>
 						</tr>

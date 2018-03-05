@@ -1,22 +1,26 @@
 // Import section
 import React,{Component} from 'react';
 import {Modal,Alert} from 'react-bootstrap';
-import {requestCertificates} from '../../actions/certificates_actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
+//// Importing additional components
 import UsersList from '../users/users_list';
 
+//// Importing additional actions
+import {requestCertificates} from '../../actions/certificates_actions';
+import {messages} from '../../globals/messages';
 
 class RequestCertificateModal extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {selected: [], alertVisible: false, alertText:"",password:""};
+		this.state = {selected: [], alertVisible: false, alertText:"",password:"",confPassword:""};
 		this.request = this.request.bind(this);
 	}
 
 	componentWillReceiveProps(){
-		this.setState({selected: [], alertVisible: false, alertText:"",password:""});
+		this.setState({selected: [], alertVisible: false, alertText:"",password:"",confPassword:""});
 	}
 
 	onUsersChange(selected){
@@ -27,6 +31,10 @@ class RequestCertificateModal extends Component{
     	this.setState({ alertVisible: false, password: ''});
  	}
 
+ 	onConfChange(event){
+ 		this.setState({confPassword: event.target.value});
+ 	}
+
  	onPasswordChange(event){
  		this.setState({password: event.target.value});
  	}
@@ -34,9 +42,18 @@ class RequestCertificateModal extends Component{
 
 	request(){
 
+		// Resetting
+		this.setState({alertVisible: false});
+
 		// Checking that at least one user has been selected 
 		if (this.state.selected.length == 0){
-			this.setState({alertVisible:true,alertText:"Please select users to request certificates to"});
+			this.setState({alertVisible:true,alertText:messages.no_users_selected});
+			return;
+		}
+
+		// Checking that passwords match
+		if (this.state.password != this.state.confPassword){
+			this.setState({alertVisible:true,alertText:messages.passwords_mismatch});
 			return;
 		}
 
@@ -63,7 +80,12 @@ class RequestCertificateModal extends Component{
 						<div className="form-group">
 							<label>PFX password</label>
 							<input type="password" onChange={this.onPasswordChange.bind(this)} value={this.state.password} className="form-control" placeholder="Type the password to protect PFX files"/>
-							<div class="help-block">This password is needed to protect your users' P12 files (encrypted private and public keypairs). If none is specified, system will use empty password and P12 files can be opened by anyone</div>
+							
+						</div>
+						<div className="form-group">
+							<label>Confirm password</label>
+							<input type="password" onChange={this.onConfChange.bind(this)} value={this.state.confPassword} className="form-control" placeholder="Confirm your password"/>
+							<div className="help-block">This password is needed to protect your users' P12 files (encrypted private and public keypairs). If none is specified, system will use empty password and P12 files can be opened by anyone</div>
 						</div>
 					</Modal.Body>
 					<Modal.Footer>

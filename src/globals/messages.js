@@ -16,7 +16,9 @@ export const messages = {
 	password_mandatory: "Password is mandatory",
 	no_recipients: "List of recipients is empty",
 	no_users_selected: "Please select at least one user to continue",
-	no_certificates_selected: "Please select at least one certificate to continue"
+	no_certificates_selected: "Please select at least one certificate to continue",
+	passwords_mismatch: "Passwords don't match",
+	
 }
 
 // Confirmation messages
