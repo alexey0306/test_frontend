@@ -12,6 +12,7 @@ import {bindActionCreators} from 'redux';
 import Sidebar from 'react-sidebar';
 import {browserHistory} from 'react-router';
 import SigninIndex from './auth/signin_index';
+import {testAction} from '../actions/test_actions';
 
 // Init section
 const mql = window.matchMedia(`(min-width: 800px)`);
@@ -55,6 +56,10 @@ class App extends Component {
     this.props.toggleSidebar(true);
   }
 
+  testAction(){
+    this.props.testAction();
+  }
+
   render() {
     this.props.setService(this.props.params.id);
     const header = <BreadcrumbNew service={this.props.service} style={{margin:'0px'}} />
@@ -84,7 +89,10 @@ class App extends Component {
               <div className="col-md-12" style={{padding:'40px'}}>
                 <div className="saferoomContainer">
                   <div className="saferoomHeader saferoom-default">{header}</div>
-                  <div className="saferoomContent">{this.props.children}</div>
+                  <div className="saferoomContent">
+                    <button onClick={this.testAction.bind(this)}>Add task</button>
+                    {this.props.children}
+                  </div>
                 </div>
               </div>
             </div>
@@ -104,7 +112,7 @@ function mapStateToProps(state){
   };
 }
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({setService,toggleSidebar},dispatch);
+  return bindActionCreators({setService,toggleSidebar,testAction},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);

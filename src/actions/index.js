@@ -67,10 +67,7 @@ export const FETCH_POLICY_START = "FETCH_POLICY_START";
 export const CREATE_POLICY = "CREATE_POLICY";
 
 // Tasks actions
-export const FETCH_TASKS_START = "LIST_TASKS_START";
-export const FETCH_TASKS = "LIST_TASKS";
-export const DELETE_TASKS = "DELETE_TASKS";
-export const FETCH_TASK = "FETCH_TASK";
+export const CREATE_TASK = "ADD_TASK";
 
 // Certificates action
 export const FETCH_CERTIFICATES_START = "FETCH_CERTIFICATES_START";

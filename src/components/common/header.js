@@ -7,10 +7,14 @@ import {bindActionCreators} from 'redux';
 import {signout} from '../../actions/auth_actions';
 import {fetchAdmin} from '../../actions/admin_actions';
 
+//// Importing additional components
+import TaskManagerModal from '../modals/task_manager';
+
 class Header extends Component{
 
 	constructor(props){
 		super(props);
+		this.state = {modalTask: false}
 		this.onBarsClick = this.onBarsClick.bind(this);
 	}
 
@@ -31,12 +35,14 @@ class Header extends Component{
 						<div style={{display:'inline',marginLeft:'30px'}}><img style={{width:'auto', maxHeight:'40px'}} src='/images/logo_text_inverted.png' /></div>
 						{/*<div style={{display:'inline',marginLeft:'30px'}}><img style={{width:'auto', maxHeight:'40px'}} src='/images/logo_text_inverted.png' /></div> */}
 						<div style={{display:'inline',marginRight:'30px'}} className="pull-right">
+							<i title="Task Manager" onClick={() => this.setState({modalTask: true})} className="fa fa-tasks fa-2x custom-icon"></i>
 							<i title="User profile" className="fa fa-user fa-2x custom-icon"></i>
 							<i title="Get help" className="fa fa-question fa-2x custom-icon"></i>
 							<i onClick={() => this.props.signout()} title="Log out" className="fa fa-sign-out fa-2x custom-icon"></i>
 						</div>
 					</div>					
 				</div>
+				<TaskManagerModal show={this.state.modalTask} onHide={()=> this.setState({modalTask:false})} />
 			</div>			
 		);
 	}

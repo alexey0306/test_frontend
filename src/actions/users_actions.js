@@ -1,5 +1,4 @@
 // Import section
-import axios from 'axios';
 import {FETCH_USERS,FETCH_USER,ROOT_URL,
 		REQUEST_TIMEOUT,CREATE_USER,DELETE_USERS, IMPORT_USERS, 
 		SORT_USERS, TYPE_DANGER,TYPE_SUCCESS,success,
