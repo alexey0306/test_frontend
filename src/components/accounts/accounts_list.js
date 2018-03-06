@@ -70,7 +70,7 @@ class AccountsList extends Component{
 			<div>
 			<div className="accounts-list">
 				{this.props.accounts.map(this.renderAccount)}
-				<div onClick={this.onNewClick} className="card">
+				<div onClick={this.onNewClick.bind(this)} className="card">
 					<div className="card-block-new">
 						<i className="fa fa-plus fa-big" aria-hidden="true"></i>
 						<div className="card-text-new">Add new account</div>
