@@ -18,6 +18,11 @@ export const messages = {
 	no_users_selected: "Please select at least one user to continue",
 	no_certificates_selected: "Please select at least one certificate to continue",
 	passwords_mismatch: "Passwords don't match",
+	network_error: "Error while connecting to the server: server not responding",
+	internal_error: "Internal server error. Please contact system administrator",
+	account_created: "Account has been successfully created",
+	account_disconnected: "Account has been successfully disconnected. To connect it once again, please click Login button",
+	accounts_deleted: "Account(s) have been successfully deleted"
 	
 }
 
@@ -27,5 +32,6 @@ export const confirmations = {
 	update_note: "Do you really want to update the note?",
 	delete_account: "Are you sure that you want to delete this account? Please note that deleting your account won't affect your data stored in the cloud",
 	delete_users: "Do you really want to delete selected users?",
-	delete_certificates: "Do you really want to delete selected certificates?"
+	delete_certificates: "Do you really want to delete selected certificates?",
+	disconnect_account: "Do you really want to disconnect this account?"
 }

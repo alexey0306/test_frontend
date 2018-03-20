@@ -26,7 +26,9 @@ class AccountInfo extends Component{
 					<li className="list-group-item"><strong>Premium status: </strong>
 						{!this.props.account.online.premiumStatus ? 'n/a' : PREMIUM_STATUS[this.props.account.online.premiumStatus]}						
 					</li>
-
+					<li className="list-group-item"><strong>Default notebook: </strong>
+						<i className="fa fa-book" style={{marginLeft:'10px',marginRight:'5px'}}></i> {this.props.account.defaultNotebook.name}
+					</li>
 				</ul>
 			</div>
 		);

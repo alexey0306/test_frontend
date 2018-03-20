@@ -2,13 +2,10 @@
 import React,{Component} from 'react';
 import {Modal,Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {fetchAccount} from '../../actions/accounts_actions';
 import Spinner from '../common/spinner';
 import AccountInfo from '../accounts/account_info';
 
 class AccountInfoModal extends Component{
-
 
 	render(){
 		const { handleSubmit, pristine, reset, submitting } = this.props;
@@ -19,7 +16,7 @@ class AccountInfoModal extends Component{
 						<Modal.Title id="contained-modal-title-lg">Account Info</Modal.Title>
 					</Modal.Header>
 					<Modal.Body className="modalBody">
-						{ !this.props.account.name ? 
+						{ !this.props.account ? 
 							(<Spinner />) : 
 							(<AccountInfo account={this.props.account} />) 
 						}
@@ -33,12 +30,8 @@ class AccountInfoModal extends Component{
 	}
 }
 
-function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchAccount},dispatch);
-}
-
 function mapStateToProps(state){
-	return { account: state.accounts.account };
+	return { account: state.accounts.account, defaultNotebook: state.accounts.defaultNotebook };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(AccountInfoModal);
+export default connect(mapStateToProps,null)(AccountInfoModal);

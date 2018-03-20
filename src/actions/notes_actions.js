@@ -3,7 +3,7 @@ import {
 		FETCH_NOTES_START, FETCH_NOTE, FETCH_NOTE_START,CREATE_NOTE, SET_LAST_ITEM,
 		DECRYPT_NOTE,CLEAR_DECRYPTED,SET_FAVOURITE,FETCH_FAVOURITES,DELETE_FAVOURITES,
 		BATCH_CREATE_NOTES,RESTORE_NOTES,ENCRYPT_NOTES,EDIT_NOTE,UPDATE_NOTE,ROOT_URL, 
-		success, handleError,TYPE_DANGER,TYPE_SUCCESS} from './index';
+		success, handleError,TYPE_DANGER,TYPE_SUCCESS,CREATE_TASK} from './index';
 import {custom_axios} from '../globals/helpers';
 import {messages} from '../globals/messages';
 import {showAlert,isLoading} from './alerts_actions';
@@ -205,6 +205,7 @@ export function batchCreate(data){
 	formData.append("keys", data.keys);
 	formData.append("account", data.account);
 	formData.append("split", data.split);
+	formData.append("notebookGuid",data.notebookGuid);
 
 	data.files.map(function(file){
 		formData.append("files[]",file);
@@ -212,9 +213,6 @@ export function batchCreate(data){
 
 
 	return function(dispatch){
-
-		// Displaying progress
-		dispatch(showAlert(TYPE_SUCCESS,messages.request_sent));
 
 		// Sending request
 		custom_axios().post(URL,formData,{
@@ -225,11 +223,15 @@ export function batchCreate(data){
 		})
 		.then((response) => {
 
-			// Passing data to reducer
-			dispatch(success(response,BATCH_CREATE_NOTES));
-
 			// Displaying alert
-			dispatch(showAlert(TYPE_SUCCESS,response.data.message));
+			dispatch(showAlert(TYPE_SUCCESS,messages.request_sent));
+
+			// Creating a task
+			let task = response.data
+			task.url = `${URL}/status`;
+
+			// Sending message to Task Reducer
+			dispatch(success(task,CREATE_TASK));
 
 			
 		})

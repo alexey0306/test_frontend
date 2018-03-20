@@ -1,6 +1,8 @@
 // Import section
 import {FETCH_MENU} from '../actions/index';
 
+// {id:5,name:"Policies",header: false,link:"policies","icon":"list"},
+
 // Constants
 const menu = [
 	{id:1,name:"ADMINISTRATION",header: true,link:"",icon:""},
@@ -8,9 +10,7 @@ const menu = [
 	{id:2,name:"Users",header: false,link:"users","icon":"user"},
 	{id:3,name:"Groups",header: false,link:"groups","icon":"users"},
 	{id:4,name:"Accounts",header: false,link:"accounts","icon":"object-group"},
-	{id:5,name:"Policies",header: false,link:"policies","icon":"list"},
 	{id:6,name:"Certificates",header: false,link:"certificates","icon":"id-card-o"},
-	{id:7,name:"Tasks",header: false,link:"tasks","icon":"tasks"},
 	{id:8,name:"",header: false,link:"tasks","icon":"tasks",separator:true},
 	{id:9,name:"NOTES",header: true,link:"",icon:""},
 	{id:10,name:"Create note",header: false,link:"create",icon:"sticky-note-o"},

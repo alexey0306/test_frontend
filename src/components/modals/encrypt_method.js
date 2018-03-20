@@ -4,6 +4,9 @@ import {connect} from 'react-redux';
 import {Modal,Button, Alert} from 'react-bootstrap';
 import EncryptionMethod from '../common/encryption_method';
 
+//// Importing additional components
+import {messages} from '../../globals/messages';
+
 
 // Declaring a class
 class EncryptModal extends Component{
@@ -14,7 +17,7 @@ class EncryptModal extends Component{
 	}
 
 	selectMethod(data){
-		this.setState({method:data.method,password: data.password,keys:data.keys});		
+		this.setState({method:data.method,password: data.password,keys:data.keys, confirmPassword: data.confirmPassword});		
 	}
 
 	handleAlertDismiss() {
@@ -23,21 +26,28 @@ class EncryptModal extends Component{
 
 	onFinish(){
 
-		// Double-checking password
-		if (this.state.method == "password" && this.state.password == ""){
-			this.setState({alertVisible:true, alertText: "Password cannot be empty"});
-			return false;
-		}
+		// Hiding the alert
+		this.setState({ alertVisible: false});
 
-		// Checking that password has been confirmed
-		if (this.state.method == "password" && (this.state.password != this.state.confirmPassword)){
-			this.setState({alertVisible:true, alertText: "Passwords don't match"});
-			return false;
+		// Double-checking password
+		if (this.state.method == "password"){
+
+			// Checking if password is specified
+			if (this.state.password == ""){
+				this.setState({alertVisible:true, alertText: messages.password_mandatory});
+				return false;
+			}
+
+			// Checking that passwords match
+			if (this.state.password != this.state.confirmPassword){
+				this.setState({alertVisible:true, alertText: messages.passwords_mismatch});
+				return false;
+			}
 		}
 
 		// Checking recipients
 		if ( this.state.method == "cms" && this.state.keys.length == 0 ){
-			this.setState({alertVisible:true,alertText:"No recipients selected"});
+			this.setState({alertVisible:true,alertText:messages.no_recipients});
 			return false;
 		}	
 
@@ -58,7 +68,7 @@ class EncryptModal extends Component{
 							<p>{this.state.alertText}</p>
 							</Alert>
 					) : ''}
-					<EncryptionMethod onMethodSelect={this.selectMethod.bind(this)} />
+					<EncryptionMethod on onMethodSelect={this.selectMethod.bind(this)} />
 				</Modal.Body>
 				<Modal.Footer>
 					<button type="submit" onClick={this.onFinish.bind(this)} className="btn btn-primary">Apply</button>

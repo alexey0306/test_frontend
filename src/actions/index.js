@@ -1,4 +1,5 @@
 import {showAlert,isLoading} from './alerts_actions';
+import {messages} from '../globals/messages';
 
 // Export section
 export const ROOT_URL = "https://www.saferoomapp.com:5000/";
@@ -31,6 +32,8 @@ export const FETCH_ACCOUNTS = "FETCH_ACCOUNTS";
 export const FETCH_ACCOUNT = "FETCH_ACCOUNT";
 export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
+export const CLEAR_ACCOUNT = "CLEAR_ACCOUNT";
+export const DISCONNECT_ACCOUNT = "DISCONNECT_ACCOUNT";
 
 // Notebook actions
 export const FETCH_NOTEBOOKS_START = "FETCH_NOTEBOOKS_START";
@@ -40,6 +43,9 @@ export const SET_NOTEBOOK = "SET_NOTEBOOK";
 export const LIST_NOTEBOOKS = "LIST_NOTEBOOKS";
 export const CLEAR_NOTEBOOKS = "CLEAR_NOTEBOOKS";
 export const ENCRYPT_NOTEBOOK = "ENCRYPT_NOTEBOOK";
+export const FETCH_DEFAULT_NOTEBOOK = "GET_DEFAULT_NOTEBOOK";
+export const CLEAR_DEFAULT_NOTEBOOK = "CLEAR_DEFAULT_NOTEBOOK";
+export const SET_DEFAULT_NOTEBOOK = "SET_DEFAULT_NOTEBOOK";
 
 // Notes actions
 export const FETCH_NOTES = "FETCH_NOTES";
@@ -68,6 +74,7 @@ export const CREATE_POLICY = "CREATE_POLICY";
 
 // Tasks actions
 export const CREATE_TASK = "ADD_TASK";
+export const DELETE_TASK = "DELETE_TASK";
 
 // Certificates action
 export const FETCH_CERTIFICATES_START = "FETCH_CERTIFICATES_START";
@@ -126,9 +133,22 @@ export function success(response,type){
 }
 
 export function handleError(dispatch,err){
-	var message = "";
+	console.log(err);
+	let message = "";
 	if (err.response){message = err.response.data.message;}
-	else{message = err.toString();}
+	else{
+		
+ 		if (err.toString().includes("Network Error")){
+			message = messages.network_error;
+		}
+		else if (err.toString().includes("status code 500")){
+			message = messages.internal_error;
+		}
+		else{
+			message = err.toString();
+		}		
+	}
 	dispatch(showAlert(TYPE_DANGER,message));
 	dispatch(isLoading(false));
+	
 }

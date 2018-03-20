@@ -90,7 +90,6 @@ class App extends Component {
                 <div className="saferoomContainer">
                   <div className="saferoomHeader saferoom-default">{header}</div>
                   <div className="saferoomContent">
-                    <button onClick={this.testAction.bind(this)}>Add task</button>
                     {this.props.children}
                   </div>
                 </div>

@@ -407,3 +407,14 @@ i.custom-icon:hover{
   width: 30%;
   margin-right: 20px;
 }
+
+.defaultNotebook{
+  font-size: 1.1em;
+  padding: 15px;
+  border: 1px solid #ddd;
+}
+
+.notebookItem:hover{
+  cursor: pointer;
+  background: #eee;
+}

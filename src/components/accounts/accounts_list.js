@@ -9,7 +9,10 @@ import CreateAccountModal from '../modals/create_account';
 import AccountCard from './account_card';
 
 //// Importing additional actions
-import {fetchAccounts,fetchAccount,deleteAccount} from '../../actions/accounts_actions';
+import {
+	fetchAccounts,fetchAccount,deleteAccount,fetchDefault,disconnectAccount
+} 
+from '../../actions/accounts_actions';
 import {ROOT_URL} from '../../actions/index';
 import {displayBread} from '../../actions/navigation_actions';
 import {SERVICE_ONENOTE} from '../../globals/globals';
@@ -40,7 +43,9 @@ class AccountsList extends Component{
 	}
 
 	onLogout(id,service){
-		return "";
+		if (window.confirm(confirmations.disconnect_account)){
+			this.props.disconnectAccount(id);
+		}
 	}
 
 	onDelete(id){
@@ -66,11 +71,12 @@ class AccountsList extends Component{
 	}
 
 	render(){
+		console.log(this.props.accounts);
 		return (
 			<div>
 			<div className="accounts-list">
 				{this.props.accounts.map(this.renderAccount)}
-				<div onClick={this.onNewClick} className="card">
+				<div onClick={this.onNewClick.bind(this)} className="card">
 					<div className="card-block-new">
 						<i className="fa fa-plus fa-big" aria-hidden="true"></i>
 						<div className="card-text-new">Add new account</div>
@@ -109,11 +115,16 @@ class AccountsList extends Component{
 }
 
 function mapStateToProps(state){
-	return { accounts: state.accounts.all };
+	return { 
+		accounts: state.accounts.all 
+	};
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({fetchAccounts,fetchAccount,displayBread,deleteAccount},dispatch);
+	return bindActionCreators({
+		fetchAccounts,fetchAccount,displayBread,deleteAccount,
+		fetchDefault,disconnectAccount
+	},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(AccountsList);

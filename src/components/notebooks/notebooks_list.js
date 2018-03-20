@@ -105,7 +105,7 @@ class NotebooksList extends Component {
 					onClick={this.onNotebookClick}
 					checked={_.includes(this.state.selected,notebook.guid)} />
 				</td>
-				<td><Link to={link}>{notebook.name}</Link></td>
+				<td><i style={{marginRight:'10px'}} className="fa fa-book"></i> <Link to={link}>{notebook.name}</Link></td>
 				<td>{notebook.guid}</td>
 				<td>{notebook.created}</td>
 				<td>{notebook.shared ? (<i title="Shared" className="fa fa-users" aria-hidden="true"></i>) : 'n/a'}</td>

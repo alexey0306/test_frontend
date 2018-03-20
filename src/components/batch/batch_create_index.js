@@ -1,13 +1,19 @@
 // Import section
 import React,{Component} from 'react';
+import ReactDom from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import $ from "jquery";
+
+//// Importing additional component and actions
 import {displayBread} from '../../actions/navigation_actions';
 import AccountsDropdown from '../accounts/accounts_dropdown';
-import {fetchAccounts} from '../../actions/accounts_actions';
+import {fetchAccounts,fetchDefault,clearDefaultNotebook,setDefaultNotebook} from '../../actions/accounts_actions';
+import {fetchNotebooks,clearNotebooks} from '../../actions/notebooks_actions';
 import {batchCreate} from '../../actions/notes_actions';
 import DropzoneArea from '../common/dropzone';
 import EncryptModal from '../modals/encrypt_method';
+import NotebooksListModal from '../modals/notebooks_list';
 
 // Init section
 const items = [{id:1, name:"Batch Encryption",link:"",isLink: false}];
@@ -17,7 +23,7 @@ class BatchCreateIndex extends Component{
 
 	constructor(props){
 		super(props);
-		this.state = {account:-1,files:[],lgShow:false,split:false}
+		this.state = {account:-1,files:[],lgShow:false,split:false, modalNotebooks: false }
 	}
 
 	componentDidMount(){
@@ -27,6 +33,7 @@ class BatchCreateIndex extends Component{
 
 	onAccountSelect(account){
 		this.setState({account});
+		this.props.fetchDefault(account);
 	}
 
 	onDrop(files){
@@ -46,13 +53,23 @@ class BatchCreateIndex extends Component{
 			keys:keys,
 			account: this.state.account,
 			split:this.state.split,
-			files:this.state.files
+			files:this.state.files,
+			notebookGuid: this.props.default.guid
 		}
-
+		
 		// Sending the request
 		this.props.batchCreate(data);
 
-		
+	}
+
+	changeNotebook(){
+		this.props.clearNotebooks();
+		this.props.fetchNotebooks(this.state.account,true);
+		this.setState({modalNotebooks: true});
+	}
+
+	componentWillUnmount(){
+		this.props.clearDefaultNotebook();
 	}
 
 	onSplitChange(event){
@@ -61,13 +78,26 @@ class BatchCreateIndex extends Component{
 		return false;
 	}
 
+	onNotebookSelected(notebook){
+		this.props.setDefaultNotebook(notebook);
+	}
+
 	render(){
 		return (
 			<div>
+				<div ref={ el => this.container = el }></div>
 				<div className="form-group">
 					<label>Account:</label>
 					<AccountsDropdown accounts={this.props.accounts} onChange={this.onAccountSelect.bind(this)} />					
 				</div>
+				{ this.props.default != null ? (
+					<div className="form-group" style={{marginTop:'20px',marginBottom: '20px'}}>
+						<label>Notebook the notes will be uploaded to:</label>
+						<div className="defaultNotebook"><i className="fa fa-book" style={{marginRight:'10px'}}></i> { this.props.default.name }
+						<span style={{marginLeft: '20px'}}><a id={this.state.account} onClick={this.changeNotebook.bind(this)} href="#">Change</a></span></div>
+					</div>
+				) : null }
+				
 				<div className="form-group">
 					<label>Files to upload:</label>
 					<DropzoneArea onDropped={this.onDrop.bind(this)} />
@@ -84,18 +114,22 @@ class BatchCreateIndex extends Component{
           			<button onClick={this.selectMethod.bind(this)} className="btn btn-primary"> Start</button>
           		</div>
           		<EncryptModal onSelected={this.createNote.bind(this)} show={this.state.lgShow} onHide={()=> this.setState({lgShow:false})} />
-
+          		<NotebooksListModal show={this.state.modalNotebooks} onHide={()=> this.setState({modalNotebooks:false})} onNotebookSelected={this.onNotebookSelected.bind(this)}  />
 			</div>
 		);
 	}
 }
 
 function mapStateToProps(state){
-	return {accounts: state.accounts.all};
+	return { accounts: state.accounts.all, default: state.accounts.defaultNotebook };
 }
 
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({displayBread,fetchAccounts,batchCreate},dispatch);
+	return bindActionCreators({
+		displayBread,fetchAccounts,batchCreate,
+		fetchDefault,clearDefaultNotebook,
+		fetchNotebooks,clearNotebooks,setDefaultNotebook
+	},dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(BatchCreateIndex);

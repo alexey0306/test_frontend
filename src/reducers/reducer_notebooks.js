@@ -1,8 +1,11 @@
 // Import section
-import {FETCH_NOTEBOOKS,FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS,CLEAR_NOTEBOOKS,SET_NOTEBOOK, LIST_NOTEBOOKS} from '../actions/index';
+import {
+		FETCH_NOTEBOOKS,FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS,
+		CLEAR_NOTEBOOKS,SET_NOTEBOOK, LIST_NOTEBOOKS
+} from '../actions/index';
 
 // Initializing variables
-const INITIAL_STATE = { all: [], active: {}, notebook_list:[]};
+const INITIAL_STATE = { all: [], active: {}, notebook_list:[] };
 
 // Functions
 export default function (state = INITIAL_STATE, action) {

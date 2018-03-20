@@ -26,7 +26,6 @@ import NotesEdit from './components/notes/notes_edit';
 import PoliciesList from './components/policies/policies_list';
 import PolicyInfo from './components/policies/policy_info';
 
-import TasksIndex from './components/tasks/tasks_index.js';
 import CreateNote from './components/notes/create_note';
 import CertificatesIndex from './components/certificates/certificates_index';
 import ThumbnailContainer from './components/common/thumbnail';
@@ -53,7 +52,6 @@ export default (
 		<Route path="notes/:id/edit/:guid" component={NotesEdit} />
 		<Route path="policies" component={PoliciesList}></Route>
 		<Route path="policies/:pid" component={PolicyInfo}></Route>
-		<Route path="tasks" component={TasksIndex}></Route>
 		<Route path="create" component={CreateNote}></Route>
 		<Route path="certificates" component={CertificatesIndex}></Route>
 		<Route path="sections/:id/list/:notebook_name/:notebook_guid" component={SectionsIndex}></Route>

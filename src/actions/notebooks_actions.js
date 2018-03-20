@@ -1,17 +1,18 @@
 import {
 		FETCH_NOTEBOOKS, FETCH_NOTEBOOKS_START,SORT_NOTEBOOKS,
-		SET_NOTEBOOK, LIST_NOTEBOOKS,CLEAR_NOTEBOOKS,REQUEST_TIMEOUT,
-		ENCRYPT_NOTEBOOK,ROOT_URL, success, TYPE_DANGER,TYPE_SUCCESS,handleError
+		SET_NOTEBOOK, LIST_NOTEBOOKS,CLEAR_NOTEBOOKS,GET_DEFAULT_NOTEBOOK,
+		REQUEST_TIMEOUT,ROOT_URL, 
+		success, TYPE_DANGER,TYPE_SUCCESS,handleError,CREATE_TASK
 } from './index';
 import {custom_axios} from '../globals/helpers';
 import {showAlert,isLoading} from './alerts_actions';
+import {messages} from '../globals/messages'; 
 
 // ---------------------------------------------------
 // 		Fetching notebooks
 // ---------------------------------------------------
 
 export function fetchNotebooks(id, refresh = false, term = ""){
-
 	var URL = `${ROOT_URL}notebooks/list/${id}?term=${term}`;
 	if (refresh){URL = URL+"&refresh";}
 
@@ -19,7 +20,6 @@ export function fetchNotebooks(id, refresh = false, term = ""){
 		
 		// Displaying progress
 		dispatch(success(null,FETCH_NOTEBOOKS_START));
-		dispatch(isLoading(true));
 		
 		// Sending request
 		custom_axios().get(URL)
@@ -87,10 +87,14 @@ export function encryptNotebooks(data){
 		.then((response) => {
 
 			// Displaying the response from the server
-			dispatch(showAlert(response.data.type,response.data.message))
+			dispatch(showAlert(TYPE_SUCCESS,messages.request_sent));
 
-			// Passing the result to Reducer
-			dispatch(success(response,ENCRYPT_NOTEBOOK));
+			// Creating the task object
+			let task = response.data
+			task.url = `${URL}/status`;
+			
+			// Sending message to reducer
+			dispatch(success(task,CREATE_TASK));
 		})
 		.catch((err) => {
 			handleError(dispatch,err);

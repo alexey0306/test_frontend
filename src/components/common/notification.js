@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import {clearAlerts} from '../../actions/alerts_actions';
 
 const timeout = 10000;
-const position = "top-right";
+const position = "bottom-right";
 
 class Notification extends Component{
 
